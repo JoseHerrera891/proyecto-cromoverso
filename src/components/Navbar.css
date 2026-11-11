@@ -176,6 +176,11 @@
   background: transparent;
 }
 
+.navbar-buscador button:hover {
+  color: var(--marca-primario-hover);
+  background: var(--marca-primario-suave);
+}
+
 .navbar-buscador input {
   width: 100%;
   min-width: 0;
@@ -260,6 +265,10 @@
   border-radius: var(--radio-m);
   color: var(--texto-principal);
   background: var(--fondo-superficie);
+}
+
+.navbar-estado button:hover {
+  background: var(--fondo-sutil);
 }
 
 .navbar-enlaces-escritorio,

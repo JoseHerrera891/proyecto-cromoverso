@@ -20,11 +20,19 @@
   font: var(--peso-negrita) var(--texto-pequeno) / var(--interlineado-unidad)
     var(--fuente-rubik);
   cursor: pointer;
+  transition:
+    background-color var(--duracion-transicion-corta)
+      var(--curva-transicion-estandar),
+    color var(--duracion-transicion-corta) var(--curva-transicion-estandar);
 }
 
 .selector-idioma button[aria-pressed="true"] {
   color: var(--texto-principal);
   background: var(--marca-acento);
+}
+
+.selector-idioma button:hover:not(:disabled):not([aria-pressed="true"]) {
+  background: var(--fondo-sutil);
 }
 
 .selector-idioma button:focus-visible {
@@ -34,5 +42,6 @@
 
 .selector-idioma button:disabled {
   color: var(--texto-terciario);
+  opacity: var(--opacidad-deshabilitado);
   cursor: not-allowed;
 }
