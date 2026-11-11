@@ -58,11 +58,15 @@
   --espacio-7: 48px;
   --espacio-8: 64px;
   --control-alto-minimo: 44px;
+  --selector-idioma-boton-ancho-minimo: 40px;
+  --selector-idioma-boton-alto-minimo: 36px;
   --alto-navbar-escritorio: 72px;
   --ancho-navbar-maximo: 1448px;
   --ancho-cookie-banner-maximo: 47.5rem;
   --borde-grosor: 2px;
   --borde-foco-grosor: 3px;
+  --duracion-transicion-corta: 150ms;
+  --curva-transicion-estandar: ease;
   --sombra-pop: 4px 4px 0 0 var(--fondo-inverso);
   --sombra-pop-pequena: 2px 2px 0 0 var(--fondo-inverso);
   --sombra-flotante: 0 16px 40px -8px #1a10332e;

@@ -10,8 +10,8 @@
 }
 
 .selector-idioma button {
-  min-width: 40px;
-  min-height: 36px;
+  min-width: var(--selector-idioma-boton-ancho-minimo);
+  min-height: var(--selector-idioma-boton-alto-minimo);
   padding-inline: var(--espacio-2);
   border: 0;
   border-radius: var(--radio-pildora);

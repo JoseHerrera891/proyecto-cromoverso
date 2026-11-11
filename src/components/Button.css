@@ -10,9 +10,10 @@
   text-align: center;
   cursor: pointer;
   transition:
-    background-color 150ms ease,
-    box-shadow 150ms ease,
-    color 150ms ease;
+    background-color var(--duracion-transicion-corta)
+      var(--curva-transicion-estandar),
+    box-shadow var(--duracion-transicion-corta) var(--curva-transicion-estandar),
+    color var(--duracion-transicion-corta) var(--curva-transicion-estandar);
 }
 
 .boton:focus-visible {
