@@ -1,0 +1,6 @@
+.icono {
+  flex-shrink: 0;
+  width: var(--icono-tamano);
+  height: var(--icono-tamano);
+  stroke-width: var(--borde-grosor);
+}
