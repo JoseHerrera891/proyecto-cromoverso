@@ -35,5 +35,5 @@ a:hover {
 .contenedor {
   max-width: var(--ancho-contenido);
   margin-inline: auto;
-  width: calc(100% - 2rem);
+  width: calc(100% - var(--espacio-6));
 }
