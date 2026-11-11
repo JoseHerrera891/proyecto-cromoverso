@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API = "https://yanethm-cromoverso-api.fly.dev/api/v1";
+const API = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "");
 const ENLACES_NAVBAR = ["album", "sobres", "intercambios", "mundos", "ranking"];
 const ENLACES_MOVILES = ["inicio", ...ENLACES_NAVBAR];
 
@@ -52,6 +52,9 @@ export function useTextos(idioma) {
 
     async function cargarTextosNavbar() {
       try {
+        if (!API) {
+          throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
+        }
         const respuesta = await fetch(
           `${API}/textos?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad`,
           {
