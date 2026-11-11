@@ -137,9 +137,7 @@ export default function Navbar({
                     <li key={clave}>
                       <a
                         href={DESTINOS[clave]}
-                        aria-current={
-                          activo === clave ? "page" : undefined
-                        }
+                        aria-current={activo === clave ? "page" : undefined}
                         onClick={() => setAbierto(false)}
                       >
                         {etiqueta}
@@ -183,9 +181,7 @@ export default function Navbar({
                     <li key={clave}>
                       <a
                         href={DESTINOS[clave]}
-                        aria-current={
-                          activo === clave ? "page" : undefined
-                        }
+                        aria-current={activo === clave ? "page" : undefined}
                         onClick={() => setAbierto(false)}
                       >
                         {etiqueta}
@@ -214,9 +210,9 @@ export default function Navbar({
                 type="button"
                 aria-label={`${opcionesTexto?.titulo ?? (ingles ? "Text size" : "Tamaño del texto")}: ${
                   textoGrande
-                    ? opcionesTexto?.opciones?.grande ??
-                      (ingles ? "Large" : "Grande")
-                    : opcionesTexto?.opciones?.normal ?? "Normal"
+                    ? (opcionesTexto?.opciones?.grande ??
+                      (ingles ? "Large" : "Grande"))
+                    : (opcionesTexto?.opciones?.normal ?? "Normal")
                 }`}
                 aria-pressed={textoGrande}
                 onClick={alternarTexto}

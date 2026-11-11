@@ -31,7 +31,9 @@ function validarTextos(datos) {
   ];
 
   if (!etiquetas.every((valor) => typeof valor === "string" && valor.trim())) {
-    throw new Error("La respuesta no contiene los textos requeridos del Navbar.");
+    throw new Error(
+      "La respuesta no contiene los textos requeridos del Navbar.",
+    );
   }
   return textos;
 }
