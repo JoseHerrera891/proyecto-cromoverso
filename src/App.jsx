@@ -1,5 +1,6 @@
 import "./styles/App.css";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
@@ -16,10 +17,6 @@ function leerCookie(nombre) {
   return cookie?.slice(prefijo.length);
 }
 
-function leerSeccion() {
-  return window.location.pathname.split("/").filter(Boolean)[0] || "inicio";
-}
-
 function leerIdiomaInicial() {
   if (leerCookie(COOKIE_CONSENT_NAME) !== "aceptado") return "es";
   return leerCookie(LANGUAGE_COOKIE_NAME) === "en" ? "en" : "es";
@@ -27,20 +24,14 @@ function leerIdiomaInicial() {
 
 export default function App() {
   const [idioma, setIdioma] = useState(leerIdiomaInicial);
-  const [activo, setActivo] = useState(leerSeccion);
   const [textoGrande, setTextoGrande] = useState(false);
   const [mostrarAvisoCookies, setMostrarAvisoCookies] = useState(
     () => !leerCookie(COOKIE_CONSENT_NAME),
   );
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const activo = pathname.split("/").filter(Boolean)[0] || "inicio";
   const datos = useTextos(idioma);
-
-  useEffect(() => {
-    function actualizar() {
-      setActivo(leerSeccion());
-    }
-    window.addEventListener("popstate", actualizar);
-    return () => window.removeEventListener("popstate", actualizar);
-  }, []);
 
   useEffect(() => {
     document.documentElement.lang = idioma;
@@ -55,8 +46,7 @@ export default function App() {
 
   function buscar(consulta) {
     const parametros = new URLSearchParams({ q: consulta });
-    window.history.pushState(null, "", `/cromos?${parametros}`);
-    setActivo("cromos");
+    navigate(`/cromos?${parametros}`);
   }
 
   function cambiarIdioma(nuevoIdioma) {
