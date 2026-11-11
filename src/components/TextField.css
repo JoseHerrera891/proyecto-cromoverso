@@ -6,7 +6,7 @@
 .campo-etiqueta {
   color: var(--texto-principal);
   font-size: var(--texto-pequeno);
-  font-weight: 600;
+  font-weight: var(--peso-semi-negrita);
 }
 
 .campo-control {

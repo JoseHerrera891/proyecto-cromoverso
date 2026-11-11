@@ -47,7 +47,7 @@
 
 .navbar :focus-visible {
   outline: var(--borde-foco-grosor) solid var(--marca-primario);
-  outline-offset: 3px;
+  outline-offset: var(--borde-foco-offset);
 }
 
 .navbar-marca {
@@ -59,8 +59,8 @@
 
 .navbar-marca img {
   display: block;
-  width: 197px;
-  height: 36px;
+  width: var(--ancho-navbar-logo);
+  height: var(--alto-navbar-logo);
 }
 
 .navbar-movil-acciones {
@@ -94,7 +94,7 @@
 }
 
 .navbar-icono:disabled {
-  opacity: 0.5;
+  opacity: var(--opacidad-cargando);
   cursor: wait;
 }
 
@@ -104,7 +104,7 @@
   max-height: calc(100dvh - var(--alto-navbar-escritorio));
   overflow-y: auto;
   padding-block: var(--espacio-4) var(--espacio-5);
-  border-top: 1px solid var(--borde-sutil);
+  border-top: var(--borde-grosor-sutil) solid var(--borde-sutil);
 }
 
 .navbar-panel.is-abierto {
@@ -131,7 +131,7 @@
   border-radius: var(--radio-m);
   color: var(--texto-secundario);
   font-size: var(--texto-nav-enlace);
-  font-weight: 600;
+  font-weight: var(--peso-semi-negrita);
 }
 
 .navbar-enlaces a:hover,
@@ -209,7 +209,7 @@
   border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-m);
   font-size: var(--texto-pequeno);
-  font-weight: 700;
+  font-weight: var(--peso-negrita);
   white-space: nowrap;
 }
 
@@ -343,8 +343,8 @@
   .navbar-buscador {
     order: 2;
     flex: 1;
-    min-width: 190px;
-    max-width: 260px;
+    min-width: var(--ancho-buscador-navbar-minimo);
+    max-width: var(--ancho-buscador-navbar-maximo);
     margin-left: auto;
   }
 

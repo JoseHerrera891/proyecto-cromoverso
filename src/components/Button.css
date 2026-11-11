@@ -6,7 +6,8 @@
   padding: var(--espacio-2) var(--espacio-5);
   border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
-  font: 600 var(--texto-base) / 1.2 var(--fuente-rubik);
+  font: var(--peso-semi-negrita) var(--texto-base) /
+    var(--interlineado-compacto) var(--fuente-rubik);
   text-align: center;
   cursor: pointer;
   transition:
@@ -22,7 +23,7 @@
 }
 
 .boton:disabled {
-  opacity: 0.55;
+  opacity: var(--opacidad-deshabilitado);
   cursor: not-allowed;
 }
 
