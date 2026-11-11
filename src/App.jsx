@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
+import { obtenerTituloPagina } from "./utils/tituloPagina.js";
 
 const COOKIE_CONSENT_NAME = "consentimiento";
 const COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365;
@@ -32,6 +33,7 @@ export default function App() {
   const navigate = useNavigate();
   const activo = pathname.split("/").filter(Boolean)[0] || "inicio";
   const datos = useTextos(idioma);
+  const tituloPagina = obtenerTituloPagina(pathname, datos.textos);
 
   useEffect(() => {
     document.documentElement.lang = idioma;
@@ -68,15 +70,20 @@ export default function App() {
 
   return (
     <>
-      <Navbar
-        {...datos}
-        idioma={idioma}
-        cambiarIdioma={cambiarIdioma}
-        activo={activo}
-        onBuscar={buscar}
-        textoGrande={textoGrande}
-        alternarTexto={() => setTextoGrande((valor) => !valor)}
-      />
+      <div className="sitio">
+        <Navbar
+          {...datos}
+          idioma={idioma}
+          cambiarIdioma={cambiarIdioma}
+          activo={activo}
+          onBuscar={buscar}
+          textoGrande={textoGrande}
+          alternarTexto={() => setTextoGrande((valor) => !valor)}
+        />
+        <main id="contenido-principal" className="contenedor">
+          <h1>{tituloPagina}</h1>
+        </main>
+      </div>
       {mostrarAvisoCookies && datos.textos?.cookies?.banner && (
         <CookieBanner
           texts={datos.textos.cookies.banner}
