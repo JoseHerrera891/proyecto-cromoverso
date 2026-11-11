@@ -11,7 +11,7 @@
 }
 
 .navbar-interior {
-  width: min(100% - var(--espacio-5), 1448px);
+  width: min(100% - var(--espacio-5), var(--ancho-navbar-maximo));
   margin-inline: auto;
   padding: var(--espacio-2);
   border-radius: var(--radio-l);
@@ -101,7 +101,7 @@
 .navbar-panel {
   display: none;
   width: 100%;
-  max-height: calc(100dvh - 72px);
+  max-height: calc(100dvh - var(--alto-navbar-escritorio));
   overflow-y: auto;
   padding-block: var(--espacio-4) var(--espacio-5);
   border-top: 1px solid var(--borde-sutil);
@@ -294,7 +294,7 @@
   }
 
   .navbar-bar {
-    min-height: 72px;
+    min-height: var(--alto-navbar-escritorio);
     flex-wrap: nowrap;
     gap: var(--espacio-4);
     padding-inline: var(--espacio-6);

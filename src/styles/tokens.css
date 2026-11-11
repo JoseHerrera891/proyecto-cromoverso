@@ -58,6 +58,9 @@
   --espacio-7: 48px;
   --espacio-8: 64px;
   --control-alto-minimo: 44px;
+  --alto-navbar-escritorio: 72px;
+  --ancho-navbar-maximo: 1448px;
+  --ancho-cookie-banner-maximo: 47.5rem;
   --borde-grosor: 2px;
   --borde-foco-grosor: 3px;
   --sombra-pop: 4px 4px 0 0 var(--fondo-inverso);
