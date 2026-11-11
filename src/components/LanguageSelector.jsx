@@ -3,16 +3,19 @@ import "./LanguageSelector.css";
 
 export default function LanguageSelector({ idioma, cambiarIdioma, etiqueta }) {
   return (
-    <label className="selector-idioma">
+    <div className="selector-idioma" role="group" aria-label={etiqueta}>
       <Icono nombre="idioma" />
-      <select
-        value={idioma}
-        onChange={(evento) => cambiarIdioma(evento.target.value)}
-        aria-label={etiqueta}
-      >
-        <option value="es">ES</option>
-        <option value="en">EN</option>
-      </select>
-    </label>
+      {["es", "en"].map((valor) => (
+        <button
+          type="button"
+          key={valor}
+          lang={valor}
+          aria-pressed={idioma === valor}
+          onClick={() => cambiarIdioma(valor)}
+        >
+          {valor.toUpperCase()}
+        </button>
+      ))}
+    </div>
   );
 }
