@@ -1,0 +1,55 @@
+.campo {
+  display: grid;
+  gap: var(--espacio-2);
+}
+
+.campo-etiqueta {
+  color: var(--texto-principal);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+}
+
+.campo-control {
+  width: 100%;
+  min-height: var(--espacio-7);
+  padding: var(--espacio-2) var(--espacio-3);
+  border: var(--borde-grosor) solid var(--borde-sutil);
+  border-radius: var(--radio-m);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+  font: inherit;
+}
+
+.campo-control:hover:not(:disabled) {
+  border-color: var(--borde-fuerte);
+}
+
+.campo-control:focus-visible {
+  border-color: var(--marca-primario);
+  outline: 3px solid var(--marca-primario);
+  outline-offset: var(--espacio-1);
+}
+
+.campo-control:disabled {
+  color: var(--texto-terciario);
+  background: var(--fondo-sutil);
+  cursor: not-allowed;
+}
+
+.campo-control[aria-invalid="true"] {
+  border-color: var(--estado-error);
+}
+
+.campo-descripcion,
+.campo-error {
+  margin: 0;
+  font-size: var(--texto-pequeno);
+}
+
+.campo-descripcion {
+  color: var(--texto-secundario);
+}
+
+.campo-error {
+  color: var(--estado-error);
+}
