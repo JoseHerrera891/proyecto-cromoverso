@@ -1,0 +1,56 @@
+import { describe, expect, it } from "vitest";
+import { validarTextos } from "./useTextos.js";
+
+const textosRequeridos = {
+  navbar: {
+    logo: { texto: "Cromoverso", aria: "Ir al inicio" },
+    enlaces: { inicio: "Inicio", mundos: "Mundos" },
+    buscador: { placeholder: "Buscar", aria: "Buscar cromos" },
+    botones: { ingresar: "Ingresar", crearCuenta: "Crear cuenta" },
+    aria: { idioma: "Cambiar idioma" },
+  },
+  menuMovil: {
+    abrir: "Abrir menú",
+    cerrar: "Cerrar menú",
+    enlaces: { inicio: "Inicio", mundos: "Mundos" },
+    botones: { ingresar: "Ingresar", crearCuenta: "Crear cuenta" },
+  },
+  estados: {
+    cargando: "Cargando",
+    error: { texto: "Error", botones: { reintentar: "Reintentar" } },
+  },
+  accesibilidad: {
+    tamanoTexto: {
+      titulo: "Tamaño del texto",
+      opciones: { normal: "Normal", grande: "Grande" },
+    },
+  },
+  cookies: {
+    banner: {
+      titulo: "Usamos cookies",
+      texto: "Puedes aceptar o rechazar las cookies.",
+      botones: { aceptar: "Aceptar", rechazar: "Rechazar" },
+    },
+  },
+};
+
+describe("validarTextos", () => {
+  it("accepts API navigation links and cookie banner text", () => {
+    expect(validarTextos({ textos: textosRequeridos })).toEqual(
+      textosRequeridos,
+    );
+  });
+
+  it("rejects a response missing required cookie text", () => {
+    const datos = {
+      textos: {
+        ...textosRequeridos,
+        cookies: { banner: { ...textosRequeridos.cookies.banner, texto: "" } },
+      },
+    };
+
+    expect(() => validarTextos(datos)).toThrow(
+      "La respuesta no contiene todos los textos requeridos de la interfaz.",
+    );
+  });
+});

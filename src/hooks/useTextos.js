@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 
 const API = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "");
 
-function validarTextos(datos) {
+export function validarTextos(datos) {
   const textos = datos?.textos;
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
+  const bannerCookies = textos?.cookies?.banner;
   const enlacesNavbar = Object.values(nav?.enlaces ?? {});
   const enlacesMoviles = Object.values(menuMovil?.enlaces ?? {});
   const etiquetas = [
@@ -28,6 +29,10 @@ function validarTextos(datos) {
     textos?.accesibilidad?.tamanoTexto?.titulo,
     textos?.accesibilidad?.tamanoTexto?.opciones?.normal,
     textos?.accesibilidad?.tamanoTexto?.opciones?.grande,
+    bannerCookies?.titulo,
+    bannerCookies?.texto,
+    bannerCookies?.botones?.aceptar,
+    bannerCookies?.botones?.rechazar,
   ];
 
   if (
@@ -36,7 +41,7 @@ function validarTextos(datos) {
     !etiquetas.every((valor) => typeof valor === "string" && valor.trim())
   ) {
     throw new Error(
-      "La respuesta no contiene los textos requeridos del Navbar.",
+      "La respuesta no contiene todos los textos requeridos de la interfaz.",
     );
   }
   return textos;
@@ -62,7 +67,7 @@ export function useTextos(idioma) {
           throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
         }
         const respuesta = await fetch(
-          `${API}/textos?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad`,
+          `${API}/textos?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies`,
           {
             signal: controlador.signal,
           },
