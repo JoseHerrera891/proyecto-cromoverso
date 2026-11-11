@@ -238,28 +238,6 @@
   gap: var(--espacio-2);
 }
 
-.navbar-idioma {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding-left: var(--espacio-3);
-  border: var(--borde-grosor) solid var(--borde-fuerte);
-  border-radius: var(--radio-pildora);
-  background: var(--fondo-superficie);
-}
-
-.navbar-idioma select {
-  min-height: 40px;
-  padding-inline: var(--espacio-2);
-  border: 0;
-  border-radius: var(--radio-pildora);
-  color: var(--texto-principal);
-  background: transparent;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 .navbar-accesibilidad {
   border-color: var(--borde-fuerte);
   background: var(--fondo-superficie);

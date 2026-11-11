@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Icono from "./Icono.jsx";
+import LanguageSelector from "./LanguageSelector.jsx";
 import "./Navbar.css";
 
 const DESTINOS = {
@@ -203,17 +204,11 @@ export default function Navbar({
               </>
             )}
             <div className="navbar-utilidades">
-              <label className="navbar-idioma">
-                <Icono nombre="idioma" />
-                <select
-                  value={idioma}
-                  onChange={(evento) => cambiarIdioma(evento.target.value)}
-                  aria-label={nav?.aria.idioma ?? "Cambiar idioma"}
-                >
-                  <option value="es">ES</option>
-                  <option value="en">EN</option>
-                </select>
-              </label>
+              <LanguageSelector
+                idioma={idioma}
+                cambiarIdioma={cambiarIdioma}
+                etiqueta={nav?.aria.idioma ?? "Cambiar idioma"}
+              />
               <button
                 className="navbar-icono navbar-accesibilidad"
                 type="button"

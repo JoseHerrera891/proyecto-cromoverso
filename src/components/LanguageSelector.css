@@ -1,0 +1,25 @@
+.selector-idioma {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-left: var(--espacio-3);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+}
+
+.selector-idioma select {
+  min-height: 40px;
+  padding-inline: var(--espacio-2);
+  border: 0;
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: transparent;
+  font: 700 var(--texto-pequeno) var(--fuente-rubik);
+  cursor: pointer;
+}
+
+.selector-idioma select:focus-visible {
+  outline: 3px solid var(--marca-primario);
+  outline-offset: var(--espacio-1);
+}
