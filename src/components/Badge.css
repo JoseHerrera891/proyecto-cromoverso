@@ -1,0 +1,31 @@
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  padding: var(--espacio-1) var(--espacio-2);
+  border: var(--borde-grosor) solid currentColor;
+  border-radius: var(--radio-pildora);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.etiqueta--comun {
+  color: var(--rareza-comun);
+  background: var(--fondo-sutil);
+}
+
+.etiqueta--rara {
+  color: var(--rareza-rara);
+  background: var(--estado-info-suave);
+}
+
+.etiqueta--epica {
+  color: var(--rareza-epica);
+  background: var(--mundo-neon-suave);
+}
+
+.etiqueta--legendaria {
+  color: var(--rareza-legendaria);
+  background: var(--rareza-legendaria-suave);
+}
