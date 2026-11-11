@@ -6,23 +6,31 @@ import { useTextos } from "./hooks/useTextos.js";
 
 const COOKIE_CONSENT_NAME = "consentimiento";
 const COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365;
+const LANGUAGE_COOKIE_NAME = "idioma";
+
+function leerCookie(nombre) {
+  const prefijo = `${nombre}=`;
+  const cookie = document.cookie
+    .split("; ")
+    .find((valor) => valor.startsWith(prefijo));
+  return cookie?.slice(prefijo.length);
+}
 
 function leerSeccion() {
   return window.location.pathname.split("/").filter(Boolean)[0] || "inicio";
 }
 
-function leerConsentimiento() {
-  return document.cookie
-    .split("; ")
-    .some((cookie) => cookie.startsWith(`${COOKIE_CONSENT_NAME}=`));
+function leerIdiomaInicial() {
+  if (leerCookie(COOKIE_CONSENT_NAME) !== "aceptado") return "es";
+  return leerCookie(LANGUAGE_COOKIE_NAME) === "en" ? "en" : "es";
 }
 
 export default function App() {
-  const [idioma, setIdioma] = useState("es");
+  const [idioma, setIdioma] = useState(leerIdiomaInicial);
   const [activo, setActivo] = useState(leerSeccion);
   const [textoGrande, setTextoGrande] = useState(false);
   const [mostrarAvisoCookies, setMostrarAvisoCookies] = useState(
-    () => !leerConsentimiento(),
+    () => !leerCookie(COOKIE_CONSENT_NAME),
   );
   const datos = useTextos(idioma);
 
@@ -51,8 +59,20 @@ export default function App() {
     setActivo("cromos");
   }
 
+  function cambiarIdioma(nuevoIdioma) {
+    setIdioma(nuevoIdioma);
+    if (leerCookie(COOKIE_CONSENT_NAME) === "aceptado") {
+      document.cookie = `${LANGUAGE_COOKIE_NAME}=${nuevoIdioma}; Max-Age=${COOKIE_CONSENT_MAX_AGE}; Path=/; SameSite=Lax`;
+    }
+  }
+
   function guardarConsentimiento(valor) {
     document.cookie = `${COOKIE_CONSENT_NAME}=${valor}; Max-Age=${COOKIE_CONSENT_MAX_AGE}; Path=/; SameSite=Lax`;
+    if (valor === "aceptado") {
+      document.cookie = `${LANGUAGE_COOKIE_NAME}=${idioma}; Max-Age=${COOKIE_CONSENT_MAX_AGE}; Path=/; SameSite=Lax`;
+    } else {
+      document.cookie = `${LANGUAGE_COOKIE_NAME}=; Max-Age=0; Path=/; SameSite=Lax`;
+    }
     setMostrarAvisoCookies(false);
   }
 
@@ -61,7 +81,7 @@ export default function App() {
       <Navbar
         {...datos}
         idioma={idioma}
-        cambiarIdioma={setIdioma}
+        cambiarIdioma={cambiarIdioma}
         activo={activo}
         onBuscar={buscar}
         textoGrande={textoGrande}
