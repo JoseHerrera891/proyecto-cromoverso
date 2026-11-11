@@ -2,6 +2,7 @@ import "./styles/App.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
 import { obtenerTituloPagina } from "./utils/tituloPagina.js";
@@ -83,6 +84,7 @@ export default function App() {
         <main id="contenido-principal" className="contenedor">
           <h1>{tituloPagina}</h1>
         </main>
+        <Footer textos={datos.textos} idioma={idioma} />
       </div>
       {mostrarAvisoCookies && datos.textos?.cookies?.banner && (
         <CookieBanner
