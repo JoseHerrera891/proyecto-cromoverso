@@ -58,6 +58,7 @@
   --espacio-7: 48px;
   --espacio-8: 64px;
   --borde-grosor: 2px;
+  --borde-foco-grosor: 3px;
   --sombra-pop: 4px 4px 0 0 var(--fondo-inverso);
   --sombra-pop-pequena: 2px 2px 0 0 var(--fondo-inverso);
   --sombra-flotante: 0 16px 40px -8px #1a10332e;

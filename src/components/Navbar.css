@@ -46,7 +46,7 @@
 }
 
 .navbar :focus-visible {
-  outline: 3px solid var(--marca-primario);
+  outline: var(--borde-foco-grosor) solid var(--marca-primario);
   outline-offset: 3px;
 }
 
