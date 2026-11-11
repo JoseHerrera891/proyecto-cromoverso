@@ -76,6 +76,7 @@
   --fuente-texto: var(--fuente-rubik);
   --fuente-titulos: var(--fuente-unbounded);
   --texto-pequeno: 0.875rem;
+  --texto-nav-enlace: 0.9375rem;
   --texto-base: 1rem;
   --texto-subtitulo: 1.5rem;
   --texto-titulo: clamp(2rem, 1.5rem + 2vw, 3rem);
