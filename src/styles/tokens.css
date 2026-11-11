@@ -57,6 +57,7 @@
   --espacio-6: 32px;
   --espacio-7: 48px;
   --espacio-8: 64px;
+  --control-alto-minimo: 44px;
   --borde-grosor: 2px;
   --borde-foco-grosor: 3px;
   --sombra-pop: 4px 4px 0 0 var(--fondo-inverso);
