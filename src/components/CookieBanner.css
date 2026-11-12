@@ -6,7 +6,7 @@
   width: min(100% - var(--espacio-4) * 2, var(--ancho-cookie-banner-maximo));
   max-height: calc(100dvh - var(--espacio-4) * 2);
   overflow: auto;
-  padding: var(--espacio-5);
+  padding: var(--espacio-4);
   border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-l);
   color: var(--texto-principal);

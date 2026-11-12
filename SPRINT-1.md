@@ -32,6 +32,10 @@ Como visitante de Cromoverso, quiero ver los seis mundos del álbum con sus tota
 4. La vista se ve igual que en Figma en web y móvil: tipografía, colores y espaciado.
 5. Referencia: Figma, bloque «Sprint 1», columna «1 · Inicio público» (web y móvil).
 
+**Aclaración para esta entrega:** aunque el criterio textual menciona las cuatro rarezas,
+se prioriza la captura de Figma compartida y no se muestra esa lista en Inicio. El endpoint
+sigue consultándose y las rarezas aparecen en el catálogo.
+
 ## US-CRO-S1-04 — Catálogo de un mundo
 
 Como visitante de Cromoverso, quiero ver los 20 cromos del mundo, con filtros por rareza y por tipo, para encontrar los cromos que me interesan.
