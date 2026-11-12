@@ -58,6 +58,11 @@
   --espacio-7: 48px;
   --espacio-8: 64px;
   --borde-grosor: 2px;
+  --borde-foco-grosor: 3px;
+  --borde-foco-offset: 3px;
+  --control-alto-minimo: 44px;
+  --peso-semi-negrita: 600;
+  --peso-negrita: 700;
   --sombra-pop: 4px 4px 0 0 var(--fondo-inverso);
   --sombra-pop-pequena: 2px 2px 0 0 var(--fondo-inverso);
   --sombra-flotante: 0 16px 40px -8px #1a10332e;
@@ -76,6 +81,7 @@
   --fuente-texto: var(--fuente-rubik);
   --fuente-titulos: var(--fuente-unbounded);
   --texto-pequeno: 0.875rem;
+  --texto-micro: 0.6875rem;
   --texto-base: 1rem;
   --texto-subtitulo: 1.5rem;
   --texto-titulo: clamp(2rem, 1.5rem + 2vw, 3rem);

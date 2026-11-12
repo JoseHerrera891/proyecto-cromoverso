@@ -48,7 +48,6 @@ describe("CatalogoMundo", () => {
         albumMundo: {
           migas: { inicio: "Inicio" },
           mundos: { cromos: "{cantidad} cromos" },
-          tarjeta: { tipo: "{mundo} · {tipo}" },
           filtros: {
             rareza: { titulo: "Filtrar por rareza", todas: "Todas" },
             tipo: {
@@ -69,6 +68,7 @@ describe("CatalogoMundo", () => {
         },
       },
       estados: {},
+      navbar: { buscador: { aria: "Buscar cromos", placeholder: "Buscar" } },
     };
 
     const markup = renderToStaticMarkup(
@@ -84,8 +84,9 @@ describe("CatalogoMundo", () => {
     expect(markup).toContain("Filtrar por tipo");
     expect(markup).toContain("Quitar filtros");
     expect(markup).toContain('href="/cromos/CV-001"');
+    expect(markup).toContain('src="/images/cromo-general.png"');
     expect(markup).toContain("Voltia");
-    expect(markup).toContain("Ciudad Neón · Héroe");
+    expect(markup).toContain('aria-label="Filtrar por rareza"');
     expect(markup).toContain("♛");
     expect(markup).toContain("Legendaria");
   });
