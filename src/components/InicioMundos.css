@@ -151,7 +151,7 @@
   }
 
   .inicio-mundos-lista > li {
-    flex: 0 0 min(32vw, 8.5rem);
+    flex: 0 0 min(36vw, 9rem);
     scroll-snap-align: start;
   }
 
