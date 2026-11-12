@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Icono from "./Icono.jsx";
+import LanguageSelector from "./LanguageSelector.jsx";
 import "./Navbar.css";
 
 const DESTINOS = {
@@ -72,14 +74,14 @@ export default function Navbar({
     <header className="navbar">
       <nav className="navbar-interior">
         <div className="navbar-bar">
-          <a
+          <Link
             className="navbar-marca"
-            href={DESTINOS.inicio}
+            to={DESTINOS.inicio}
             aria-label={nav?.logo.aria ?? "Cromoverso"}
             onClick={() => setAbierto(false)}
           >
             <img src={LOGO} alt="" width="197" height="36" />
-          </a>
+          </Link>
 
           <div className="navbar-movil-acciones">
             <button
@@ -134,15 +136,13 @@ export default function Navbar({
                 <ul className="navbar-enlaces navbar-enlaces-escritorio">
                   {enlaces.map(([clave, etiqueta]) => (
                     <li key={clave}>
-                      <a
-                        href={DESTINOS[clave]}
-                        aria-current={
-                          activo === clave ? "page" : undefined
-                        }
+                      <Link
+                        to={DESTINOS[clave]}
+                        aria-current={activo === clave ? "page" : undefined}
                         onClick={() => setAbierto(false)}
                       >
                         {etiqueta}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -166,12 +166,12 @@ export default function Navbar({
                   />
                 </form>
                 <div className="navbar-cuenta">
-                  <a className="navbar-ingresar" href="/ingresar">
+                  <Link className="navbar-ingresar" to="/ingresar">
                     {nav.botones.ingresar}
-                  </a>
-                  <a className="navbar-accion" href="/registro">
+                  </Link>
+                  <Link className="navbar-accion" to="/registro">
                     {nav.botones.crearCuenta}
-                  </a>
+                  </Link>
                 </div>
               </>
             )}
@@ -180,48 +180,40 @@ export default function Navbar({
                 <ul className="navbar-enlaces navbar-enlaces-movil">
                   {enlacesMoviles.map(([clave, etiqueta]) => (
                     <li key={clave}>
-                      <a
-                        href={DESTINOS[clave]}
-                        aria-current={
-                          activo === clave ? "page" : undefined
-                        }
+                      <Link
+                        to={DESTINOS[clave]}
+                        aria-current={activo === clave ? "page" : undefined}
                         onClick={() => setAbierto(false)}
                       >
                         {etiqueta}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
                 <div className="navbar-cuenta navbar-cuenta-movil">
-                  <a className="navbar-ingresar" href="/ingresar">
+                  <Link className="navbar-ingresar" to="/ingresar">
                     {menuMovil.botones.ingresar}
-                  </a>
-                  <a className="navbar-accion" href="/registro">
+                  </Link>
+                  <Link className="navbar-accion" to="/registro">
                     {menuMovil.botones.crearCuenta}
-                  </a>
+                  </Link>
                 </div>
               </>
             )}
             <div className="navbar-utilidades">
-              <label className="navbar-idioma">
-                <Icono nombre="idioma" />
-                <select
-                  value={idioma}
-                  onChange={(evento) => cambiarIdioma(evento.target.value)}
-                  aria-label={nav?.aria.idioma ?? "Cambiar idioma"}
-                >
-                  <option value="es">ES</option>
-                  <option value="en">EN</option>
-                </select>
-              </label>
+              <LanguageSelector
+                idioma={idioma}
+                cambiarIdioma={cambiarIdioma}
+                etiqueta={nav?.aria.idioma ?? "Cambiar idioma"}
+              />
               <button
                 className="navbar-icono navbar-accesibilidad"
                 type="button"
                 aria-label={`${opcionesTexto?.titulo ?? (ingles ? "Text size" : "Tamaño del texto")}: ${
                   textoGrande
-                    ? opcionesTexto?.opciones?.grande ??
-                      (ingles ? "Large" : "Grande")
-                    : opcionesTexto?.opciones?.normal ?? "Normal"
+                    ? (opcionesTexto?.opciones?.grande ??
+                      (ingles ? "Large" : "Grande"))
+                    : (opcionesTexto?.opciones?.normal ?? "Normal")
                 }`}
                 aria-pressed={textoGrande}
                 onClick={alternarTexto}

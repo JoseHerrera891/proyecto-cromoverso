@@ -1,0 +1,164 @@
+.catalogo-mundo {
+  padding-block: var(--espacio-4) var(--espacio-6);
+}
+
+.catalogo-miga {
+  display: inline-block;
+  margin-bottom: var(--espacio-3);
+}
+
+.catalogo-encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.catalogo-encabezado h1 {
+  margin: 0;
+}
+
+.catalogo-encabezado p {
+  margin-block: var(--espacio-2) 0;
+  color: var(--texto-secundario);
+}
+
+.catalogo-total {
+  flex: 0 0 auto;
+  padding: var(--espacio-2) var(--espacio-3);
+  border-radius: var(--radio-pildora);
+  background: var(--marca-acento);
+  font-weight: var(--peso-semi-negrita);
+}
+
+.catalogo-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-5);
+}
+
+.catalogo-filtros label {
+  display: grid;
+  gap: var(--espacio-1);
+  font-weight: var(--peso-semi-negrita);
+}
+
+.catalogo-filtros select,
+.catalogo-filtros button,
+.catalogo-estado button {
+  min-height: var(--control-alto-minimo);
+  padding: var(--espacio-2) var(--espacio-3);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-m);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+  font: inherit;
+}
+
+.catalogo-cromos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  gap: var(--espacio-3);
+  margin: var(--espacio-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalogo-cromos > li {
+  min-width: 0;
+}
+
+.catalogo-cromo-enlace {
+  display: block;
+  height: 100%;
+  color: var(--texto-principal);
+  text-decoration: none;
+}
+
+.catalogo-cromo-enlace:focus-visible,
+.catalogo-filtros select:focus-visible,
+.catalogo-filtros button:focus-visible,
+.catalogo-estado button:focus-visible {
+  outline: var(--borde-foco-grosor) solid var(--marca-primario);
+  outline-offset: var(--borde-foco-offset);
+}
+
+.catalogo-cromo {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.catalogo-cromo-numero,
+.catalogo-cromo-tipo {
+  color: var(--texto-secundario);
+  font-size: var(--texto-pequeno);
+}
+
+.catalogo-cromo-arte {
+  min-height: 7rem;
+  border-radius: var(--radio-m);
+  background: linear-gradient(
+    145deg,
+    var(--color-ilustracion),
+    var(--fondo-sutil)
+  );
+}
+
+.catalogo-cromo-nombre {
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-subtitulo);
+  overflow-wrap: anywhere;
+}
+
+.catalogo-cromo-rareza {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.catalogo-cromo-icono {
+  color: var(--color-rareza);
+  line-height: 1;
+}
+
+.catalogo-vacio {
+  padding-block: var(--espacio-5);
+  text-align: center;
+}
+
+.catalogo-vacio button {
+  min-height: var(--control-alto-minimo);
+  padding-inline: var(--espacio-3);
+}
+
+.catalogo-filtros button {
+  cursor: pointer;
+}
+
+.catalogo-estado {
+  padding-block: var(--espacio-5);
+}
+
+@media (max-width: 600px) {
+  .catalogo-encabezado {
+    flex-direction: column;
+  }
+
+  .catalogo-filtros {
+    align-items: stretch;
+  }
+
+  .catalogo-filtros label,
+  .catalogo-filtros select,
+  .catalogo-filtros button {
+    width: 100%;
+  }
+
+  .catalogo-cromos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--espacio-2);
+  }
+}

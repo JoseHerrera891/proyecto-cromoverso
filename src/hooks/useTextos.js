@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
+import { API_BASE_URL, crearUrlApi } from "../utils/api.js";
 
-const API = "https://yanethm-cromoverso-api.fly.dev/api/v1";
-const ENLACES_NAVBAR = ["album", "sobres", "intercambios", "mundos", "ranking"];
-const ENLACES_MOVILES = ["inicio", ...ENLACES_NAVBAR];
-
-function validarTextos(datos) {
+export function validarTextos(datos) {
   const textos = datos?.textos;
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
+  const bannerCookies = textos?.cookies?.banner;
+  const enlacesNavbar = Object.values(nav?.enlaces ?? {});
+  const enlacesMoviles = Object.values(menuMovil?.enlaces ?? {});
   const etiquetas = [
     nav?.logo?.texto,
     nav?.logo?.aria,
-    ...ENLACES_NAVBAR.map((clave) => nav?.enlaces?.[clave]),
+    ...enlacesNavbar,
     nav?.buscador?.placeholder,
     nav?.buscador?.aria,
     nav?.botones?.ingresar,
@@ -19,7 +19,7 @@ function validarTextos(datos) {
     nav?.aria?.idioma,
     menuMovil?.abrir,
     menuMovil?.cerrar,
-    ...ENLACES_MOVILES.map((clave) => menuMovil?.enlaces?.[clave]),
+    ...enlacesMoviles,
     menuMovil?.botones?.ingresar,
     menuMovil?.botones?.crearCuenta,
     textos?.estados?.cargando,
@@ -28,10 +28,20 @@ function validarTextos(datos) {
     textos?.accesibilidad?.tamanoTexto?.titulo,
     textos?.accesibilidad?.tamanoTexto?.opciones?.normal,
     textos?.accesibilidad?.tamanoTexto?.opciones?.grande,
+    bannerCookies?.titulo,
+    bannerCookies?.texto,
+    bannerCookies?.botones?.aceptar,
+    bannerCookies?.botones?.rechazar,
   ];
 
-  if (!etiquetas.every((valor) => typeof valor === "string" && valor.trim())) {
-    throw new Error("La respuesta no contiene los textos requeridos del Navbar.");
+  if (
+    !enlacesNavbar.length ||
+    !enlacesMoviles.length ||
+    !etiquetas.every((valor) => typeof valor === "string" && valor.trim())
+  ) {
+    throw new Error(
+      "La respuesta no contiene todos los textos requeridos de la interfaz.",
+    );
   }
   return textos;
 }
@@ -52,8 +62,11 @@ export function useTextos(idioma) {
 
     async function cargarTextosNavbar() {
       try {
+        if (!API_BASE_URL) {
+          throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
+        }
         const respuesta = await fetch(
-          `${API}/textos?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad`,
+          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies,paginas`,
           {
             signal: controlador.signal,
           },
