@@ -28,7 +28,9 @@
   font-weight: var(--peso-negrita);
 }
 
-.inicio-mundos:not(.inicio-mundos--pagina) > .inicio-mundos-encabezado > .inicio-mundos-total {
+.inicio-mundos:not(.inicio-mundos--pagina)
+  > .inicio-mundos-encabezado
+  > .inicio-mundos-total {
   display: none;
 }
 
@@ -229,6 +231,56 @@
     padding: 0;
     background: transparent;
     font-size: var(--texto-micro);
+  }
+}
+
+@media (min-width: 1024px) {
+  .inicio-mundos {
+    padding: 52px 36px 24px;
+  }
+
+  .inicio-mundos-encabezado h2 {
+    font-size: 1.625rem;
+    line-height: 1.2;
+  }
+
+  .inicio-mundos-encabezado p {
+    margin-top: var(--espacio-1);
+    font-size: 0.875rem;
+    line-height: 1.25;
+  }
+
+  .inicio-mundos-lista {
+    gap: 10px;
+    margin-top: var(--espacio-4);
+  }
+
+  .inicio-mundo {
+    min-height: 7.75rem;
+    padding: var(--espacio-3);
+  }
+
+  .inicio-mundo-icono {
+    flex-basis: 2.25rem;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .inicio-mundo-icono svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .inicio-mundo-total {
+    font-size: 0.75rem;
+  }
+
+  .inicio-mundo-orden {
+    font-size: 0.75rem;
+  }
+
+  .inicio-mundo-nombre {
+    font-size: 0.8125rem;
   }
 }
 
