@@ -32,8 +32,19 @@ const TRAZOS = {
       <path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z" />
     </>
   ),
-  "rareza-circulo": <circle cx="12" cy="12" r="8" />,
-  "rareza-rombo": <path d="m12 3 9 9-9 9-9-9 9-9Z" />,
+  estrella: (
+    <path
+      d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1 2.9-6Z"
+      fill="currentColor"
+      stroke="none"
+    />
+  ),
+  "rareza-circulo": (
+    <circle cx="12" cy="12" r="8" fill="currentColor" stroke="none" />
+  ),
+  "rareza-rombo": (
+    <path d="m12 3 9 9-9 9-9-9 9-9Z" fill="currentColor" stroke="none" />
+  ),
   "rareza-estrella": (
     <path
       d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1 2.9-6Z"
@@ -41,7 +52,13 @@ const TRAZOS = {
       stroke="none"
     />
   ),
-  "rareza-corona": <path d="M3 19h18M4.5 16 3 7l5 4 4-7 4 7 5-4-1.5 9h-15Z" />,
+  "rareza-corona": (
+    <path
+      d="M3 19h18M4.5 16 3 7l5 4 4-7 4 7 5-4-1.5 9h-15Z"
+      fill="currentColor"
+      stroke="none"
+    />
+  ),
   favoritos: (
     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
   ),

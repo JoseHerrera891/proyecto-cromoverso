@@ -41,7 +41,7 @@
 }
 
 .selector-idioma button:disabled {
-  color: var(--texto-terciario);
+  color: var(--texto-secundario);
   opacity: var(--opacidad-deshabilitado);
   cursor: not-allowed;
 }

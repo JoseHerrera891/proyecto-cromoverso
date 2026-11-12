@@ -96,7 +96,7 @@ export default function InicioHero({ textos }) {
         aria-label="Héroes de Cromoverso"
       >
         <span className="inicio-hero-insignia">
-          <Icono nombre="destello" /> Guardiana holográfica
+          <Icono nombre="estrella" /> Guardiana holográfica
         </span>
         <div className="inicio-hero-cartas">
           {PERSONAJES.map((personaje) => (

@@ -221,6 +221,12 @@
   background: var(--fondo-sutil);
 }
 
+@media (max-width: 767px) {
+  .navbar-movil-acciones .navbar-icono {
+    border-color: var(--borde-fuerte);
+  }
+}
+
 .navbar-enlaces-escritorio,
 .navbar-cuenta:not(.navbar-cuenta-movil) {
   display: none;

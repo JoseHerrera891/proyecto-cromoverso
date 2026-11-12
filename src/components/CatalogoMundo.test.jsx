@@ -15,7 +15,7 @@ describe("CatalogoMundo", () => {
         mundo: {
           id: "neon",
           nombre: "Ciudad Neón",
-          descripcion: "Una ciudad tecnológica.",
+          descripcion: "Metrópoli tecnológica que nunca duerme.",
           totalCromos: 20,
           numeros: { desde: 1, hasta: 20 },
           figura: "rayo",
@@ -65,7 +65,11 @@ describe("CatalogoMundo", () => {
           encabezado: {
             rango: "Mundo {numero} de 6 · cromos {desde} a {hasta}.",
           },
-          mundos: { titulo: "Mundos", cromos: "{cantidad} cromos" },
+          mundos: {
+            titulo: "Mundos",
+            cromos: "{cantidad} cromos",
+            aria: { paginaActual: "Página actual" },
+          },
           filtros: {
             rareza: { titulo: "Filtrar por rareza", todas: "Todas" },
             tipo: {
@@ -102,8 +106,9 @@ describe("CatalogoMundo", () => {
 
     expect(markup).toContain('<h1 id="catalogo-titulo">Ciudad Neón</h1>');
     expect(markup).toContain("20 cromos");
-    expect(markup).toContain("Mundo 1 de 6 · cromos 001 a 020.");
+    expect(markup).toContain("Metrópoli tecnológica que nunca duerme.");
     expect(markup).toContain("Mundos");
+    expect(markup).toContain("Página actual");
     expect(markup).toContain("Orden: número");
     expect(markup).toContain("Filtrar por rareza");
     expect(markup).toContain('value="legendaria" selected');

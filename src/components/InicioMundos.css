@@ -107,12 +107,8 @@
   height: var(--espacio-6);
   place-items: center;
   border-radius: var(--radio-pildora);
-  color: var(--color-mundo);
-  background: color-mix(
-    in srgb,
-    var(--color-mundo) 16%,
-    var(--fondo-superficie)
-  );
+  color: var(--texto-inverso);
+  background: var(--color-mundo);
 }
 
 .inicio-mundo-icono svg {
@@ -153,7 +149,9 @@
 
 @media (max-width: 767px) {
   .contenedor.inicio-contenedor {
-    width: calc(100% - 2rem);
+    width: min(calc(100vw - 2rem), 90rem);
+    margin-left: var(--espacio-4);
+    margin-right: auto;
   }
 
   .inicio-mundos {
@@ -244,8 +242,10 @@
 
 @media (min-width: 1024px) {
   .contenedor.inicio-contenedor {
-    width: calc(100% - 6rem);
+    width: min(calc(100vw - 6rem), 90rem);
     max-width: 90rem;
+    margin-left: max(3rem, calc((100vw - 90rem) / 2));
+    margin-right: auto;
   }
 
   .inicio-mundos {

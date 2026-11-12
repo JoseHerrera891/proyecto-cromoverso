@@ -85,19 +85,11 @@ export default function CatalogoMundo({ id, textos }) {
   const rarezaSeleccionada = parametros.get("rareza") ?? "";
   const tipoSeleccionado = parametros.get("tipo") ?? "";
   const hayFiltros = Boolean(rarezaSeleccionada || tipoSeleccionado);
-  const numeroMundo = datos.mundos.findIndex(
-    (mundo) => mundo.id === datos.mundo.id,
-  );
   const cromosMundo = datos.mundo.cromos;
   const cantidadPorRareza = (id) =>
     cromosMundo.filter((cromo) => cromo.rareza === id).length;
   const cantidadPorTipo = (id) =>
     cromosMundo.filter((cromo) => cromo.tipo === id).length;
-  const rangoCromos = insertarVariables(pagina.encabezado.rango, {
-    numero: numeroMundo + 1,
-    desde: String(datos.mundo.numeros.desde).padStart(3, "0"),
-    hasta: String(datos.mundo.numeros.hasta).padStart(3, "0"),
-  });
   const etiquetaOrden = insertarVariables(pagina.orden.etiqueta, {
     orden: pagina.orden.opciones.numero,
   });
@@ -140,7 +132,7 @@ export default function CatalogoMundo({ id, textos }) {
           </Link>
           <div className="catalogo-titulo-grupo">
             <h1 id="catalogo-titulo">{datos.mundo.nombre}</h1>
-            <p>{rangoCromos}</p>
+            <p>{datos.mundo.descripcion}</p>
           </div>
           <button
             className="catalogo-buscar"
@@ -173,9 +165,20 @@ export default function CatalogoMundo({ id, textos }) {
                         className="catalogo-mundo-punto"
                         aria-hidden="true"
                       />
-                      {mundo.nombre}
+                      <span>
+                        {mundo.nombre}
+                        {mundo.id === datos.mundo.id && (
+                          <span className="catalogo-mundo-actual">
+                            {pagina.mundos.aria.paginaActual}
+                          </span>
+                        )}
+                      </span>
                     </span>
-                    <span>{mundo.totalCromos}</span>
+                    <span className="catalogo-mundo-total">
+                      {insertarVariables(pagina.mundos.cromos, {
+                        cantidad: mundo.totalCromos,
+                      })}
+                    </span>
                   </Link>
                 </li>
               ))}
@@ -369,17 +372,32 @@ export default function CatalogoMundo({ id, textos }) {
                       to={`/cromos/${encodeURIComponent(cromo.id)}`}
                     >
                       <Card className="catalogo-cromo">
-                        <span className="catalogo-cromo-numero">
-                          #{String(cromo.numero).padStart(3, "0")}
-                        </span>
-                        <img
-                          className={`catalogo-cromo-arte${
-                            cromo.holografico ? " is-holografico" : ""
-                          }`}
-                          src={obtenerIlustracion(cromo)}
-                          alt={`Ilustración de ${cromo.nombre}`}
-                          loading="lazy"
-                        />
+                        <div className="catalogo-cromo-marco">
+                          <span className="catalogo-cromo-numero">
+                            {String(cromo.numero).padStart(3, "0")}
+                          </span>
+                          <img
+                            className={`catalogo-cromo-arte${
+                              cromo.holografico ? " is-holografico" : ""
+                            }`}
+                            src={obtenerIlustracion(cromo)}
+                            alt={`Ilustración de ${cromo.nombre}`}
+                            loading="lazy"
+                          />
+                          <Badge
+                            rareza={cromo.rareza}
+                            className="catalogo-cromo-rareza"
+                            aria-label={rareza.nombre}
+                          >
+                            <span
+                              className="catalogo-cromo-icono"
+                              style={{ "--color-rareza": colorRareza }}
+                              aria-hidden="true"
+                            >
+                              <Icono nombre={iconoRareza} />
+                            </span>
+                          </Badge>
+                        </div>
                         <span className="catalogo-cromo-nombre">
                           {cromo.nombre}
                         </span>
@@ -389,19 +407,6 @@ export default function CatalogoMundo({ id, textos }) {
                             tipo: tipoNombre(cromo.tipo),
                           })}
                         </span>
-                        <Badge
-                          rareza={cromo.rareza}
-                          className="catalogo-cromo-rareza"
-                          aria-label={rareza.nombre}
-                        >
-                          <span
-                            className="catalogo-cromo-icono"
-                            style={{ "--color-rareza": colorRareza }}
-                            aria-hidden="true"
-                          >
-                            <Icono nombre={iconoRareza} />
-                          </span>
-                        </Badge>
                       </Card>
                     </Link>
                   </li>
