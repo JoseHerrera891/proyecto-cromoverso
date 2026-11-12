@@ -17,6 +17,7 @@ describe("CatalogoMundo", () => {
           nombre: "Ciudad Neón",
           descripcion: "Una ciudad tecnológica.",
           totalCromos: 20,
+          color: "#7C4DFF",
         },
         rarezas: [
           {
@@ -26,7 +27,16 @@ describe("CatalogoMundo", () => {
             color: "#c9a227",
           },
         ],
-        cromos: [],
+        cromos: [
+          {
+            id: "CV-001",
+            numero: 1,
+            nombre: "Voltia",
+            rareza: "legendaria",
+            tipo: "heroe",
+            ilustracion: { colorBase: "#7C4DFF" },
+          },
+        ],
         paginacion: { total: 20 },
       },
       cargando: false,
@@ -38,6 +48,7 @@ describe("CatalogoMundo", () => {
         albumMundo: {
           migas: { inicio: "Inicio" },
           mundos: { cromos: "{cantidad} cromos" },
+          tarjeta: { tipo: "{mundo} · {tipo}" },
           filtros: {
             rareza: { titulo: "Filtrar por rareza", todas: "Todas" },
             tipo: {
@@ -50,7 +61,11 @@ describe("CatalogoMundo", () => {
               },
             },
           },
-          vacio: { botones: { limpiar: "Quitar filtros" } },
+          vacio: {
+            titulo: "Sin resultados",
+            texto: "Prueba otros filtros",
+            botones: { limpiar: "Quitar filtros" },
+          },
         },
       },
       estados: {},
@@ -68,5 +83,10 @@ describe("CatalogoMundo", () => {
     expect(markup).toContain('value="legendaria" selected');
     expect(markup).toContain("Filtrar por tipo");
     expect(markup).toContain("Quitar filtros");
+    expect(markup).toContain('href="/cromos/CV-001"');
+    expect(markup).toContain("Voltia");
+    expect(markup).toContain("Ciudad Neón · Héroe");
+    expect(markup).toContain("♛");
+    expect(markup).toContain("Legendaria");
   });
 });

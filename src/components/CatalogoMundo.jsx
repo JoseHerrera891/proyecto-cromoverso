@@ -1,6 +1,15 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useCatalogoMundo } from "../hooks/useCatalogoMundo.js";
+import Badge from "./Badge.jsx";
+import Card from "./Card.jsx";
 import "./CatalogoMundo.css";
+
+const ICONOS_RAREZA = {
+  circulo: "●",
+  rombo: "◆",
+  estrella: "★",
+  corona: "♛",
+};
 
 function insertarVariables(plantilla, variables) {
   return Object.entries(variables).reduce(
@@ -105,6 +114,79 @@ export default function CatalogoMundo({ id, textos }) {
           </button>
         )}
       </div>
+      {datos.cromos.length ? (
+        <ul className="catalogo-cromos">
+          {datos.cromos.map((cromo) => {
+            const rareza = datos.rarezas.find(
+              (item) => item.id === cromo.rareza,
+            );
+            if (!rareza) {
+              throw new Error(
+                `No se encontró la rareza del cromo ${cromo.id}.`,
+              );
+            }
+            const iconoRareza = ICONOS_RAREZA[rareza.icono];
+            if (!iconoRareza) {
+              throw new Error(
+                `El icono de rareza ${rareza.icono} no es válido.`,
+              );
+            }
+
+            return (
+              <li key={cromo.id}>
+                <Link
+                  className="catalogo-cromo-enlace"
+                  to={`/cromos/${encodeURIComponent(cromo.id)}`}
+                >
+                  <Card className="catalogo-cromo">
+                    <span className="catalogo-cromo-numero">
+                      #{String(cromo.numero).padStart(3, "0")}
+                    </span>
+                    <span
+                      className="catalogo-cromo-arte"
+                      style={{
+                        "--color-ilustracion":
+                          cromo.ilustracion?.colorBase ?? datos.mundo.color,
+                      }}
+                      aria-hidden="true"
+                    />
+                    <span className="catalogo-cromo-nombre">
+                      {cromo.nombre}
+                    </span>
+                    <span className="catalogo-cromo-tipo">
+                      {insertarVariables(pagina.tarjeta.tipo, {
+                        mundo: datos.mundo.nombre,
+                        tipo: pagina.filtros.tipo.opciones[cromo.tipo],
+                      })}
+                    </span>
+                    <Badge
+                      rareza={cromo.rareza}
+                      className="catalogo-cromo-rareza"
+                    >
+                      <span
+                        className="catalogo-cromo-icono"
+                        style={{ "--color-rareza": rareza.color }}
+                        aria-hidden="true"
+                      >
+                        {iconoRareza}
+                      </span>
+                      {rareza.nombre}
+                    </Badge>
+                  </Card>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div className="catalogo-vacio">
+          <h2>{pagina.vacio.titulo}</h2>
+          <p>{pagina.vacio.texto}</p>
+          <button type="button" onClick={limpiarFiltros}>
+            {pagina.vacio.botones.limpiar}
+          </button>
+        </div>
+      )}
     </section>
   );
 }

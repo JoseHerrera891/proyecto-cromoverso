@@ -57,11 +57,81 @@
   font: inherit;
 }
 
+.catalogo-cromos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  gap: var(--espacio-3);
+  margin: var(--espacio-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalogo-cromos > li {
+  min-width: 0;
+}
+
+.catalogo-cromo-enlace {
+  display: block;
+  height: 100%;
+  color: var(--texto-principal);
+  text-decoration: none;
+}
+
+.catalogo-cromo-enlace:focus-visible,
 .catalogo-filtros select:focus-visible,
 .catalogo-filtros button:focus-visible,
 .catalogo-estado button:focus-visible {
   outline: var(--borde-foco-grosor) solid var(--marca-primario);
   outline-offset: var(--borde-foco-offset);
+}
+
+.catalogo-cromo {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.catalogo-cromo-numero,
+.catalogo-cromo-tipo {
+  color: var(--texto-secundario);
+  font-size: var(--texto-pequeno);
+}
+
+.catalogo-cromo-arte {
+  min-height: 7rem;
+  border-radius: var(--radio-m);
+  background: linear-gradient(
+    145deg,
+    var(--color-ilustracion),
+    var(--fondo-sutil)
+  );
+}
+
+.catalogo-cromo-nombre {
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-subtitulo);
+  overflow-wrap: anywhere;
+}
+
+.catalogo-cromo-rareza {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.catalogo-cromo-icono {
+  color: var(--color-rareza);
+  line-height: 1;
+}
+
+.catalogo-vacio {
+  padding-block: var(--espacio-5);
+  text-align: center;
+}
+
+.catalogo-vacio button {
+  min-height: var(--control-alto-minimo);
+  padding-inline: var(--espacio-3);
 }
 
 .catalogo-filtros button {
@@ -85,5 +155,10 @@
   .catalogo-filtros select,
   .catalogo-filtros button {
     width: 100%;
+  }
+
+  .catalogo-cromos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--espacio-2);
   }
 }
