@@ -1,6 +1,6 @@
 import "./styles/App.css";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import InicioHero from "./components/InicioHero.jsx";
@@ -115,7 +115,9 @@ export default function App() {
           }
         />
         <main id="contenido-principal">
-          {pathname === "/" ? (
+          {pathname === "/mundos" ? (
+            <Navigate to="/mundos/neon" replace />
+          ) : pathname === "/" ? (
             <>
               <InicioHero textos={datos.textos} />
               <div className="contenedor">
@@ -129,9 +131,7 @@ export default function App() {
             />
           ) : (
             <div className="contenedor">
-              {pathname === "/mundos" ? (
-                <InicioMundos textos={datos.textos} comoPagina />
-              ) : pathname.startsWith("/cromos/") ? (
+              {pathname.startsWith("/cromos/") ? (
                 <DetalleCromo
                   id={pathname.split("/")[2] ?? ""}
                   textos={datos.textos}

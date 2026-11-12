@@ -10,7 +10,7 @@ const DESTINOS = {
   album: "/album",
   sobres: "/sobres",
   intercambios: "/intercambios",
-  mundos: "/mundos",
+  mundos: "/mundos/neon",
   ranking: "/ranking",
 };
 
