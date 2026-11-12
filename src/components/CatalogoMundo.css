@@ -6,7 +6,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: var(--espacio-4);
+  padding: var(--espacio-4) var(--espacio-7);
   color: var(--texto-inverso);
   background-color: var(--color-mundo);
   background-image:
@@ -86,7 +86,7 @@
 
 .catalogo-encabezado h1 {
   margin: 0;
-  font-size: var(--texto-titulo);
+  font-size: 2.5rem;
 }
 
 .catalogo-encabezado p {
@@ -96,10 +96,10 @@
 
 .catalogo-cuerpo {
   display: grid;
-  grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
+  grid-template-columns: minmax(17.5rem, 17.5rem) minmax(0, 1fr);
   gap: var(--espacio-5);
   padding-top: var(--espacio-5);
-  width: min(calc(100% - var(--espacio-6)), 90rem);
+  width: min(calc(100% - 2rem), 90rem);
   margin-inline: auto;
 }
 
@@ -226,7 +226,7 @@
 
 .catalogo-filtro-cantidad {
   margin-left: auto;
-  color: var(--texto-terciario);
+  color: var(--texto-secundario);
   font-size: var(--texto-micro);
   white-space: nowrap;
 }
@@ -368,7 +368,7 @@
 .catalogo-cromo-arte {
   display: block;
   width: 100%;
-  aspect-ratio: 0.76;
+  aspect-ratio: 0.87;
   object-fit: cover;
   border: var(--borde-grosor) solid var(--borde-sutil);
   border-radius: var(--radio-s);
@@ -383,7 +383,7 @@
 }
 
 .catalogo-cromo-tipo {
-  color: var(--texto-terciario);
+  color: var(--texto-secundario);
   font-size: 0.625rem;
   line-height: 1.25;
   overflow-wrap: normal;
@@ -407,6 +407,16 @@
 .catalogo-cromo-icono {
   color: var(--color-rareza);
   line-height: 1;
+}
+
+.catalogo-filtro-rareza-icono .icono {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.catalogo-cromo-icono .icono {
+  width: 1rem;
+  height: 1rem;
 }
 
 .catalogo-orden:focus-within,
@@ -465,7 +475,7 @@
 
 @media (max-width: 767px) {
   .catalogo-encabezado {
-    padding: var(--espacio-3);
+    padding: var(--espacio-4);
   }
 
   .catalogo-migas {
@@ -481,7 +491,7 @@
   }
 
   .catalogo-encabezado h1 {
-    font-size: var(--texto-subtitulo);
+    font-size: 1.25rem;
   }
 
   .catalogo-encabezado p {
@@ -580,10 +590,6 @@
     font-size: var(--texto-micro);
   }
 
-  .catalogo-cromo-arte {
-    aspect-ratio: 0.78;
-  }
-
   .catalogo-cromo-nombre {
     font-size: var(--texto-micro);
   }
@@ -592,5 +598,15 @@
     max-width: 100%;
     padding-inline: var(--espacio-1);
     font-size: var(--texto-micro);
+  }
+}
+
+@media (min-width: 1024px) {
+  .catalogo-cuerpo {
+    width: min(calc(100% - 6rem), 90rem);
+  }
+
+  .catalogo-encabezado h1 {
+    font-size: 2.5rem;
   }
 }

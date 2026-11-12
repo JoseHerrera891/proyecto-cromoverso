@@ -152,8 +152,16 @@
 }
 
 @media (max-width: 767px) {
+  .contenedor.inicio-contenedor {
+    width: calc(100% - 2rem);
+  }
+
   .inicio-mundos {
     padding-block: var(--espacio-5) var(--espacio-6);
+  }
+
+  .inicio-mundos-encabezado h2 {
+    font-size: 1.25rem;
   }
 
   .inicio-mundos-encabezado p {
@@ -178,7 +186,7 @@
   }
 
   .inicio-mundo-nombre {
-    font-size: var(--texto-pequeno);
+    font-size: 1rem;
   }
 
   .inicio-mundo-total {
@@ -235,6 +243,11 @@
 }
 
 @media (min-width: 1024px) {
+  .contenedor.inicio-contenedor {
+    width: calc(100% - 6rem);
+    max-width: 90rem;
+  }
+
   .inicio-mundos {
     padding: var(--espacio-7) 0 var(--espacio-5);
   }
@@ -285,7 +298,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .inicio-contenedor {
+  .contenedor.inicio-contenedor {
     width: min(calc(100% - 3.5rem), var(--ancho-contenido));
   }
 
@@ -294,7 +307,7 @@
   }
 
   .inicio-mundos-encabezado h2 {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
   }
 
   .inicio-mundos-encabezado p {

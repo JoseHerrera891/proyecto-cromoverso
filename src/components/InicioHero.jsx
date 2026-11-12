@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Icono from "./Icono.jsx";
 import "./InicioHero.css";
 
 const PERSONAJES = [
@@ -30,7 +31,7 @@ function CartaHeroe({ className, numero, nombre, mundo, imagen }) {
     <article className={`inicio-hero-carta ${className}`}>
       <span className="inicio-hero-carta-numero">{numero}</span>
       <span className="inicio-hero-carta-insignia" aria-hidden="true">
-        ♛
+        <Icono nombre="rareza-corona" />
       </span>
       <img className="inicio-hero-carta-arte" src={imagen} alt="" />
       <strong>{nombre}</strong>
@@ -68,23 +69,19 @@ export default function InicioHero({ textos }) {
             className="inicio-hero-boton inicio-hero-boton--acento"
             to="/registro"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 10h16v10H4zM3 7h18v3H3zM12 7v13m0-13H8.5a2 2 0 1 1 2-2c0 1.1 1.5 2 1.5 2Zm0 0h3.5a2 2 0 1 0-2-2c0 1.1-1.5 2-1.5 2Z" />
-            </svg>
+            <Icono nombre="regalo" />
             {hero.botones.crearCuentaGratis}
           </Link>
           <a
             className="inicio-hero-boton inicio-hero-boton--claro"
             href="#mundos"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 4h6a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4zM20 4h-4a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h4z" />
-            </svg>
+            <Icono nombre="album" />
             {hero.botones.explorarMundos}
           </a>
         </div>
         <p className="inicio-hero-subtitulo">
-          <span aria-hidden="true">✦</span>
+          <Icono nombre="destello" />
           <span className="inicio-hero-subtitulo--escritorio">
             {hero.subtitulo}
           </span>
@@ -98,7 +95,9 @@ export default function InicioHero({ textos }) {
         role="group"
         aria-label="Héroes de Cromoverso"
       >
-        <span className="inicio-hero-insignia">✦ Guardiana holográfica</span>
+        <span className="inicio-hero-insignia">
+          <Icono nombre="destello" /> Guardiana holográfica
+        </span>
         <div className="inicio-hero-cartas">
           {PERSONAJES.map((personaje) => (
             <CartaHeroe key={personaje.numero} {...personaje} />

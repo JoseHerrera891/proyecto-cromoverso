@@ -46,6 +46,7 @@ describe("CatalogoMundo", () => {
             id: "CV-001",
             numero: 1,
             nombre: "Voltia",
+            mundo: "neon",
             rareza: "legendaria",
             tipo: "heroe",
             ilustracion: { colorBase: "#7C4DFF" },
@@ -114,12 +115,14 @@ describe("CatalogoMundo", () => {
     expect(markup).toContain('href="/cromos/CV-001"');
     expect(markup).toContain("Ciudad Neón · Héroe");
     expect(markup).toContain("Voltia");
-    expect(markup).toContain('src="/images/cromo-general.png"');
-    expect(markup).toContain('alt="Voltia, Héroe"');
-    expect(markup).toContain('class="etiqueta etiqueta--legendaria catalogo-cromo-rareza"');
+    expect(markup).toContain('src="/images/cromos/CV-001.png"');
+    expect(markup).toContain('alt="Ilustración de Voltia"');
+    expect(markup).toContain(
+      'class="etiqueta etiqueta--legendaria catalogo-cromo-rareza"',
+    );
     expect(markup).toContain('aria-label="Legendaria"');
     expect(markup).toContain('aria-label="Filtrar por rareza"');
-    expect(markup).toContain("♛");
+    expect(markup).toContain('class="icono icono--rareza-corona"');
     expect(markup).toContain("1 cromos");
     expect(markup).toContain("Legendaria");
   });

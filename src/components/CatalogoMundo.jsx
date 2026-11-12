@@ -7,11 +7,39 @@ import Icono from "./Icono.jsx";
 import "./CatalogoMundo.css";
 
 const ICONOS_RAREZA = {
-  circulo: "○",
-  rombo: "◆",
-  estrella: "★",
-  corona: "♛",
+  circulo: "rareza-circulo",
+  rombo: "rareza-rombo",
+  estrella: "rareza-estrella",
+  corona: "rareza-corona",
 };
+
+const COLORES_RAREZA = {
+  comun: "var(--rareza-comun)",
+  rara: "var(--rareza-rara)",
+  epica: "var(--rareza-epica)",
+  legendaria: "var(--rareza-legendaria)",
+};
+
+const ILUSTRACIONES_NEON = [
+  { desde: 1, hasta: 1, archivo: "CV-001.png" },
+  { desde: 2, hasta: 3, archivo: "CV-002.png" },
+  { desde: 4, hasta: 7, archivo: "CV-004.png" },
+  { desde: 8, hasta: 8, archivo: "CV-008.png" },
+  { desde: 9, hasta: 12, archivo: "CV-009.png" },
+  { desde: 13, hasta: 15, archivo: "CV-013.png" },
+  { desde: 16, hasta: 16, archivo: "CV-016.png" },
+  { desde: 17, hasta: 20, archivo: "CV-017.png" },
+];
+
+function obtenerIlustracion(cromo) {
+  if (cromo.mundo !== "neon") return "/images/cromo-general.png";
+  const ilustracion = ILUSTRACIONES_NEON.find(
+    ({ desde, hasta }) => cromo.numero >= desde && cromo.numero <= hasta,
+  );
+  return ilustracion
+    ? `/images/cromos/${ilustracion.archivo}`
+    : "/images/cromo-general.png";
+}
 
 function insertarVariables(plantilla, variables) {
   return Object.entries(variables).reduce(
@@ -141,7 +169,10 @@ export default function CatalogoMundo({ id, textos }) {
                     style={{ "--color-mundo-enlace": mundo.color }}
                   >
                     <span className="catalogo-mundo-identidad">
-                      <span className="catalogo-mundo-punto" aria-hidden="true" />
+                      <span
+                        className="catalogo-mundo-punto"
+                        aria-hidden="true"
+                      />
                       {mundo.nombre}
                     </span>
                     <span>{mundo.totalCromos}</span>
@@ -175,10 +206,13 @@ export default function CatalogoMundo({ id, textos }) {
                 />
                 <span
                   className="catalogo-filtro-rareza"
-                  style={{ "--color-rareza": rareza.color }}
+                  style={{ "--color-rareza": COLORES_RAREZA[rareza.id] }}
                 >
-                  <span className="catalogo-filtro-rareza-icono" aria-hidden="true">
-                    {ICONOS_RAREZA[rareza.icono]}
+                  <span
+                    className="catalogo-filtro-rareza-icono"
+                    aria-hidden="true"
+                  >
+                    <Icono nombre={ICONOS_RAREZA[rareza.icono]} />
                   </span>
                   {rareza.nombre}
                 </span>
@@ -321,6 +355,12 @@ export default function CatalogoMundo({ id, textos }) {
                     `El icono de rareza ${rareza.icono} no es válido.`,
                   );
                 }
+                const colorRareza = COLORES_RAREZA[cromo.rareza];
+                if (!colorRareza) {
+                  throw new Error(
+                    `El color de rareza ${cromo.rareza} no es válido.`,
+                  );
+                }
 
                 return (
                   <li key={cromo.id}>
@@ -333,9 +373,11 @@ export default function CatalogoMundo({ id, textos }) {
                           #{String(cromo.numero).padStart(3, "0")}
                         </span>
                         <img
-                          className={`catalogo-cromo-arte${cromo.holografico ? " is-holografico" : ""}`}
-                          src="/images/cromo-general.png"
-                          alt={`${cromo.nombre}, ${tipoNombre(cromo.tipo)}`}
+                          className={`catalogo-cromo-arte${
+                            cromo.holografico ? " is-holografico" : ""
+                          }`}
+                          src={obtenerIlustracion(cromo)}
+                          alt={`Ilustración de ${cromo.nombre}`}
                           loading="lazy"
                         />
                         <span className="catalogo-cromo-nombre">
@@ -354,10 +396,10 @@ export default function CatalogoMundo({ id, textos }) {
                         >
                           <span
                             className="catalogo-cromo-icono"
-                            style={{ "--color-rareza": rareza.color }}
+                            style={{ "--color-rareza": colorRareza }}
                             aria-hidden="true"
                           >
-                            {iconoRareza}
+                            <Icono nombre={iconoRareza} />
                           </span>
                         </Badge>
                       </Card>
