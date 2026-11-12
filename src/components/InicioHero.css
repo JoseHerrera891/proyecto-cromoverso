@@ -132,7 +132,7 @@
 
 .inicio-hero-ilustracion {
   justify-self: center;
-  width: min(100%, 34rem);
+  width: min(100%, 42rem);
   container-type: inline-size;
 }
 
@@ -162,7 +162,7 @@
 .inicio-hero-cartas {
   position: relative;
   width: 100%;
-  aspect-ratio: 1.4;
+  aspect-ratio: 1.75;
 }
 
 .inicio-hero-carta {
@@ -171,8 +171,8 @@
   grid-template-rows: minmax(0, 1fr) auto auto;
   gap: clamp(2px, 0.5cqw, 4px);
   overflow: hidden;
-  width: 34%;
-  height: 82%;
+  width: 30%;
+  height: 80%;
   padding: clamp(4px, 1.2cqw, 10px);
   border: clamp(3px, 1.4cqw, 10px) solid var(--fondo-inverso);
   border-radius: var(--radio-m);
@@ -191,7 +191,7 @@
   border: clamp(1px, 0.4cqw, 3px) solid var(--fondo-inverso);
   border-radius: var(--radio-pildora);
   background: var(--fondo-superficie);
-  font-size: 1.25rem;
+  font-size: clamp(0.875rem, 2.5cqw, 1rem);
   font-weight: var(--peso-negrita);
 }
 
@@ -231,36 +231,36 @@
 .inicio-hero-carta strong {
   overflow: hidden;
   font-family: var(--fuente-titulos);
-  font-size: 1.25rem;
+  font-size: clamp(0.875rem, 2.4cqw, 1rem);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .inicio-hero-carta > span:last-child {
   overflow: hidden;
-  font-size: 1rem;
+  font-size: clamp(0.75rem, 2cqw, 0.875rem);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .inicio-hero-carta--raiz {
   top: 15%;
-  left: 0;
-  transform: rotate(-9deg);
+  left: 1%;
+  transform: rotate(-7deg);
 }
 
 .inicio-hero-carta--astra {
   top: 15%;
-  right: 0;
-  transform: rotate(9deg);
+  right: 1%;
+  transform: rotate(7deg);
 }
 
 .inicio-hero-carta--voltia {
-  top: 4%;
-  left: 28%;
+  top: 6%;
+  left: 31%;
   z-index: 1;
-  width: 44%;
-  height: 90%;
+  width: 38%;
+  height: 88%;
 }
 
 @media (max-width: 767px) {
@@ -282,15 +282,15 @@
 
   .inicio-hero-carta-numero,
   .inicio-hero-carta strong {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
-  .inicio-hero-carta-insignia {
-    font-size: var(--texto-micro);
+  .inicio-hero-carta--raiz {
+    left: 4%;
   }
 
-  .inicio-hero-carta > span:last-child {
-    font-size: 0.75rem;
+  .inicio-hero-carta--astra {
+    right: 4%;
   }
 
   .inicio-hero-ilustracion {
@@ -369,7 +369,7 @@
 
   .inicio-hero-ilustracion {
     justify-self: end;
-    width: min(100%, 30rem);
+    width: min(100%, 42rem);
   }
 }
 
