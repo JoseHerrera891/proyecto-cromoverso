@@ -81,7 +81,7 @@ export default function Navbar({
             onClick={() => setAbierto(false)}
           >
             <img src={LOGO} alt="" />
-          </a>
+          </Link>
 
           <div className="navbar-movil-acciones">
             <button
