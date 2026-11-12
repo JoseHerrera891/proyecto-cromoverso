@@ -6,8 +6,15 @@ export function validarTextos(datos) {
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
   const bannerCookies = textos?.cookies?.banner;
+  const footer = textos?.footer;
+  const columnasFooter = footer?.columnas;
   const enlacesNavbar = Object.values(nav?.enlaces ?? {});
   const enlacesMoviles = Object.values(menuMovil?.enlaces ?? {});
+  const enlacesFooter = [
+    ...Object.values(columnasFooter?.explora?.enlaces ?? {}),
+    ...Object.values(columnasFooter?.cuenta?.enlaces ?? {}),
+    ...Object.values(columnasFooter?.legal?.enlaces ?? {}),
+  ];
   const etiquetas = [
     nav?.logo?.texto,
     nav?.logo?.aria,
@@ -32,11 +39,21 @@ export function validarTextos(datos) {
     bannerCookies?.texto,
     bannerCookies?.botones?.aceptar,
     bannerCookies?.botones?.rechazar,
+    footer?.lema,
+    columnasFooter?.explora?.titulo,
+    ...Object.values(columnasFooter?.explora?.enlaces ?? {}),
+    columnasFooter?.cuenta?.titulo,
+    ...Object.values(columnasFooter?.cuenta?.enlaces ?? {}),
+    columnasFooter?.legal?.titulo,
+    ...Object.values(columnasFooter?.legal?.enlaces ?? {}),
+    footer?.legal?.derechos,
+    footer?.legal?.nota,
   ];
 
   if (
     !enlacesNavbar.length ||
     !enlacesMoviles.length ||
+    !enlacesFooter.length ||
     !etiquetas.every((valor) => typeof valor === "string" && valor.trim())
   ) {
     throw new Error(
@@ -66,7 +83,7 @@ export function useTextos(idioma) {
           throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
         }
         const respuesta = await fetch(
-          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies,paginas`,
+          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies,paginas,footer`,
           {
             signal: controlador.signal,
           },

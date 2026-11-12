@@ -32,6 +32,27 @@ const textosRequeridos = {
       botones: { aceptar: "Aceptar", rechazar: "Rechazar" },
     },
   },
+  footer: {
+    lema: "Colecciona aventuras",
+    columnas: {
+      explora: {
+        titulo: "Explora",
+        enlaces: { inicio: "Inicio", mundos: "Mundos" },
+      },
+      cuenta: {
+        titulo: "Tu cuenta",
+        enlaces: { ingresar: "Ingresar", crearCuenta: "Crear cuenta" },
+      },
+      legal: {
+        titulo: "Legal",
+        enlaces: { terminos: "Términos", accesibilidad: "Accesibilidad" },
+      },
+    },
+    legal: {
+      derechos: "© {anio} Cromoverso",
+      nota: "Todos los derechos reservados.",
+    },
+  },
 };
 
 describe("validarTextos", () => {
@@ -46,6 +67,19 @@ describe("validarTextos", () => {
       textos: {
         ...textosRequeridos,
         cookies: { banner: { ...textosRequeridos.cookies.banner, texto: "" } },
+      },
+    };
+
+    expect(() => validarTextos(datos)).toThrow(
+      "La respuesta no contiene todos los textos requeridos de la interfaz.",
+    );
+  });
+
+  it("rejects a response missing required footer text", () => {
+    const datos = {
+      textos: {
+        ...textosRequeridos,
+        footer: { ...textosRequeridos.footer, lema: "" },
       },
     };
 
