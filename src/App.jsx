@@ -1,6 +1,6 @@
 import "./styles/App.css";
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import InicioHero from "./components/InicioHero.jsx";
@@ -44,7 +44,6 @@ export default function App() {
     () => !leerCookie(COOKIE_CONSENT_NAME),
   );
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const activo = pathname.split("/").filter(Boolean)[0] || "inicio";
   const datos = useTextos(idioma);
   const tituloPagina = obtenerTituloPagina(pathname, datos.textos);
@@ -77,11 +76,6 @@ export default function App() {
     }));
   }
 
-  function buscar(consulta) {
-    const parametros = new URLSearchParams({ q: consulta });
-    navigate(`/cromos?${parametros}`);
-  }
-
   function cambiarIdioma(nuevoIdioma) {
     setIdioma(nuevoIdioma);
     if (leerCookie(COOKIE_CONSENT_NAME) === "aceptado") {
@@ -107,7 +101,6 @@ export default function App() {
           idioma={idioma}
           cambiarIdioma={cambiarIdioma}
           activo={activo}
-          onBuscar={buscar}
           preferenciasAccesibilidad={preferenciasAccesibilidad}
           onCambiarAccesibilidad={cambiarPreferenciaAccesibilidad}
           onRestablecerAccesibilidad={() =>

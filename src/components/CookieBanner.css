@@ -5,7 +5,7 @@
   gap: var(--espacio-4);
   position: fixed;
   left: 50%;
-  bottom: 25vh;
+  bottom: var(--espacio-3);
   z-index: 20;
   width: min(84vw, var(--ancho-contenido));
   max-height: calc(100dvh - var(--espacio-4) * 2);

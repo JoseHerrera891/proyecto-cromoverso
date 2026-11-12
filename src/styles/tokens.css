@@ -60,13 +60,11 @@
   --control-alto-minimo: 44px;
   --selector-idioma-boton-ancho-minimo: 40px;
   --selector-idioma-boton-alto-minimo: 36px;
-  --alto-navbar-escritorio: 72px;
+  --alto-navbar-escritorio: 66px;
   --ancho-navbar-maximo: 1448px;
   --ancho-navbar-logo: 197px;
   --alto-navbar-logo: 36px;
   --icono-tamano: 20px;
-  --ancho-buscador-navbar-minimo: 190px;
-  --ancho-buscador-navbar-maximo: 260px;
   --ancho-cookie-banner-maximo: 42rem;
   --borde-grosor-sutil: 1px;
   --borde-grosor: 2px;
@@ -103,5 +101,5 @@
   --interlineado-unidad: 1;
   --interlineado: 1.6;
   --radio: var(--radio-s);
-  --ancho-contenido: 75rem;
+  --ancho-contenido: 80rem;
 }

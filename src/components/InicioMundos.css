@@ -236,28 +236,28 @@
 
 @media (min-width: 1024px) {
   .inicio-mundos {
-    padding: 52px 36px 24px;
+    padding: var(--espacio-7) 0 var(--espacio-5);
   }
 
   .inicio-mundos-encabezado h2 {
-    font-size: 1.625rem;
+    font-size: 1.75rem;
     line-height: 1.2;
   }
 
   .inicio-mundos-encabezado p {
-    margin-top: var(--espacio-1);
-    font-size: 0.875rem;
-    line-height: 1.25;
+    margin-top: var(--espacio-2);
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   .inicio-mundos-lista {
-    gap: 10px;
-    margin-top: var(--espacio-4);
+    gap: var(--espacio-4);
+    margin-top: var(--espacio-5);
   }
 
   .inicio-mundo {
-    min-height: 7.75rem;
-    padding: var(--espacio-3);
+    min-height: 10rem;
+    padding: var(--espacio-4);
   }
 
   .inicio-mundo-icono {
@@ -272,15 +272,15 @@
   }
 
   .inicio-mundo-total {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
 
   .inicio-mundo-orden {
-    font-size: 0.75rem;
+    font-size: var(--texto-micro);
   }
 
   .inicio-mundo-nombre {
-    font-size: 0.8125rem;
+    font-size: 1.0625rem;
   }
 }
 

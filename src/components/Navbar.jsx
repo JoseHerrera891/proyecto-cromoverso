@@ -25,20 +25,15 @@ export default function Navbar({
   idioma,
   cambiarIdioma,
   activo,
-  onBuscar,
   preferenciasAccesibilidad,
   onCambiarAccesibilidad,
   onRestablecerAccesibilidad,
 }) {
   const [abierto, setAbierto] = useState(false);
-  const [busquedaAbierta, setBusquedaAbierta] = useState(false);
   const [panelAccesibilidadAbierto, setPanelAccesibilidadAbierto] =
     useState(false);
-  const [busqueda, setBusqueda] = useState("");
   const botonMenu = useRef(null);
-  const botonBusqueda = useRef(null);
   const botonAccesibilidad = useRef(null);
-  const campoBusqueda = useRef(null);
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
   const estados = textos?.estados;
@@ -52,7 +47,9 @@ export default function Navbar({
   );
   const cerrarAccesibilidad =
     textosAccesibilidad?.botones?.cerrar ??
-    (ingles ? "Close accessibility options" : "Cerrar opciones de accesibilidad");
+    (ingles
+      ? "Close accessibility options"
+      : "Cerrar opciones de accesibilidad");
   const enlaces = Object.entries(nav?.enlaces ?? {}).filter(
     ([clave]) => DESTINOS[clave],
   );
@@ -62,11 +59,6 @@ export default function Navbar({
 
   useEffect(() => {
     function cerrarConEscape(evento) {
-      if (evento.key === "Escape" && busquedaAbierta) {
-        setBusquedaAbierta(false);
-        botonBusqueda.current?.focus();
-        return;
-      }
       if (evento.key === "Escape" && abierto && !panelAccesibilidadAbierto) {
         setAbierto(false);
         botonMenu.current?.focus();
@@ -74,30 +66,7 @@ export default function Navbar({
     }
     document.addEventListener("keydown", cerrarConEscape);
     return () => document.removeEventListener("keydown", cerrarConEscape);
-  }, [abierto, busquedaAbierta, panelAccesibilidadAbierto]);
-
-  function abrirBusqueda() {
-    if (window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches) {
-      if (busquedaAbierta) {
-        setBusquedaAbierta(false);
-      } else {
-        setBusquedaAbierta(true);
-        requestAnimationFrame(() => campoBusqueda.current?.focus());
-      }
-      return;
-    }
-    setAbierto(true);
-    requestAnimationFrame(() => campoBusqueda.current?.focus());
-  }
-
-  function buscar(evento) {
-    evento.preventDefault();
-    const consulta = busqueda.trim();
-    if (!consulta) return;
-    onBuscar(consulta);
-    setAbierto(false);
-    setBusquedaAbierta(false);
-  }
+  }, [abierto, panelAccesibilidadAbierto]);
 
   return (
     <header className="navbar">
@@ -113,18 +82,14 @@ export default function Navbar({
           </Link>
 
           <div className="navbar-movil-acciones">
-            <button
-              ref={botonBusqueda}
-              type="button"
-              className="navbar-icono"
-              aria-label={nav?.buscador.aria ?? "Buscar"}
-              aria-expanded={busquedaAbierta || abierto}
-              aria-controls="navbar-busqueda"
-              disabled={!nav}
-              onClick={abrirBusqueda}
-            >
-              <Icono nombre="buscar" />
-            </button>
+            {nav && (
+              <Link
+                className="navbar-ingresar navbar-ingresar-movil"
+                to="/ingresar"
+              >
+                {nav.botones.ingresar}
+              </Link>
+            )}
             <button
               ref={botonMenu}
               type="button"
@@ -178,26 +143,6 @@ export default function Navbar({
                     </li>
                   ))}
                 </ul>
-                <form
-                  id="navbar-busqueda"
-                  className={`navbar-buscador${busquedaAbierta ? " is-abierto" : ""}`}
-                  role="search"
-                  aria-label={nav.buscador.aria}
-                  onSubmit={buscar}
-                >
-                  <button type="submit" aria-label={nav.buscador.aria}>
-                    <Icono nombre="buscar" />
-                  </button>
-                  <input
-                    ref={campoBusqueda}
-                    type="search"
-                    value={busqueda}
-                    onChange={(evento) => setBusqueda(evento.target.value)}
-                    placeholder={nav.buscador.placeholder}
-                    aria-label={nav.buscador.aria}
-                    required
-                  />
-                </form>
                 <div className="navbar-cuenta">
                   <Link className="navbar-ingresar" to="/ingresar">
                     {nav.botones.ingresar}

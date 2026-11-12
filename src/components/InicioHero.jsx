@@ -30,7 +30,7 @@ function CartaHeroe({ className, numero, nombre, mundo, imagen }) {
     <article className={`inicio-hero-carta ${className}`}>
       <span className="inicio-hero-carta-numero">{numero}</span>
       <span className="inicio-hero-carta-insignia" aria-hidden="true">
-        ✦
+        ♛
       </span>
       <img className="inicio-hero-carta-arte" src={imagen} alt="" />
       <strong>{nombre}</strong>
