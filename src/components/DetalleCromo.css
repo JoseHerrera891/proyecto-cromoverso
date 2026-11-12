@@ -89,6 +89,13 @@
   font-weight: var(--peso-semi-negrita);
 }
 
+.detalle-cromo-navegacion {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-5);
+}
+
 .detalle-cromo-estado {
   padding-block: var(--espacio-5);
 }

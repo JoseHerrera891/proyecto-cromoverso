@@ -16,6 +16,7 @@ const textos = {
         tipos: { heroe: "Héroe" },
       },
       poder: { titulo: "Poder" },
+      navegacion: { anterior: "Cromo anterior", siguiente: "Cromo siguiente" },
       atributos: {
         titulo: "Atributos",
         total: "Total {total}",
@@ -50,6 +51,8 @@ describe("DetalleCromo", () => {
         poder: "Descarga eléctrica",
         descripcion: "Cuida la ciudad.",
         atributos: { fuerza: 98, velocidad: 87, mente: 75, energia: 80 },
+        anterior: { id: "CV-000" },
+        siguiente: { id: "CV-002" },
         ilustracion: { colorBase: "#7C4DFF" },
       },
       cargando: false,
@@ -70,6 +73,10 @@ describe("DetalleCromo", () => {
     expect(markup).toContain('aria-valuenow="98"');
     expect(markup).toContain("Escala de 10 a 99.");
     expect(markup).toContain("Total 340");
+    expect(markup).toContain('href="/cromos/CV-000"');
+    expect(markup).toContain("Cromo anterior");
+    expect(markup).toContain('href="/cromos/CV-002"');
+    expect(markup).toContain("Cromo siguiente");
   });
 
   it("muestra el estado localizado cuando el cromo no existe", () => {

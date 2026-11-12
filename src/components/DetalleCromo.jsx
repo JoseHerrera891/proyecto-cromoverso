@@ -110,6 +110,23 @@ export default function DetalleCromo({ id, textos }) {
           </p>
         </section>
       )}
+      {pagina.navegacion && (
+        <nav
+          className="detalle-cromo-navegacion"
+          aria-label={`${pagina.navegacion.anterior} / ${pagina.navegacion.siguiente}`}
+        >
+          {cromo.anterior && (
+            <Link to={`/cromos/${encodeURIComponent(cromo.anterior.id)}`}>
+              {pagina.navegacion.anterior}
+            </Link>
+          )}
+          {cromo.siguiente && (
+            <Link to={`/cromos/${encodeURIComponent(cromo.siguiente.id)}`}>
+              {pagina.navegacion.siguiente}
+            </Link>
+          )}
+        </nav>
+      )}
     </article>
   );
 }

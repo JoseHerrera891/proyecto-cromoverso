@@ -1,5 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import { solicitarDetalleCromo } from "./useDetalleCromo.js";
+import {
+  obtenerCromosAdyacentes,
+  solicitarDetalleCromo,
+} from "./useDetalleCromo.js";
 
 const detalle = {
   id: "CV-001",
@@ -45,5 +48,22 @@ describe("solicitarDetalleCromo", () => {
     await expect(invocador({ ok: false, status: 404 })).rejects.toThrow(
       "Error HTTP 404.",
     );
+  });
+});
+
+describe("obtenerCromosAdyacentes", () => {
+  it("encuentra cromos anterior y siguiente y permite los extremos", () => {
+    const cromos = [
+      { id: "CV-001", posicion: 1 },
+      { id: "CV-002", posicion: 2 },
+      { id: "CV-003", posicion: 3 },
+    ];
+
+    expect(obtenerCromosAdyacentes(cromos[1], cromos)).toEqual({
+      anterior: cromos[0],
+      siguiente: cromos[2],
+    });
+    expect(obtenerCromosAdyacentes(cromos[0], cromos).anterior).toBeNull();
+    expect(obtenerCromosAdyacentes(cromos[2], cromos).siguiente).toBeNull();
   });
 });

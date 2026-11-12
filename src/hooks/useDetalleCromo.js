@@ -35,6 +35,26 @@ export async function solicitarDetalleCromo(id, signal, fetcher = fetch) {
   return validarDetalleCromo(await respuesta.json());
 }
 
+export function obtenerCromosAdyacentes(cromo, cromosMundo) {
+  if (
+    !Array.isArray(cromosMundo) ||
+    !cromosMundo.every(
+      ({ id, posicion } = {}) =>
+        typeof id === "string" && Number.isInteger(posicion),
+    )
+  ) {
+    throw new Error("La lista del mundo no tiene el formato esperado.");
+  }
+  const indice = cromosMundo.findIndex(({ id }) => id === cromo.id);
+  if (indice < 0) {
+    throw new Error("El cromo no aparece en la lista de su mundo.");
+  }
+  return {
+    anterior: cromosMundo[indice - 1] ?? null,
+    siguiente: cromosMundo[indice + 1] ?? null,
+  };
+}
+
 export function useDetalleCromo(id) {
   const [cromo, setCromo] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -52,6 +72,15 @@ export function useDetalleCromo(id) {
     setCromo(null);
 
     solicitarDetalleCromo(id, controlador.signal)
+      .then(async (dato) => {
+        const respuesta = await fetch(
+          crearUrlApi(`mundos/${encodeURIComponent(dato.mundo)}`),
+          { signal: controlador.signal },
+        );
+        if (!respuesta.ok) throw new Error(`Error HTTP ${respuesta.status}.`);
+        const mundo = await respuesta.json();
+        return { ...dato, ...obtenerCromosAdyacentes(dato, mundo.cromos) };
+      })
       .then((dato) => vigente && setCromo(dato))
       .catch((error) => {
         if (vigente) {
