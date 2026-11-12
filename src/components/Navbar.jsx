@@ -80,8 +80,8 @@ export default function Navbar({
             aria-label={nav?.logo.aria ?? "Cromoverso"}
             onClick={() => setAbierto(false)}
           >
-            <img src={LOGO} alt="" width="197" height="36" />
-          </Link>
+            <img src={LOGO} alt="" />
+          </a>
 
           <div className="navbar-movil-acciones">
             <button
