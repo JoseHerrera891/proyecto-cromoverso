@@ -37,6 +37,7 @@ export default function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const activo = pathname.split("/").filter(Boolean)[0] || "inicio";
+  const esCatalogo = pathname.startsWith("/mundos/");
   const datos = useTextos(idioma);
   const tituloPagina = obtenerTituloPagina(pathname, datos.textos);
 
@@ -75,7 +76,7 @@ export default function App() {
 
   return (
     <>
-      <div className="sitio">
+      <div className={`sitio${esCatalogo ? " sitio--catalogo" : ""}`}>
         <Navbar
           {...datos}
           idioma={idioma}

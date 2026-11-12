@@ -8,3 +8,9 @@
 .sitio > main {
   flex: 1;
 }
+
+@media (max-width: 1199px) {
+  .sitio--catalogo > .navbar {
+    display: none;
+  }
+}
