@@ -6,8 +6,8 @@
   border: var(--borde-grosor) solid currentColor;
   border-radius: var(--radio-pildora);
   font-size: var(--texto-pequeno);
-  font-weight: 600;
-  line-height: 1;
+  font-weight: var(--peso-semi-negrita);
+  line-height: var(--interlineado-unidad);
 }
 
 .etiqueta--comun {

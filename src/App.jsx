@@ -6,6 +6,7 @@ import Footer from "./components/Footer.jsx";
 import InicioHero from "./components/InicioHero.jsx";
 import InicioMundos from "./components/InicioMundos.jsx";
 import CatalogoMundo from "./components/CatalogoMundo.jsx";
+import DetalleCromo from "./components/DetalleCromo.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
 import { obtenerTituloPagina } from "./utils/tituloPagina.js";
@@ -93,6 +94,11 @@ export default function App() {
             </>
           ) : pathname.startsWith("/mundos/") ? (
             <CatalogoMundo
+              id={pathname.split("/")[2] ?? ""}
+              textos={datos.textos}
+            />
+          ) : pathname.startsWith("/cromos/") ? (
+            <DetalleCromo
               id={pathname.split("/")[2] ?? ""}
               textos={datos.textos}
             />

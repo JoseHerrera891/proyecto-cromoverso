@@ -15,7 +15,7 @@ h1,
 h2,
 h3 {
   font-family: var(--fuente-titulos);
-  line-height: 1.2;
+  line-height: var(--interlineado-compacto);
   overflow-wrap: anywhere;
 }
 
@@ -35,5 +35,5 @@ a:hover {
 .contenedor {
   max-width: var(--ancho-contenido);
   margin-inline: auto;
-  width: calc(100% - 2rem);
+  width: calc(100% - var(--espacio-6));
 }

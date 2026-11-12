@@ -6,7 +6,7 @@
 .campo-etiqueta {
   color: var(--texto-principal);
   font-size: var(--texto-pequeno);
-  font-weight: 600;
+  font-weight: var(--peso-semi-negrita);
 }
 
 .campo-control {
@@ -26,7 +26,7 @@
 
 .campo-control:focus-visible {
   border-color: var(--marca-primario);
-  outline: 3px solid var(--marca-primario);
+  outline: var(--borde-foco-grosor) solid var(--marca-primario);
   outline-offset: var(--espacio-1);
 }
 

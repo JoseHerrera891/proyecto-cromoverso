@@ -1,3 +1,5 @@
+import "./Icono.css";
+
 const TRAZOS = {
   buscar: (
     <>
@@ -32,12 +34,10 @@ const TRAZOS = {
 export default function Icono({ nombre }) {
   return (
     <svg
+      className="icono"
       viewBox="0 0 24 24"
-      width="20"
-      height="20"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
