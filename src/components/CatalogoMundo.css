@@ -391,8 +391,16 @@
 }
 
 .catalogo-cromo-rareza {
-  justify-self: start;
-  padding: 2px var(--espacio-2);
+  position: absolute;
+  top: var(--espacio-2);
+  right: var(--espacio-2);
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  place-items: center;
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
   font-size: var(--texto-micro);
 }
 

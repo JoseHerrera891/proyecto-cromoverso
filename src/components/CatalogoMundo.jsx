@@ -350,6 +350,7 @@ export default function CatalogoMundo({ id, textos }) {
                         <Badge
                           rareza={cromo.rareza}
                           className="catalogo-cromo-rareza"
+                          aria-label={rareza.nombre}
                         >
                           <span
                             className="catalogo-cromo-icono"
@@ -358,7 +359,6 @@ export default function CatalogoMundo({ id, textos }) {
                           >
                             {iconoRareza}
                           </span>
-                          <span>{rareza.nombre}</span>
                         </Badge>
                       </Card>
                     </Link>
