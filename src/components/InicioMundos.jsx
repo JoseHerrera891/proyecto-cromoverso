@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useInicioPublico } from "../hooks/useInicioPublico.js";
+import InicioRarezas from "./InicioRarezas.jsx";
 import "./InicioMundos.css";
 
 function insertarVariables(plantilla, variables) {
@@ -68,6 +69,7 @@ export default function InicioMundos({ textos }) {
           </li>
         ))}
       </ul>
+      <InicioRarezas rarezas={datos.rarezas} />
     </section>
   );
 }

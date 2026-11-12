@@ -13,6 +13,7 @@ describe("InicioMundos", () => {
     useInicioPublico.mockReturnValue({
       datos: {
         totalAlbum: 120,
+        rarezas: [],
         mundos: Array.from({ length: 6 }, (_, index) => ({
           id: `mundo-${index}`,
           nombre: `Mundo ${index}`,

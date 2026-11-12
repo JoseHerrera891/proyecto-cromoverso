@@ -1,0 +1,70 @@
+.inicio-rarezas {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inicio-rarezas-item {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-width: 0;
+  padding: var(--espacio-2);
+  border-radius: var(--radio-m);
+  background: var(--fondo-superficie);
+  color: var(--texto-principal);
+  font-size: var(--texto-pequeno);
+  font-weight: var(--peso-semi-negrita);
+}
+
+.inicio-rarezas-icono {
+  flex: 0 0 var(--espacio-3);
+  width: var(--espacio-3);
+  height: var(--espacio-3);
+  border-radius: 50%;
+  background: var(--color-rareza);
+}
+
+.inicio-rarezas-icono--rombo {
+  border-radius: 0;
+  transform: rotate(45deg) scale(0.78);
+}
+
+.inicio-rarezas-icono--estrella {
+  border-radius: 0;
+  clip-path: polygon(
+    50% 0,
+    62% 35%,
+    100% 38%,
+    72% 61%,
+    81% 100%,
+    50% 77%,
+    19% 100%,
+    28% 61%,
+    0 38%,
+    38% 35%
+  );
+}
+
+.inicio-rarezas-icono--corona {
+  border-radius: 0;
+  clip-path: polygon(
+    0 20%,
+    28% 48%,
+    40% 5%,
+    60% 48%,
+    82% 15%,
+    100% 20%,
+    90% 82%,
+    10% 82%
+  );
+}
+
+@media (max-width: 600px) {
+  .inicio-rarezas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
