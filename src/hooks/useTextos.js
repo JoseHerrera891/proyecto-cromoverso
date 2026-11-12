@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-
-const API = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "");
+import { API_BASE_URL, crearUrlApi } from "../utils/api.js";
 
 export function validarTextos(datos) {
   const textos = datos?.textos;
@@ -63,11 +62,11 @@ export function useTextos(idioma) {
 
     async function cargarTextosNavbar() {
       try {
-        if (!API) {
+        if (!API_BASE_URL) {
           throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
         }
         const respuesta = await fetch(
-          `${API}/textos?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies`,
+          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies,paginas`,
           {
             signal: controlador.signal,
           },
