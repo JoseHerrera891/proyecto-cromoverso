@@ -1,11 +1,11 @@
 .inicio-mundos {
-  padding-block: var(--espacio-6);
+  padding-block: var(--espacio-5);
   scroll-margin-top: var(--espacio-5);
 }
 
 .inicio-mundos-encabezado {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   gap: var(--espacio-3);
 }
@@ -26,6 +26,21 @@
   border-radius: var(--radio-pildora);
   background: var(--marca-acento);
   font-weight: var(--peso-negrita);
+}
+
+.inicio-mundos:not(.inicio-mundos--pagina) > .inicio-mundos-encabezado > .inicio-mundos-total {
+  display: none;
+}
+
+.inicio-mundos-enlace {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--espacio-1);
+  padding-bottom: var(--espacio-1);
+  font-size: var(--texto-pequeno);
+  font-weight: var(--peso-negrita);
+  text-decoration: none;
 }
 
 .inicio-mundos-lista {
@@ -169,8 +184,50 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .inicio-mundos-lista {
     grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .inicio-mundo {
+    min-height: 5.625rem;
+    padding: var(--espacio-2);
+    border-radius: var(--radio-m);
+  }
+
+  .inicio-mundo-identificador {
+    justify-content: space-between;
+    gap: var(--espacio-1);
+  }
+
+  .inicio-mundos-lista > li:not(:first-child) .inicio-mundo-orden {
+    visibility: hidden;
+  }
+
+  .inicio-mundo-orden {
+    font-size: var(--texto-micro);
+  }
+
+  .inicio-mundo-icono {
+    flex-basis: 1.75rem;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .inicio-mundo-icono svg {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+
+  .inicio-mundo-nombre {
+    margin-top: var(--espacio-1);
+    font-size: clamp(0.625rem, 1.1vw, 0.75rem);
+  }
+
+  .inicio-mundo-total {
+    margin-top: 2px;
+    padding: 0;
+    background: transparent;
+    font-size: var(--texto-micro);
   }
 }

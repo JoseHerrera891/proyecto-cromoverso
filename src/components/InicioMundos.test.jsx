@@ -32,6 +32,7 @@ describe("InicioMundos", () => {
             titulo: "Los seis mundos",
             subtitulo: "Cada mundo tiene cromos.",
             etiquetas: { mundo: "Mundo {numero}", cromos: "{cantidad} cromos" },
+            enlaces: { ver: "Ver {mundo}" },
           },
         },
       },
@@ -43,10 +44,11 @@ describe("InicioMundos", () => {
       </MemoryRouter>,
     );
 
-    expect(markup.match(/href="\/mundos\/mundo-/g)).toHaveLength(6);
+    expect(markup.match(/href="\/mundos\/mundo-/g)).toHaveLength(7);
     expect(markup.match(/20 cromos/g)).toHaveLength(6);
     expect(markup).toContain("Los seis mundos");
-    expect(markup).toContain(">120</span>");
+    expect(markup).toContain("Ver Mundo 0");
+    expect(markup).not.toContain(">120</span>");
     expect(markup).not.toContain("inicio-rarezas");
     expect(markup).toContain('class="inicio-mundo-icono"');
 

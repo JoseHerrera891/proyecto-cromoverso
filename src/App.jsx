@@ -14,6 +14,13 @@ import { obtenerTituloPagina } from "./utils/tituloPagina.js";
 const COOKIE_CONSENT_NAME = "consentimiento";
 const COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365;
 const LANGUAGE_COOKIE_NAME = "idioma";
+const PREFERENCIAS_ACCESIBILIDAD_INICIALES = {
+  tamanoTexto: "normal",
+  altoContraste: false,
+  reducirMovimiento: false,
+  subrayarEnlaces: false,
+  fuenteLecturaFacil: false,
+};
 
 function leerCookie(nombre) {
   const prefijo = `${nombre}=`;
@@ -30,7 +37,9 @@ function leerIdiomaInicial() {
 
 export default function App() {
   const [idioma, setIdioma] = useState(leerIdiomaInicial);
-  const [textoGrande, setTextoGrande] = useState(false);
+  const [preferenciasAccesibilidad, setPreferenciasAccesibilidad] = useState(
+    PREFERENCIAS_ACCESIBILIDAD_INICIALES,
+  );
   const [mostrarAvisoCookies, setMostrarAvisoCookies] = useState(
     () => !leerCookie(COOKIE_CONSENT_NAME),
   );
@@ -45,11 +54,28 @@ export default function App() {
   }, [idioma]);
 
   useEffect(() => {
-    document.documentElement.style.fontSize = textoGrande ? "112%" : "";
-    return () => {
-      document.documentElement.style.fontSize = "";
-    };
-  }, [textoGrande]);
+    const raiz = document.documentElement;
+    raiz.dataset.tamanoTexto = preferenciasAccesibilidad.tamanoTexto;
+    raiz.dataset.altoContraste = String(
+      preferenciasAccesibilidad.altoContraste,
+    );
+    raiz.dataset.reducirMovimiento = String(
+      preferenciasAccesibilidad.reducirMovimiento,
+    );
+    raiz.dataset.subrayarEnlaces = String(
+      preferenciasAccesibilidad.subrayarEnlaces,
+    );
+    raiz.dataset.fuenteLecturaFacil = String(
+      preferenciasAccesibilidad.fuenteLecturaFacil,
+    );
+  }, [preferenciasAccesibilidad]);
+
+  function cambiarPreferenciaAccesibilidad(nombre, valor) {
+    setPreferenciasAccesibilidad((actuales) => ({
+      ...actuales,
+      [nombre]: valor,
+    }));
+  }
 
   function buscar(consulta) {
     const parametros = new URLSearchParams({ q: consulta });
@@ -82,8 +108,11 @@ export default function App() {
           cambiarIdioma={cambiarIdioma}
           activo={activo}
           onBuscar={buscar}
-          textoGrande={textoGrande}
-          alternarTexto={() => setTextoGrande((valor) => !valor)}
+          preferenciasAccesibilidad={preferenciasAccesibilidad}
+          onCambiarAccesibilidad={cambiarPreferenciaAccesibilidad}
+          onRestablecerAccesibilidad={() =>
+            setPreferenciasAccesibilidad(PREFERENCIAS_ACCESIBILIDAD_INICIALES)
+          }
         />
         <main id="contenido-principal">
           {pathname === "/" ? (

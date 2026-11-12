@@ -293,6 +293,12 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 1199px) {
+  .inicio-hero {
+    min-height: clamp(20rem, 39vw, 35rem);
+  }
+}
+
 @media (max-width: 360px) {
   .inicio-hero {
     padding-inline: var(--espacio-4);

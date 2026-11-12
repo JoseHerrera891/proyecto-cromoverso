@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Icono from "./Icono.jsx";
 import LanguageSelector from "./LanguageSelector.jsx";
+import PanelAccesibilidad from "./PanelAccesibilidad.jsx";
 import "./Navbar.css";
 
 const DESTINOS = {
@@ -25,20 +26,31 @@ export default function Navbar({
   cambiarIdioma,
   activo,
   onBuscar,
-  textoGrande,
-  alternarTexto,
+  preferenciasAccesibilidad,
+  onCambiarAccesibilidad,
+  onRestablecerAccesibilidad,
 }) {
   const [abierto, setAbierto] = useState(false);
+  const [panelAccesibilidadAbierto, setPanelAccesibilidadAbierto] =
+    useState(false);
   const [busqueda, setBusqueda] = useState("");
   const botonMenu = useRef(null);
+  const botonAccesibilidad = useRef(null);
   const campoBusqueda = useRef(null);
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
   const estados = textos?.estados;
-  const opcionesTexto = textos?.accesibilidad?.tamanoTexto;
+  const textosAccesibilidad = textos?.accesibilidad;
   const ingles = idioma === "en";
   const abrir = menuMovil?.abrir ?? (ingles ? "Open menu" : "Abrir menú");
   const cerrar = menuMovil?.cerrar ?? (ingles ? "Close menu" : "Cerrar menú");
+  const cerrarPanelAccesibilidad = useCallback(
+    () => setPanelAccesibilidadAbierto(false),
+    [],
+  );
+  const cerrarAccesibilidad =
+    textosAccesibilidad?.botones?.cerrar ??
+    (ingles ? "Close accessibility options" : "Cerrar opciones de accesibilidad");
   const enlaces = Object.entries(nav?.enlaces ?? {}).filter(
     ([clave]) => DESTINOS[clave],
   );
@@ -48,14 +60,14 @@ export default function Navbar({
 
   useEffect(() => {
     function cerrarConEscape(evento) {
-      if (evento.key === "Escape" && abierto) {
+      if (evento.key === "Escape" && abierto && !panelAccesibilidadAbierto) {
         setAbierto(false);
         botonMenu.current?.focus();
       }
     }
     document.addEventListener("keydown", cerrarConEscape);
     return () => document.removeEventListener("keydown", cerrarConEscape);
-  }, [abierto]);
+  }, [abierto, panelAccesibilidadAbierto]);
 
   function abrirBusqueda() {
     setAbierto(true);
@@ -207,16 +219,19 @@ export default function Navbar({
                 etiqueta={nav?.aria.idioma ?? "Cambiar idioma"}
               />
               <button
+                ref={botonAccesibilidad}
                 className="navbar-icono navbar-accesibilidad"
                 type="button"
-                aria-label={`${opcionesTexto?.titulo ?? (ingles ? "Text size" : "Tamaño del texto")}: ${
-                  textoGrande
-                    ? (opcionesTexto?.opciones?.grande ??
-                      (ingles ? "Large" : "Grande"))
-                    : (opcionesTexto?.opciones?.normal ?? "Normal")
-                }`}
-                aria-pressed={textoGrande}
-                onClick={alternarTexto}
+                aria-label={
+                  textosAccesibilidad?.botones?.abrir ??
+                  (ingles
+                    ? "Open accessibility options"
+                    : "Abrir opciones de accesibilidad")
+                }
+                aria-expanded={panelAccesibilidadAbierto}
+                aria-haspopup="dialog"
+                aria-controls="panel-accesibilidad"
+                onClick={() => setPanelAccesibilidadAbierto(true)}
               >
                 <Icono nombre="accesibilidad" />
               </button>
@@ -224,6 +239,23 @@ export default function Navbar({
           </div>
         </div>
       </nav>
+      {panelAccesibilidadAbierto && textosAccesibilidad && (
+        <PanelAccesibilidad
+          id="panel-accesibilidad"
+          textos={{
+            ...textosAccesibilidad,
+            botones: {
+              ...textosAccesibilidad.botones,
+              cerrar: cerrarAccesibilidad,
+            },
+          }}
+          preferencias={preferenciasAccesibilidad}
+          onCambiar={onCambiarAccesibilidad}
+          onRestablecer={onRestablecerAccesibilidad}
+          onCerrar={cerrarPanelAccesibilidad}
+          botonAbrir={botonAccesibilidad}
+        />
+      )}
     </header>
   );
 }

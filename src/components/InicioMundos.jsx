@@ -37,7 +37,7 @@ export default function InicioMundos({ textos, comoPagina = false }) {
 
   return (
     <section
-      className="inicio-mundos"
+      className={`inicio-mundos${comoPagina ? " inicio-mundos--pagina" : ""}`}
       id="mundos"
       aria-labelledby="inicio-mundos-titulo"
     >
@@ -50,7 +50,20 @@ export default function InicioMundos({ textos, comoPagina = false }) {
           )}
           <p>{pagina.mundos.subtitulo}</p>
         </div>
-        <span className="inicio-mundos-total">{datos.totalAlbum}</span>
+        {!comoPagina && datos.mundos[0] && (
+          <Link
+            className="inicio-mundos-enlace"
+            to={`/mundos/${datos.mundos[0].id}`}
+          >
+            {insertarVariables(pagina.mundos.enlaces.ver, {
+              mundo: datos.mundos[0].nombre,
+            })}
+            <span aria-hidden="true">→</span>
+          </Link>
+        )}
+        {comoPagina && (
+          <span className="inicio-mundos-total">{datos.totalAlbum}</span>
+        )}
       </div>
       <ul className="inicio-mundos-lista">
         {datos.mundos.map((mundo, indice) => (

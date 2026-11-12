@@ -20,10 +20,18 @@ const textosRequeridos = {
     error: { texto: "Error", botones: { reintentar: "Reintentar" } },
   },
   accesibilidad: {
+    titulo: "Accesibilidad",
+    botones: { abrir: "Abrir opciones", restablecer: "Restablecer" },
     tamanoTexto: {
       titulo: "Tamaño del texto",
-      opciones: { normal: "Normal", grande: "Grande" },
+      opciones: { normal: "Normal", grande: "Grande", muyGrande: "Muy grande" },
     },
+    altoContraste: { titulo: "Alto contraste", ayuda: "Más contraste" },
+    reducirMovimiento: { titulo: "Reducir movimiento", ayuda: "Menos movimiento" },
+    subrayarEnlaces: { titulo: "Subrayar enlaces", ayuda: "Más claridad" },
+    fuenteLecturaFacil: { titulo: "Lectura fácil", ayuda: "Más legible" },
+    etiquetas: { encendido: "Encendido", apagado: "Apagado" },
+    enlaces: { declaracion: "Declaración de accesibilidad" },
   },
   cookies: {
     banner: {

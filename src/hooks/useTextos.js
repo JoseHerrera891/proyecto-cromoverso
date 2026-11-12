@@ -5,6 +5,7 @@ export function validarTextos(datos) {
   const textos = datos?.textos;
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
+  const accesibilidad = textos?.accesibilidad;
   const bannerCookies = textos?.cookies?.banner;
   const footer = textos?.footer;
   const columnasFooter = footer?.columnas;
@@ -35,6 +36,21 @@ export function validarTextos(datos) {
     textos?.accesibilidad?.tamanoTexto?.titulo,
     textos?.accesibilidad?.tamanoTexto?.opciones?.normal,
     textos?.accesibilidad?.tamanoTexto?.opciones?.grande,
+    accesibilidad?.titulo,
+    accesibilidad?.botones?.abrir,
+    accesibilidad?.botones?.restablecer,
+    accesibilidad?.tamanoTexto?.opciones?.muyGrande,
+    accesibilidad?.altoContraste?.titulo,
+    accesibilidad?.altoContraste?.ayuda,
+    accesibilidad?.reducirMovimiento?.titulo,
+    accesibilidad?.reducirMovimiento?.ayuda,
+    accesibilidad?.subrayarEnlaces?.titulo,
+    accesibilidad?.subrayarEnlaces?.ayuda,
+    accesibilidad?.fuenteLecturaFacil?.titulo,
+    accesibilidad?.fuenteLecturaFacil?.ayuda,
+    accesibilidad?.etiquetas?.encendido,
+    accesibilidad?.etiquetas?.apagado,
+    accesibilidad?.enlaces?.declaracion,
     bannerCookies?.titulo,
     bannerCookies?.texto,
     bannerCookies?.botones?.aceptar,
