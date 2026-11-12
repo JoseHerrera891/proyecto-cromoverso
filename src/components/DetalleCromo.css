@@ -43,6 +43,15 @@
   background: var(--fondo-superficie);
 }
 
+.detalle-cromo-rareza {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin: var(--espacio-3) 0 0 var(--espacio-2);
+  color: var(--color-rareza);
+  font-weight: var(--peso-semi-negrita);
+}
+
 .detalle-cromo > section {
   margin-top: var(--espacio-5);
 }

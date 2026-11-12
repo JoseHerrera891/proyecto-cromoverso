@@ -55,6 +55,20 @@ export function obtenerCromosAdyacentes(cromo, cromosMundo) {
   };
 }
 
+export function validarRarezaCromo(rareza, rarezas) {
+  if (
+    !Array.isArray(rarezas) ||
+    !rarezas.every(({ id, nombre, icono, color } = {}) =>
+      [id, nombre, icono, color].every((valor) => typeof valor === "string"),
+    )
+  ) {
+    throw new Error("La lista de rarezas no tiene el formato esperado.");
+  }
+  const resultado = rarezas.find(({ id }) => id === rareza);
+  if (!resultado) throw new Error(`No se encontró la rareza ${rareza}.`);
+  return resultado;
+}
+
 export function useDetalleCromo(id) {
   const [cromo, setCromo] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -73,13 +87,25 @@ export function useDetalleCromo(id) {
 
     solicitarDetalleCromo(id, controlador.signal)
       .then(async (dato) => {
-        const respuesta = await fetch(
-          crearUrlApi(`mundos/${encodeURIComponent(dato.mundo)}`),
-          { signal: controlador.signal },
+        const [respuestaMundo, respuestaRarezas] = await Promise.all([
+          fetch(crearUrlApi(`mundos/${encodeURIComponent(dato.mundo)}`), {
+            signal: controlador.signal,
+          }),
+          fetch(crearUrlApi("rarezas"), { signal: controlador.signal }),
+        ]);
+        const fallo = [respuestaMundo, respuestaRarezas].find(
+          (respuesta) => !respuesta.ok,
         );
-        if (!respuesta.ok) throw new Error(`Error HTTP ${respuesta.status}.`);
-        const mundo = await respuesta.json();
-        return { ...dato, ...obtenerCromosAdyacentes(dato, mundo.cromos) };
+        if (fallo) throw new Error(`Error HTTP ${fallo.status}.`);
+        const [mundo, listaRarezas] = await Promise.all([
+          respuestaMundo.json(),
+          respuestaRarezas.json(),
+        ]);
+        return {
+          ...dato,
+          ...obtenerCromosAdyacentes(dato, mundo.cromos),
+          datosRareza: validarRarezaCromo(dato.rareza, listaRarezas.datos),
+        };
       })
       .then((dato) => vigente && setCromo(dato))
       .catch((error) => {

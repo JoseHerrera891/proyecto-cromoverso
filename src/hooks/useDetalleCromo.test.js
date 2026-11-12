@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   obtenerCromosAdyacentes,
   solicitarDetalleCromo,
+  validarRarezaCromo,
 } from "./useDetalleCromo.js";
 
 const detalle = {
@@ -65,5 +66,23 @@ describe("obtenerCromosAdyacentes", () => {
     });
     expect(obtenerCromosAdyacentes(cromos[0], cromos).anterior).toBeNull();
     expect(obtenerCromosAdyacentes(cromos[2], cromos).siguiente).toBeNull();
+  });
+});
+
+describe("validarRarezaCromo", () => {
+  it("encuentra la rareza con su nombre, icono y color", () => {
+    const rarezas = [
+      {
+        id: "legendaria",
+        nombre: "Legendaria",
+        icono: "corona",
+        color: "#C9A227",
+      },
+    ];
+
+    expect(validarRarezaCromo("legendaria", rarezas)).toEqual(rarezas[0]);
+    expect(() => validarRarezaCromo("mítica", rarezas)).toThrow(
+      "No se encontró la rareza mítica.",
+    );
   });
 });

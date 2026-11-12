@@ -48,6 +48,11 @@ describe("DetalleCromo", () => {
         mundoNombre: "Ciudad Neón",
         posicion: 1,
         tipo: "heroe",
+        datosRareza: {
+          nombre: "Legendaria",
+          icono: "corona",
+          color: "#C9A227",
+        },
         poder: "Descarga eléctrica",
         descripcion: "Cuida la ciudad.",
         atributos: { fuerza: 98, velocidad: 87, mente: 75, energia: 80 },
@@ -67,6 +72,8 @@ describe("DetalleCromo", () => {
 
     expect(markup).toContain("<h1>Voltia</h1>");
     expect(markup).toContain("CV-001 · Ciudad Neón, posición 1");
+    expect(markup).toContain("Legendaria");
+    expect(markup).toContain("♛");
     expect(markup).toContain("Descarga eléctrica");
     expect(markup).toContain('href="/mundos/neon"');
     expect(markup).toContain("Fuerza");

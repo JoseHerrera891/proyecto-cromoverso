@@ -2,6 +2,13 @@ import { Link } from "react-router-dom";
 import { useDetalleCromo } from "../hooks/useDetalleCromo.js";
 import "./DetalleCromo.css";
 
+const ICONOS_RAREZA = {
+  circulo: "●",
+  rombo: "◆",
+  estrella: "★",
+  corona: "♛",
+};
+
 function insertarVariables(plantilla, variables) {
   return Object.entries(variables).reduce(
     (texto, [clave, valor]) => texto.replaceAll(`{${clave}}`, String(valor)),
@@ -65,6 +72,15 @@ export default function DetalleCromo({ id, textos }) {
         </p>
         <span className="detalle-cromo-tipo">
           {pagina.encabezado.tipos[cromo.tipo]}
+        </span>
+        <span
+          className="detalle-cromo-rareza"
+          style={{ "--color-rareza": cromo.datosRareza.color }}
+        >
+          <span aria-hidden="true">
+            {ICONOS_RAREZA[cromo.datosRareza.icono]}
+          </span>
+          {cromo.datosRareza.nombre}
         </span>
       </header>
       <section aria-labelledby="detalle-cromo-poder">
