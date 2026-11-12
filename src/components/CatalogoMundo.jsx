@@ -141,7 +141,10 @@ export default function CatalogoMundo({ id, textos }) {
                     }
                     style={{ "--color-mundo-enlace": mundo.color }}
                   >
-                    <span>{mundo.nombre}</span>
+                    <span className="catalogo-mundo-identidad">
+                      <span className="catalogo-mundo-punto" aria-hidden="true" />
+                      {mundo.nombre}
+                    </span>
                     <span>{mundo.totalCromos}</span>
                   </Link>
                 </li>
@@ -175,7 +178,9 @@ export default function CatalogoMundo({ id, textos }) {
                   className={`catalogo-opcion-icono catalogo-opcion-icono--${rareza.icono}`}
                   style={{ "--color-rareza": rareza.color }}
                   aria-hidden="true"
-                />
+                >
+                  {ICONOS_RAREZA[rareza.icono]}
+                </span>
                 {rareza.nombre}
                 <span className="catalogo-filtro-cantidad">
                   {cantidadPorRareza(rareza.id)}
@@ -371,7 +376,9 @@ export default function CatalogoMundo({ id, textos }) {
                           >
                             {iconoRareza}
                           </span>
-                          {rareza.nombre}
+                          <span className="catalogo-solo-lector">
+                            {rareza.nombre}
+                          </span>
                         </Badge>
                       </Card>
                     </Link>

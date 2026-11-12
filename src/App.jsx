@@ -122,15 +122,15 @@ export default function App() {
                 <InicioMundos textos={datos.textos} />
               </div>
             </>
+          ) : pathname.startsWith("/mundos/") ? (
+            <CatalogoMundo
+              id={pathname.split("/")[2] ?? ""}
+              textos={datos.textos}
+            />
           ) : (
             <div className="contenedor">
               {pathname === "/mundos" ? (
                 <InicioMundos textos={datos.textos} comoPagina />
-              ) : pathname.startsWith("/mundos/") ? (
-                <CatalogoMundo
-                  id={pathname.split("/")[2] ?? ""}
-                  textos={datos.textos}
-                />
               ) : pathname.startsWith("/cromos/") ? (
                 <DetalleCromo
                   id={pathname.split("/")[2] ?? ""}

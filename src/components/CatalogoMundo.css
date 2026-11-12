@@ -99,6 +99,8 @@
   grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
   gap: var(--espacio-5);
   padding-top: var(--espacio-5);
+  width: min(calc(100% - var(--espacio-6)), 90rem);
+  margin-inline: auto;
 }
 
 .catalogo-filtros-escritorio {
@@ -138,6 +140,20 @@
   border-radius: var(--radio-s);
   color: var(--texto-principal);
   text-decoration: none;
+}
+
+.catalogo-mundo-identidad {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+.catalogo-mundo-punto {
+  flex: 0 0 var(--espacio-2);
+  width: var(--espacio-2);
+  height: var(--espacio-2);
+  border-radius: var(--radio-pildora);
+  background: var(--color-mundo-enlace);
 }
 
 .catalogo-mundos a[aria-current="page"] {
@@ -189,11 +205,14 @@
 }
 
 .catalogo-opcion-icono {
-  width: var(--espacio-2);
-  height: var(--espacio-2);
-  flex: 0 0 auto;
-  border-radius: var(--radio-pildora);
-  background: var(--color-rareza);
+  display: grid;
+  flex: 0 0 1rem;
+  width: 1rem;
+  height: 1rem;
+  place-items: center;
+  color: var(--color-rareza);
+  font-size: var(--texto-pequeno);
+  line-height: 1;
 }
 
 .catalogo-resultados {
@@ -348,9 +367,16 @@
 }
 
 .catalogo-cromo-rareza {
-  align-self: start;
-  justify-self: start;
-  padding: var(--espacio-1) var(--espacio-2);
+  position: absolute;
+  top: var(--espacio-2);
+  right: var(--espacio-2);
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  place-items: center;
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
   font-size: var(--texto-micro);
 }
 
@@ -385,8 +411,22 @@
 }
 
 @media (min-width: 768px) and (max-width: 959px) {
+  .catalogo-cuerpo {
+    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    gap: var(--espacio-3);
+  }
+
   .catalogo-cromos {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--espacio-2);
+  }
+
+  .catalogo-cromo {
+    padding: var(--espacio-1);
+  }
+
+  .catalogo-cromo-nombre {
+    font-size: var(--texto-micro);
   }
 }
 
