@@ -67,7 +67,7 @@
   --icono-tamano: 20px;
   --ancho-buscador-navbar-minimo: 190px;
   --ancho-buscador-navbar-maximo: 260px;
-  --ancho-cookie-banner-maximo: 47.5rem;
+  --ancho-cookie-banner-maximo: 42rem;
   --borde-grosor-sutil: 1px;
   --borde-grosor: 2px;
   --borde-foco-grosor: 3px;
@@ -103,5 +103,5 @@
   --interlineado-unidad: 1;
   --interlineado: 1.6;
   --radio: var(--radio-s);
-  --ancho-contenido: 75rem;
+  --ancho-contenido: 66.5rem;
 }
