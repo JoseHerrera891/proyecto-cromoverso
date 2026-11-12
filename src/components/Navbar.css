@@ -296,10 +296,15 @@
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
+  .navbar-interior {
+    width: calc(100% - var(--espacio-6));
+  }
+
   .navbar-bar {
     flex-wrap: nowrap;
-    gap: var(--espacio-2);
-    padding-inline: var(--espacio-2);
+    gap: var(--espacio-6);
+    min-height: 2.8125rem;
+    padding: 0 var(--espacio-3);
   }
 
   .navbar-marca img {
@@ -308,10 +313,6 @@
   }
 
   .navbar-movil-acciones {
-    order: 2;
-  }
-
-  .navbar-movil-acciones button:nth-child(2) {
     display: none;
   }
 
@@ -320,6 +321,7 @@
     flex: 1;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     gap: var(--espacio-1);
     width: auto;
     max-height: none;
@@ -348,8 +350,9 @@
   }
 
   .navbar-enlaces a {
-    min-height: var(--control-alto-minimo);
+    min-height: 2.25rem;
     padding-inline: var(--espacio-1);
+    font-size: var(--texto-micro);
     white-space: nowrap;
   }
 
@@ -360,12 +363,13 @@
 
   .navbar-utilidades {
     order: 3;
+    margin-left: auto;
     gap: var(--espacio-1);
   }
 
   .navbar-accesibilidad {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 1.75rem;
+    height: 1.75rem;
   }
 
   .navbar-cuenta:not(.navbar-cuenta-movil) {
@@ -375,7 +379,7 @@
 
   .navbar-ingresar,
   .navbar-accion {
-    min-height: 2.25rem;
+    min-height: 2rem;
     padding: var(--espacio-1) var(--espacio-2);
     font-size: var(--texto-micro);
   }

@@ -120,7 +120,7 @@ export default function App() {
           ) : pathname === "/" ? (
             <>
               <InicioHero textos={datos.textos} />
-              <div className="contenedor">
+              <div className="contenedor inicio-contenedor">
                 <InicioMundos textos={datos.textos} />
               </div>
             </>

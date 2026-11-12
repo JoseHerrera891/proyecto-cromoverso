@@ -231,3 +231,27 @@
     font-size: var(--texto-micro);
   }
 }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .inicio-contenedor {
+    width: min(calc(100% - 3.5rem), var(--ancho-contenido));
+  }
+
+  .inicio-mundos {
+    padding-block: var(--espacio-6) 20px;
+  }
+
+  .inicio-mundos-encabezado h2 {
+    font-size: 1.125rem;
+  }
+
+  .inicio-mundos-encabezado p {
+    margin-top: var(--espacio-1);
+    font-size: var(--texto-micro);
+  }
+
+  .inicio-mundos-lista {
+    gap: var(--espacio-2);
+    margin-top: var(--espacio-3);
+  }
+}

@@ -124,3 +124,42 @@
     gap: var(--espacio-4);
   }
 }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pie-pagina {
+    min-height: 19.75rem;
+  }
+
+  .pie-pagina-contenido {
+    width: min(calc(100% - 3.5rem), var(--ancho-contenido));
+  }
+
+  .pie-pagina-identidad img {
+    max-width: 7.5rem;
+    max-height: 1.5rem;
+  }
+
+  .pie-pagina-identidad p {
+    margin-top: var(--espacio-2);
+    font-size: var(--texto-micro);
+  }
+
+  .pie-pagina-columna h2 {
+    margin-bottom: var(--espacio-1);
+    font-size: 0.5rem;
+  }
+
+  .pie-pagina-columna ul {
+    gap: 0;
+  }
+
+  .pie-pagina-columna a {
+    min-height: 1.125rem;
+    font-size: 0.625rem;
+  }
+
+  .pie-pagina-legal {
+    padding-top: var(--espacio-3);
+    font-size: 0.5625rem;
+  }
+}
