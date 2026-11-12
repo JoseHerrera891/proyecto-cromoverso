@@ -31,10 +31,12 @@ export default function Navbar({
   onRestablecerAccesibilidad,
 }) {
   const [abierto, setAbierto] = useState(false);
+  const [busquedaAbierta, setBusquedaAbierta] = useState(false);
   const [panelAccesibilidadAbierto, setPanelAccesibilidadAbierto] =
     useState(false);
   const [busqueda, setBusqueda] = useState("");
   const botonMenu = useRef(null);
+  const botonBusqueda = useRef(null);
   const botonAccesibilidad = useRef(null);
   const campoBusqueda = useRef(null);
   const nav = textos?.navbar;
@@ -60,6 +62,11 @@ export default function Navbar({
 
   useEffect(() => {
     function cerrarConEscape(evento) {
+      if (evento.key === "Escape" && busquedaAbierta) {
+        setBusquedaAbierta(false);
+        botonBusqueda.current?.focus();
+        return;
+      }
       if (evento.key === "Escape" && abierto && !panelAccesibilidadAbierto) {
         setAbierto(false);
         botonMenu.current?.focus();
@@ -67,9 +74,18 @@ export default function Navbar({
     }
     document.addEventListener("keydown", cerrarConEscape);
     return () => document.removeEventListener("keydown", cerrarConEscape);
-  }, [abierto, panelAccesibilidadAbierto]);
+  }, [abierto, busquedaAbierta, panelAccesibilidadAbierto]);
 
   function abrirBusqueda() {
+    if (window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches) {
+      if (busquedaAbierta) {
+        setBusquedaAbierta(false);
+      } else {
+        setBusquedaAbierta(true);
+        requestAnimationFrame(() => campoBusqueda.current?.focus());
+      }
+      return;
+    }
     setAbierto(true);
     requestAnimationFrame(() => campoBusqueda.current?.focus());
   }
@@ -80,6 +96,7 @@ export default function Navbar({
     if (!consulta) return;
     onBuscar(consulta);
     setAbierto(false);
+    setBusquedaAbierta(false);
   }
 
   return (
@@ -97,9 +114,12 @@ export default function Navbar({
 
           <div className="navbar-movil-acciones">
             <button
+              ref={botonBusqueda}
               type="button"
               className="navbar-icono"
               aria-label={nav?.buscador.aria ?? "Buscar"}
+              aria-expanded={busquedaAbierta || abierto}
+              aria-controls="navbar-busqueda"
               disabled={!nav}
               onClick={abrirBusqueda}
             >
@@ -159,7 +179,8 @@ export default function Navbar({
                   ))}
                 </ul>
                 <form
-                  className="navbar-buscador"
+                  id="navbar-busqueda"
+                  className={`navbar-buscador${busquedaAbierta ? " is-abierto" : ""}`}
                   role="search"
                   aria-label={nav.buscador.aria}
                   onSubmit={buscar}

@@ -27,8 +27,8 @@
 }
 
 .selector-idioma button[aria-pressed="true"] {
-  color: var(--texto-principal);
-  background: var(--marca-acento);
+  color: var(--texto-inverso);
+  background: var(--marca-primario);
 }
 
 .selector-idioma button:hover:not(:disabled):not([aria-pressed="true"]) {
@@ -44,4 +44,24 @@
   color: var(--texto-terciario);
   opacity: var(--opacidad-deshabilitado);
   cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .selector-idioma > .icono {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .selector-idioma {
+    gap: 0;
+    padding: 2px;
+  }
+
+  .selector-idioma button {
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    padding-inline: var(--espacio-1);
+    font-size: var(--texto-micro);
+  }
 }
