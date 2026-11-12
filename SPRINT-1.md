@@ -40,9 +40,9 @@ sigue consultándose y las rarezas aparecen en el catálogo.
 
 Como visitante de Cromoverso, quiero ver los 20 cromos del mundo, con filtros por rareza y por tipo, para encontrar los cromos que me interesan.
 
-1. La vista muestra los 20 cromos del mundo con filtros por rareza y tipo, con datos de `GET /mundos/:id`, `GET /cromos` y `GET /rarezas`.
+1. La vista muestra el nombre y el rango del mundo, la navegación entre los seis mundos, los totales por rareza y tipo, y sus 20 cromos ordenados por número. Los datos vienen de `GET /mundos`, `GET /mundos/:id`, `GET /cromos` y `GET /rarezas`.
 2. Los filtros viven en la URL (por ejemplo, `?rareza=legendaria&tipo=villano`) y se conservan al recargar o compartir el enlace.
-3. Cada elemento enlaza a la ruta de su detalle (vista 3, planificada para Sprint 2). La rareza siempre se muestra con su icono y su palabra (`GET /rarezas`).
+3. Las tarjetas muestran nombre, mundo, tipo e ilustración; cada elemento enlaza a la ruta de su detalle (vista 3, planificada para Sprint 2). La rareza siempre se muestra con su icono y su palabra (`GET /rarezas`).
 4. La vista se ve igual que en Figma en web y móvil.
 5. Referencia: Figma, bloque «Sprint 1», columna «2 · Catálogo de un mundo» (web y móvil).
 
@@ -66,7 +66,7 @@ Alcance: aviso de cookies con aceptar y rechazar, sin panel de preferencias.
 2. «Aceptar» y «Rechazar» tienen el mismo tamaño y el mismo peso visual.
 3. La decisión se guarda en la cookie `consentimiento` y el aviso no vuelve a salir.
 4. Si la persona rechaza, el sitio funciona igual, pero el idioma no se guarda en la cookie `idioma`.
-5. Referencia: Figma, bloque «Sprint 1», «Aviso de cookies (primera visita)». El aviso se puede usar con teclado.
+5. Referencia: Figma, bloque «Sprint 1», «Aviso de cookies (primera visita)». En escritorio se muestra como aviso horizontal compacto; en móvil se adapta al ancho disponible. El aviso se puede usar con teclado.
 
 ## Decisión sobre el stack
 

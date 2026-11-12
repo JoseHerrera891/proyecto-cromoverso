@@ -5,7 +5,7 @@
   min-height: 23rem;
   overflow: hidden;
   padding: clamp(var(--espacio-5), 5vw, var(--espacio-8));
-  border-radius: var(--radio-xl);
+  border-radius: 0;
   color: var(--texto-inverso);
   background:
     linear-gradient(132deg, transparent 0 56%, var(--fondo-inverso-2) 56%),
@@ -139,7 +139,7 @@
     display: block;
     min-height: 0;
     padding: var(--espacio-5);
-    border-radius: 0 0 var(--radio-xl) var(--radio-xl);
+    border-radius: 0;
   }
 
   .inicio-hero h1 {

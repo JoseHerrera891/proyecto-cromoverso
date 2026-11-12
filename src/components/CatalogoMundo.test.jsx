@@ -17,8 +17,22 @@ describe("CatalogoMundo", () => {
           nombre: "Ciudad Neón",
           descripcion: "Una ciudad tecnológica.",
           totalCromos: 20,
+          numeros: { desde: 1, hasta: 20 },
+          figura: "rayo",
           color: "#7C4DFF",
+          cromos: [
+            { rareza: "legendaria", tipo: "heroe" },
+            { rareza: "rara", tipo: "aliado" },
+          ],
         },
+        mundos: [
+          {
+            id: "neon",
+            nombre: "Ciudad Neón",
+            totalCromos: 20,
+            color: "#7C4DFF",
+          },
+        ],
         rarezas: [
           {
             id: "legendaria",
@@ -47,7 +61,10 @@ describe("CatalogoMundo", () => {
       paginas: {
         albumMundo: {
           migas: { inicio: "Inicio" },
-          mundos: { cromos: "{cantidad} cromos" },
+          encabezado: {
+            rango: "Mundo {numero} de 6 · cromos {desde} a {hasta}.",
+          },
+          mundos: { titulo: "Mundos", cromos: "{cantidad} cromos" },
           filtros: {
             rareza: { titulo: "Filtrar por rareza", todas: "Todas" },
             tipo: {
@@ -65,6 +82,11 @@ describe("CatalogoMundo", () => {
             texto: "Prueba otros filtros",
             botones: { limpiar: "Quitar filtros" },
           },
+          orden: {
+            etiqueta: "Orden: {orden}",
+            opciones: { numero: "número" },
+          },
+          tarjeta: { tipo: "{mundo} · {tipo}" },
         },
       },
       estados: {},
@@ -79,12 +101,15 @@ describe("CatalogoMundo", () => {
 
     expect(markup).toContain('<h1 id="catalogo-titulo">Ciudad Neón</h1>');
     expect(markup).toContain("20 cromos");
+    expect(markup).toContain("Mundo 1 de 6 · cromos 001 a 020.");
+    expect(markup).toContain("Mundos");
+    expect(markup).toContain("Orden: número");
     expect(markup).toContain("Filtrar por rareza");
     expect(markup).toContain('value="legendaria" selected');
     expect(markup).toContain("Filtrar por tipo");
     expect(markup).toContain("Quitar filtros");
     expect(markup).toContain('href="/cromos/CV-001"');
-    expect(markup).toContain('src="/images/cromo-general.png"');
+    expect(markup).toContain("Ciudad Neón · Héroe");
     expect(markup).toContain("Voltia");
     expect(markup).toContain('aria-label="Filtrar por rareza"');
     expect(markup).toContain("♛");

@@ -1,10 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
 import { solicitarDatosCatalogo } from "./useCatalogoMundo.js";
 
-const mundo = { id: "neon", nombre: "Ciudad Neón" };
+const mundo = {
+  id: "neon",
+  nombre: "Ciudad Neón",
+  cromos: [{ id: "CV-001", rareza: "rara", tipo: "heroe" }],
+};
 const cromos = [
   { id: "CV-001", nombre: "Voltia", rareza: "rara", tipo: "heroe" },
 ];
+const mundos = {
+  datos: [{ id: "neon", nombre: "Ciudad Neón", totalCromos: 20 }],
+};
 const rarezas = [
   { id: "rara", nombre: "Rara", icono: "rombo", color: "#2F6FED" },
 ];
@@ -20,7 +27,9 @@ describe("solicitarDatosCatalogo", () => {
               ? mundo
               : url.includes("/cromos?")
                 ? { datos: cromos, paginacion: { total: 1 } }
-                : { datos: rarezas },
+                : url.endsWith("/mundos")
+                  ? mundos
+                  : { datos: rarezas },
           ),
       }),
     );
@@ -36,9 +45,10 @@ describe("solicitarDatosCatalogo", () => {
       mundo,
       cromos,
       rarezas,
+      mundos: mundos.datos,
       paginacion: { total: 1 },
     });
-    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(fetcher).toHaveBeenCalledTimes(4);
     expect(fetcher.mock.calls[1][0]).toContain(
       "mundo=neon&rareza=rara&tipo=heroe",
     );

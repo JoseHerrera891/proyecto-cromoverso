@@ -4,6 +4,7 @@ import { useCatalogoMundo } from "../hooks/useCatalogoMundo.js";
 import Badge from "./Badge.jsx";
 import Card from "./Card.jsx";
 import Icono from "./Icono.jsx";
+import { FIGURAS } from "../utils/figuras.jsx";
 import "./CatalogoMundo.css";
 
 const ICONOS_RAREZA = {
@@ -57,12 +58,31 @@ export default function CatalogoMundo({ id, textos }) {
   const rarezaSeleccionada = parametros.get("rareza") ?? "";
   const tipoSeleccionado = parametros.get("tipo") ?? "";
   const hayFiltros = Boolean(rarezaSeleccionada || tipoSeleccionado);
-  const etiquetasBusqueda = textos.navbar?.buscador;
-  const cromosVisibles = datos.cromos.filter((cromo) =>
-    cromo.nombre
-      .toLocaleLowerCase()
-      .includes(busqueda.trim().toLocaleLowerCase()),
+  const numeroMundo = datos.mundos.findIndex(
+    (mundo) => mundo.id === datos.mundo.id,
   );
+  const cromosMundo = datos.mundo.cromos;
+  const cantidadPorRareza = (id) =>
+    cromosMundo.filter((cromo) => cromo.rareza === id).length;
+  const cantidadPorTipo = (id) =>
+    cromosMundo.filter((cromo) => cromo.tipo === id).length;
+  const rangoCromos = insertarVariables(pagina.encabezado.rango, {
+    numero: numeroMundo + 1,
+    desde: String(datos.mundo.numeros.desde).padStart(3, "0"),
+    hasta: String(datos.mundo.numeros.hasta).padStart(3, "0"),
+  });
+  const etiquetaOrden = insertarVariables(pagina.orden.etiqueta, {
+    orden: pagina.orden.opciones.numero,
+  });
+  const tipoNombre = (tipo) => pagina.filtros.tipo.opciones[tipo] ?? tipo;
+  const etiquetasBusqueda = textos.navbar?.buscador;
+  const cromosVisibles = [...datos.cromos]
+    .filter((cromo) =>
+      cromo.nombre
+        .toLocaleLowerCase()
+        .includes(busqueda.trim().toLocaleLowerCase()),
+    )
+    .sort((a, b) => a.numero - b.numero);
 
   function limpiarFiltros() {
     const nuevosParametros = new URLSearchParams(parametros);
@@ -93,7 +113,7 @@ export default function CatalogoMundo({ id, textos }) {
           </Link>
           <div className="catalogo-titulo-grupo">
             <h1 id="catalogo-titulo">{datos.mundo.nombre}</h1>
-            <p>{datos.mundo.descripcion}</p>
+            <p>{rangoCromos}</p>
           </div>
           <button
             className="catalogo-buscar"
@@ -109,6 +129,25 @@ export default function CatalogoMundo({ id, textos }) {
       </header>
       <div className="catalogo-cuerpo">
         <aside className="catalogo-filtros-escritorio">
+          <nav className="catalogo-mundos" aria-label={pagina.mundos.titulo}>
+            <h2>{pagina.mundos.titulo}</h2>
+            <ul>
+              {datos.mundos.map((mundo) => (
+                <li key={mundo.id}>
+                  <Link
+                    to={`/mundos/${encodeURIComponent(mundo.id)}`}
+                    aria-current={
+                      mundo.id === datos.mundo.id ? "page" : undefined
+                    }
+                    style={{ "--color-mundo-enlace": mundo.color }}
+                  >
+                    <span>{mundo.nombre}</span>
+                    <span>{mundo.totalCromos}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <fieldset>
             <legend>{pagina.filtros.rareza.titulo}</legend>
             <label className="catalogo-opcion">
@@ -119,6 +158,9 @@ export default function CatalogoMundo({ id, textos }) {
                 onChange={() => cambiarFiltro("rareza", "")}
               />
               {pagina.filtros.rareza.todas}
+              <span className="catalogo-filtro-cantidad">
+                {cromosMundo.length}
+              </span>
             </label>
             {datos.rarezas.map((rareza) => (
               <label className="catalogo-opcion" key={rareza.id}>
@@ -135,6 +177,9 @@ export default function CatalogoMundo({ id, textos }) {
                   aria-hidden="true"
                 />
                 {rareza.nombre}
+                <span className="catalogo-filtro-cantidad">
+                  {cantidadPorRareza(rareza.id)}
+                </span>
               </label>
             ))}
           </fieldset>
@@ -160,6 +205,9 @@ export default function CatalogoMundo({ id, textos }) {
                     onChange={() => cambiarFiltro("tipo", tipo)}
                   />
                   {etiqueta}
+                  <span className="catalogo-filtro-cantidad">
+                    {cantidadPorTipo(tipo)}
+                  </span>
                 </label>
               ),
             )}
@@ -181,6 +229,11 @@ export default function CatalogoMundo({ id, textos }) {
                 cantidad: datos.mundo.totalCromos,
               })}
             </span>
+            <label className="catalogo-orden">
+              <select aria-label={etiquetaOrden}>
+                <option value="numero">{etiquetaOrden}</option>
+              </select>
+            </label>
             <div className="catalogo-filtros-movil">
               <label>
                 <span className="catalogo-solo-lector">
@@ -276,14 +329,36 @@ export default function CatalogoMundo({ id, textos }) {
                         <span className="catalogo-cromo-numero">
                           #{String(cromo.numero).padStart(3, "0")}
                         </span>
-                        <img
+                        <svg
                           className="catalogo-cromo-arte"
-                          src="/images/cromo-general.png"
-                          alt=""
-                          aria-hidden="true"
-                        />
+                          viewBox="0 0 100 100"
+                          role="img"
+                          aria-label={`${cromo.nombre}, ${tipoNombre(cromo.tipo)}`}
+                          style={{
+                            "--color-figura":
+                              cromo.ilustracion?.colorBase ?? datos.mundo.color,
+                          }}
+                        >
+                          <circle
+                            className="catalogo-cromo-arte-fondo"
+                            cx="50"
+                            cy="50"
+                            r="48"
+                          />
+                          <g className="catalogo-cromo-figura">
+                            {FIGURAS[cromo.ilustracion?.figura] ??
+                              FIGURAS[datos.mundo.figura] ??
+                              FIGURAS.rayo}
+                          </g>
+                        </svg>
                         <span className="catalogo-cromo-nombre">
                           {cromo.nombre}
+                        </span>
+                        <span className="catalogo-cromo-tipo">
+                          {insertarVariables(pagina.tarjeta.tipo, {
+                            mundo: datos.mundo.nombre,
+                            tipo: tipoNombre(cromo.tipo),
+                          })}
                         </span>
                         <Badge
                           rareza={cromo.rareza}

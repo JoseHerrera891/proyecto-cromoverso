@@ -107,6 +107,45 @@
   gap: var(--espacio-3);
 }
 
+.catalogo-mundos {
+  padding: var(--espacio-3);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-m);
+  background: var(--fondo-superficie);
+}
+
+.catalogo-mundos h2 {
+  margin: 0 0 var(--espacio-2);
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-pequeno);
+}
+
+.catalogo-mundos ul {
+  display: grid;
+  gap: var(--espacio-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalogo-mundos a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+  min-height: var(--espacio-6);
+  padding: var(--espacio-1) var(--espacio-2);
+  border-radius: var(--radio-s);
+  color: var(--texto-principal);
+  text-decoration: none;
+}
+
+.catalogo-mundos a[aria-current="page"] {
+  color: var(--color-mundo-enlace);
+  background: color-mix(in srgb, var(--color-mundo-enlace) 12%, white);
+  font-weight: var(--peso-semi-negrita);
+}
+
 .catalogo-filtros-escritorio fieldset {
   display: grid;
   gap: var(--espacio-2);
@@ -143,6 +182,12 @@
   accent-color: var(--marca-primario);
 }
 
+.catalogo-filtro-cantidad {
+  margin-left: auto;
+  color: var(--texto-terciario);
+  font-size: var(--texto-micro);
+}
+
 .catalogo-opcion-icono {
   width: var(--espacio-2);
   height: var(--espacio-2);
@@ -171,6 +216,23 @@
   background: var(--fondo-superficie);
   font-size: var(--texto-pequeno);
   font-weight: var(--peso-semi-negrita);
+}
+
+.catalogo-orden {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-size: var(--texto-pequeno);
+}
+
+.catalogo-orden select {
+  min-height: var(--control-alto-minimo);
+  padding-inline: var(--espacio-2);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-s);
+  color: inherit;
+  background: var(--fondo-superficie);
+  font: inherit;
 }
 
 .catalogo-filtros-movil {
@@ -252,15 +314,37 @@
   aspect-ratio: 0.76;
   border: var(--borde-grosor) solid var(--borde-sutil);
   border-radius: var(--radio-s);
-  object-fit: cover;
+  color: var(--color-figura);
+  background:
+    radial-gradient(circle at 50% 35%, white 0 12%, transparent 58%),
+    color-mix(in srgb, var(--color-figura) 18%, white);
+}
+
+.catalogo-cromo-arte-fondo {
+  fill: transparent;
+}
+
+.catalogo-cromo-figura {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .catalogo-cromo-nombre {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   font-family: var(--fuente-titulos);
-  font-size: var(--texto-pequeno);
+  font-size: 0.75rem;
   line-height: 1.2;
+}
+
+.catalogo-cromo-tipo {
+  color: var(--texto-terciario);
+  font-size: 0.625rem;
+  line-height: 1.25;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .catalogo-cromo-rareza {
@@ -273,6 +357,12 @@
 .catalogo-cromo-icono {
   color: var(--color-rareza);
   line-height: 1;
+}
+
+.catalogo-orden:focus-within,
+.catalogo-mundos a:focus-visible {
+  outline: var(--borde-foco-grosor) solid var(--marca-acento);
+  outline-offset: var(--borde-foco-offset);
 }
 
 .catalogo-vacio {
@@ -294,7 +384,7 @@
   padding-block: var(--espacio-5);
 }
 
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 768px) and (max-width: 959px) {
   .catalogo-cromos {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -337,6 +427,31 @@
     display: none;
   }
 
+  .catalogo-filtros-escritorio {
+    display: block;
+    margin-bottom: var(--espacio-3);
+  }
+
+  .catalogo-mundos {
+    overflow: hidden;
+    padding: var(--espacio-2);
+  }
+
+  .catalogo-mundos ul {
+    display: flex;
+    overflow-x: auto;
+    gap: var(--espacio-2);
+  }
+
+  .catalogo-mundos a {
+    white-space: nowrap;
+  }
+
+  .catalogo-filtros-escritorio fieldset,
+  .catalogo-filtros-escritorio > .catalogo-limpiar {
+    display: none;
+  }
+
   .catalogo-controles {
     justify-content: flex-start;
     gap: var(--espacio-2);
@@ -347,6 +462,11 @@
     flex: 1;
     gap: var(--espacio-2);
     min-width: 0;
+  }
+
+  .catalogo-orden {
+    flex-basis: 100%;
+    justify-content: flex-end;
   }
 
   .catalogo-filtros-movil label {

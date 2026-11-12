@@ -2,12 +2,25 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { crearUrlApi } from "../utils/api.js";
 
-export function validarDatosCatalogo(mundo, respuestaCromos, respuestaRarezas) {
+export function validarDatosCatalogo(
+  mundo,
+  respuestaCromos,
+  respuestaRarezas,
+  respuestaMundos,
+) {
   const cromos = respuestaCromos?.datos;
   const rarezas = respuestaRarezas?.datos;
+  const mundos = respuestaMundos?.datos;
   if (
     typeof mundo?.id !== "string" ||
     typeof mundo?.nombre !== "string" ||
+    !Array.isArray(mundo.cromos) ||
+    !Array.isArray(mundos) ||
+    !mundos.every(
+      ({ id, nombre, totalCromos } = {}) =>
+        [id, nombre].every((valor) => typeof valor === "string") &&
+        typeof totalCromos === "number",
+    ) ||
     !Array.isArray(cromos) ||
     !Array.isArray(rarezas) ||
     !cromos.every(({ id, nombre, rareza, tipo } = {}) =>
@@ -19,7 +32,13 @@ export function validarDatosCatalogo(mundo, respuestaCromos, respuestaRarezas) {
   ) {
     throw new Error("La respuesta del catálogo no tiene el formato esperado.");
   }
-  return { mundo, cromos, rarezas, paginacion: respuestaCromos.paginacion };
+  return {
+    mundo,
+    cromos,
+    rarezas,
+    mundos,
+    paginacion: respuestaCromos.paginacion,
+  };
 }
 
 export async function solicitarDatosCatalogo(
@@ -35,16 +54,17 @@ export async function solicitarDatosCatalogo(
     `mundos/${encodeURIComponent(id)}`,
     `cromos?${parametros}`,
     "rarezas",
+    "mundos",
   ];
   const respuestas = await Promise.all(
     rutas.map((ruta) => fetcher(crearUrlApi(ruta), { signal })),
   );
   const fallo = respuestas.find((respuesta) => !respuesta.ok);
   if (fallo) throw new Error(`Error HTTP ${fallo.status}.`);
-  const [mundo, cromos, rarezas] = await Promise.all(
+  const [mundo, cromos, rarezas, mundos] = await Promise.all(
     respuestas.map((respuesta) => respuesta.json()),
   );
-  return validarDatosCatalogo(mundo, cromos, rarezas);
+  return validarDatosCatalogo(mundo, cromos, rarezas, mundos);
 }
 
 export function useCatalogoMundo(id) {

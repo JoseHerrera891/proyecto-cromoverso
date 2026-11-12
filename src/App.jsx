@@ -85,26 +85,32 @@ export default function App() {
           textoGrande={textoGrande}
           alternarTexto={() => setTextoGrande((valor) => !valor)}
         />
-        <main id="contenido-principal" className="contenedor">
+        <main id="contenido-principal">
           {pathname === "/" ? (
             <>
               <InicioHero textos={datos.textos} />
-              <InicioMundos textos={datos.textos} />
+              <div className="contenedor">
+                <InicioMundos textos={datos.textos} />
+              </div>
             </>
-          ) : pathname === "/mundos" ? (
-            <InicioMundos textos={datos.textos} comoPagina />
-          ) : pathname.startsWith("/mundos/") ? (
-            <CatalogoMundo
-              id={pathname.split("/")[2] ?? ""}
-              textos={datos.textos}
-            />
-          ) : pathname.startsWith("/cromos/") ? (
-            <DetalleCromo
-              id={pathname.split("/")[2] ?? ""}
-              textos={datos.textos}
-            />
           ) : (
-            <h1>{tituloPagina}</h1>
+            <div className="contenedor">
+              {pathname === "/mundos" ? (
+                <InicioMundos textos={datos.textos} comoPagina />
+              ) : pathname.startsWith("/mundos/") ? (
+                <CatalogoMundo
+                  id={pathname.split("/")[2] ?? ""}
+                  textos={datos.textos}
+                />
+              ) : pathname.startsWith("/cromos/") ? (
+                <DetalleCromo
+                  id={pathname.split("/")[2] ?? ""}
+                  textos={datos.textos}
+                />
+              ) : (
+                <h1>{tituloPagina}</h1>
+              )}
+            </div>
           )}
         </main>
         <Footer textos={datos.textos} idioma={idioma} />
