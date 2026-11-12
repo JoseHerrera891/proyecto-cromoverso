@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import InicioHero from "./components/InicioHero.jsx";
+import InicioMundos from "./components/InicioMundos.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
 import { obtenerTituloPagina } from "./utils/tituloPagina.js";
@@ -84,7 +85,10 @@ export default function App() {
         />
         <main id="contenido-principal" className="contenedor">
           {pathname === "/" ? (
-            <InicioHero textos={datos.textos} />
+            <>
+              <InicioHero textos={datos.textos} />
+              <InicioMundos textos={datos.textos} />
+            </>
           ) : (
             <h1>{tituloPagina}</h1>
           )}
