@@ -133,6 +133,7 @@
 .inicio-hero-ilustracion {
   justify-self: center;
   width: min(100%, 34rem);
+  container-type: inline-size;
 }
 
 .inicio-hero-insignia {
@@ -140,13 +141,13 @@
   top: -1.5rem;
   left: 50%;
   z-index: 2;
-  padding: var(--espacio-1) var(--espacio-3);
-  border: var(--borde-grosor) solid var(--borde-fuerte);
+  padding: clamp(0.35rem, 1cqw, 0.75rem) clamp(0.75rem, 2cqw, 1.375rem);
+  border: clamp(2px, 0.25vw, 4px) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
   color: var(--texto-principal);
   background: var(--marca-acento);
   box-shadow: var(--sombra-pop-pequena);
-  font-size: var(--texto-micro);
+  font-size: 1.0625rem;
   font-weight: var(--peso-negrita);
   text-transform: uppercase;
   white-space: nowrap;
@@ -154,8 +155,8 @@
 }
 
 .inicio-hero-insignia .icono {
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 1.1em;
+  height: 1.1em;
 }
 
 .inicio-hero-cartas {
@@ -168,52 +169,53 @@
   position: absolute;
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto auto;
-  gap: 2px;
+  gap: clamp(2px, 0.5cqw, 4px);
   overflow: hidden;
   width: 34%;
   height: 82%;
-  padding: 4px;
-  border: 3px solid var(--fondo-inverso);
+  padding: clamp(4px, 1.2cqw, 10px);
+  border: clamp(3px, 1.4cqw, 10px) solid var(--fondo-inverso);
   border-radius: var(--radio-m);
   color: var(--texto-principal);
   background: var(--fondo-superficie);
-  box-shadow: var(--sombra-pop);
+  box-shadow: clamp(4px, 1.2cqw, 9px) clamp(4px, 1.2cqw, 9px) 0 0
+    var(--fondo-inverso);
 }
 
 .inicio-hero-carta-numero {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: clamp(5px, 1.5cqw, 12px);
+  left: clamp(5px, 1.5cqw, 12px);
   z-index: 1;
-  padding: 0 var(--espacio-1);
-  border: 1px solid var(--fondo-inverso);
+  padding: 0 clamp(0.25rem, 1cqw, 0.625rem);
+  border: clamp(1px, 0.4cqw, 3px) solid var(--fondo-inverso);
   border-radius: var(--radio-pildora);
   background: var(--fondo-superficie);
-  font-size: var(--texto-micro);
+  font-size: 1.25rem;
   font-weight: var(--peso-negrita);
 }
 
 .inicio-hero-carta-insignia {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: clamp(5px, 1.5cqw, 12px);
+  right: clamp(5px, 1.5cqw, 12px);
   z-index: 1;
   display: grid;
-  width: 1rem;
-  height: 1rem;
+  width: clamp(1.5rem, 4.7cqw, 2.25rem);
+  height: clamp(2rem, 6.3cqw, 2.75rem);
   place-items: center;
-  border: 1px solid var(--fondo-inverso);
+  border: clamp(1px, 0.4cqw, 3px) solid var(--fondo-inverso);
   border-radius: var(--radio-pildora);
   color: var(--rareza-legendaria);
   background: var(--fondo-superficie);
   box-shadow: var(--sombra-pop-pequena);
-  font-size: 0.65rem;
+  font-size: 1rem;
   line-height: 1;
 }
 
 .inicio-hero-carta-insignia .icono {
-  width: 0.65rem;
-  height: 0.65rem;
+  width: 82%;
+  height: 82%;
   stroke-width: 1.75;
 }
 
@@ -221,34 +223,35 @@
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: var(--radio-s);
+  border: clamp(2px, 0.7cqw, 5px) solid var(--marca-primario);
+  border-radius: var(--radio-m);
   object-fit: cover;
 }
 
 .inicio-hero-carta strong {
   overflow: hidden;
   font-family: var(--fuente-titulos);
-  font-size: clamp(0.55rem, 0.9vw, 0.75rem);
+  font-size: 1.25rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .inicio-hero-carta > span:last-child {
   overflow: hidden;
-  font-size: clamp(0.4rem, 0.65vw, 0.55rem);
+  font-size: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .inicio-hero-carta--raiz {
   top: 15%;
-  left: 5%;
+  left: 0;
   transform: rotate(-9deg);
 }
 
 .inicio-hero-carta--astra {
   top: 15%;
-  right: 5%;
+  right: 0;
   transform: rotate(9deg);
 }
 
@@ -271,6 +274,23 @@
   .inicio-hero h1 {
     max-width: 13ch;
     font-size: 1.75rem;
+  }
+
+  .inicio-hero-insignia {
+    font-size: var(--texto-pequeno);
+  }
+
+  .inicio-hero-carta-numero,
+  .inicio-hero-carta strong {
+    font-size: 1rem;
+  }
+
+  .inicio-hero-carta-insignia {
+    font-size: var(--texto-micro);
+  }
+
+  .inicio-hero-carta > span:last-child {
+    font-size: 0.75rem;
   }
 
   .inicio-hero-ilustracion {
@@ -305,7 +325,7 @@
 
 @media (min-width: 768px) {
   .inicio-hero {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     gap: var(--espacio-5);
   }
 
