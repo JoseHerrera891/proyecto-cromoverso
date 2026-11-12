@@ -6,7 +6,7 @@ export default defineConfig({
   // ... tu otra configuración
   test: {
     env: {
-      VITE_API_BASE_URL: 'http://localhost:3000/api', // O la URL de prueba que prefieras
+      VITE_API_BASE_URL: "http://localhost:3000/api", // O la URL de prueba que prefieras
     },
   },
 });
