@@ -39,6 +39,7 @@ export function useDetalleCromo(id) {
   const [cromo, setCromo] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(false);
+  const [noEncontrado, setNoEncontrado] = useState(false);
   const [intento, setIntento] = useState(0);
 
   useEffect(() => {
@@ -47,14 +48,19 @@ export function useDetalleCromo(id) {
     let vigente = true;
     setCargando(true);
     setError(false);
+    setNoEncontrado(false);
     setCromo(null);
 
     solicitarDetalleCromo(id, controlador.signal)
       .then((dato) => vigente && setCromo(dato))
       .catch((error) => {
         if (vigente) {
-          console.error("Error al cargar el detalle del cromo:", error);
           setError(true);
+          if (error.message === "Error HTTP 404.") {
+            setNoEncontrado(true);
+          } else {
+            console.error("Error al cargar el detalle del cromo:", error);
+          }
         }
       })
       .finally(() => {
@@ -73,6 +79,7 @@ export function useDetalleCromo(id) {
     cromo,
     cargando,
     error,
+    noEncontrado,
     recargar: () => setIntento((valor) => valor + 1),
   };
 }
