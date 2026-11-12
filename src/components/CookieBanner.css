@@ -3,7 +3,7 @@
   right: var(--espacio-4);
   bottom: var(--espacio-4);
   z-index: 20;
-  width: min(100% - var(--espacio-4) * 2, 47.5rem);
+  width: min(100% - var(--espacio-4) * 2, var(--ancho-cookie-banner-maximo));
   max-height: calc(100dvh - var(--espacio-4) * 2);
   overflow: auto;
   padding: var(--espacio-5);
