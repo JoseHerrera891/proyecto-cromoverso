@@ -77,8 +77,10 @@ describe("componentes base del sistema de diseño", () => {
     expect(markup).toContain('aria-labelledby="');
     expect(markup).toContain('aria-describedby="');
     expect(markup).toContain("Preferencias de cookies");
+    expect(markup).toContain('class="cookie-banner-copy"');
     expect(markup).toContain("Aceptar");
     expect(markup).toContain("Rechazar");
-    expect(markup.match(/class="boton boton--secundario"/g)).toHaveLength(2);
+    expect(markup).toContain('class="boton boton--secundario"');
+    expect(markup).toContain('class="boton boton--primario"');
   });
 });

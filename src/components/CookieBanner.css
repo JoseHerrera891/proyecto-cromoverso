@@ -1,62 +1,69 @@
 .cookie-banner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: flex;
   align-items: center;
-  column-gap: var(--espacio-4);
-  row-gap: var(--espacio-2);
+  justify-content: space-between;
+  gap: var(--espacio-4);
   position: fixed;
-  right: var(--espacio-4);
-  bottom: var(--espacio-4);
+  left: 50%;
+  bottom: 25vh;
   z-index: 20;
-  width: min(
-    calc(100vw - var(--espacio-4) * 2),
-    var(--ancho-cookie-banner-maximo)
-  );
+  width: min(84vw, var(--ancho-contenido));
   max-height: calc(100dvh - var(--espacio-4) * 2);
   overflow: auto;
-  padding: var(--espacio-4);
+  padding: var(--espacio-3) var(--espacio-4);
   border: var(--borde-grosor) solid var(--borde-fuerte);
-  border-radius: var(--radio-l);
+  border-radius: var(--radio-m);
   color: var(--texto-principal);
   background: var(--fondo-superficie);
-  box-shadow: var(--sombra-flotante);
+  box-shadow: var(--sombra-pop);
+  transform: translateX(-50%);
+}
+
+.cookie-banner-copy {
+  flex: 1;
+  min-width: 0;
 }
 
 .cookie-banner-title {
-  grid-column: 1;
   margin: 0;
-  font-size: var(--texto-subtitulo);
+  font-size: var(--texto-pequeno);
 }
 
 .cookie-banner-description {
-  grid-column: 1;
   margin: 0;
   color: var(--texto-secundario);
+  font-size: var(--texto-micro);
 }
 
 .cookie-banner-actions {
-  grid-column: 2;
-  grid-row: 1 / span 2;
   display: flex;
-  gap: var(--espacio-3);
-  margin-top: 0;
+  flex: 0 0 auto;
+  gap: var(--espacio-2);
 }
 
 .cookie-banner-actions .boton {
-  flex: 1;
+  width: 7rem;
+  min-height: var(--control-alto-minimo);
+  padding: var(--espacio-2) var(--espacio-4);
+  font-size: var(--texto-pequeno);
 }
 
 @media (max-width: 640px) {
   .cookie-banner {
-    display: block;
-    right: var(--espacio-3);
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--espacio-2);
     bottom: var(--espacio-3);
-    width: calc(100% - var(--espacio-3) * 2);
-    padding: var(--espacio-4);
+    width: calc(100vw - var(--espacio-4));
+    padding: var(--espacio-3);
   }
 
   .cookie-banner-actions {
-    margin-top: var(--espacio-4);
-    gap: var(--espacio-2);
+    align-self: flex-end;
+  }
+
+  .cookie-banner-actions .boton {
+    flex: 1;
+    min-width: 7rem;
   }
 }

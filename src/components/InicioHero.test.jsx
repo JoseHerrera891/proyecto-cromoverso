@@ -27,8 +27,17 @@ describe("InicioHero", () => {
     );
 
     expect(markup).toContain("<h1");
-    expect(markup).toContain(textos.paginas.inicio.hero.titulo);
+    expect(markup).toContain("Seis mundos. 120");
+    expect(markup).toContain("héroes.");
+    expect(markup).toContain("Un álbum tuyo.");
     expect(markup).toContain('href="/registro"');
     expect(markup).toContain('href="#mundos"');
+    expect(markup).toContain('aria-label="Héroes de Cromoverso"');
+    expect(markup).toContain("Raíz Madre");
+    expect(markup).toContain("Voltia");
+    expect(markup).toContain("Astra");
+    expect(markup).toContain(
+      'class="inicio-hero-carta inicio-hero-carta--voltia"',
+    );
   });
 });
