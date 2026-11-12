@@ -16,6 +16,17 @@ const textos = {
         tipos: { heroe: "Héroe" },
       },
       poder: { titulo: "Poder" },
+      atributos: {
+        titulo: "Atributos",
+        total: "Total {total}",
+        escala: "Escala de 10 a 99.",
+        nombres: {
+          fuerza: "Fuerza",
+          velocidad: "Velocidad",
+          mente: "Mente",
+          energia: "Energía",
+        },
+      },
       noEncontrado: {
         titulo: "Cromo no encontrado",
         texto: "Revisa el número.",
@@ -38,6 +49,7 @@ describe("DetalleCromo", () => {
         tipo: "heroe",
         poder: "Descarga eléctrica",
         descripcion: "Cuida la ciudad.",
+        atributos: { fuerza: 98, velocidad: 87, mente: 75, energia: 80 },
         ilustracion: { colorBase: "#7C4DFF" },
       },
       cargando: false,
@@ -54,6 +66,10 @@ describe("DetalleCromo", () => {
     expect(markup).toContain("CV-001 · Ciudad Neón, posición 1");
     expect(markup).toContain("Descarga eléctrica");
     expect(markup).toContain('href="/mundos/neon"');
+    expect(markup).toContain("Fuerza");
+    expect(markup).toContain('aria-valuenow="98"');
+    expect(markup).toContain("Escala de 10 a 99.");
+    expect(markup).toContain("Total 340");
   });
 
   it("muestra el estado localizado cuando el cromo no existe", () => {

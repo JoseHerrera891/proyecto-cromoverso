@@ -13,6 +13,7 @@ export default function DetalleCromo({ id, textos }) {
   const { cromo, cargando, error, noEncontrado, recargar } =
     useDetalleCromo(id);
   const pagina = textos?.paginas?.detalleCromo;
+  const atributos = pagina?.atributos;
   const estados = textos?.estados;
 
   if (cargando || !pagina) {
@@ -71,6 +72,44 @@ export default function DetalleCromo({ id, textos }) {
         <p className="detalle-cromo-poder">{cromo.poder}</p>
         <p>{cromo.descripcion}</p>
       </section>
+      {atributos && (
+        <section aria-labelledby="detalle-cromo-atributos">
+          <h2 id="detalle-cromo-atributos">{atributos.titulo}</h2>
+          <ul className="detalle-cromo-atributos">
+            {Object.entries(cromo.atributos).map(([nombre, valor]) => (
+              <li key={nombre}>
+                <div className="detalle-cromo-atributo-etiqueta">
+                  <span>{atributos.nombres[nombre]}</span>
+                  <span>{valor}</span>
+                </div>
+                <div
+                  className="detalle-cromo-barra"
+                  role="progressbar"
+                  aria-label={atributos.nombres[nombre]}
+                  aria-valuemin="10"
+                  aria-valuemax="99"
+                  aria-valuenow={valor}
+                >
+                  <span
+                    style={{
+                      width: `${((valor - 10) / 89) * 100}%`,
+                    }}
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="detalle-cromo-escala">{atributos.escala}</p>
+          <p className="detalle-cromo-atributo-total">
+            {insertarVariables(atributos.total, {
+              total: Object.values(cromo.atributos).reduce(
+                (suma, valor) => suma + valor,
+                0,
+              ),
+            })}
+          </p>
+        </section>
+      )}
     </article>
   );
 }

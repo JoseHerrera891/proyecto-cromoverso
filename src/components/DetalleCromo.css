@@ -52,6 +52,43 @@
   font-weight: var(--peso-semi-negrita);
 }
 
+.detalle-cromo-atributos {
+  display: grid;
+  gap: var(--espacio-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detalle-cromo-atributo-etiqueta {
+  display: flex;
+  justify-content: space-between;
+  font-weight: var(--peso-semi-negrita);
+}
+
+.detalle-cromo-barra {
+  height: var(--espacio-2);
+  overflow: hidden;
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-sutil);
+}
+
+.detalle-cromo-barra > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-mundo);
+}
+
+.detalle-cromo-escala {
+  color: var(--texto-secundario);
+  font-size: var(--texto-pequeno);
+}
+
+.detalle-cromo-atributo-total {
+  font-weight: var(--peso-semi-negrita);
+}
+
 .detalle-cromo-estado {
   padding-block: var(--espacio-5);
 }
