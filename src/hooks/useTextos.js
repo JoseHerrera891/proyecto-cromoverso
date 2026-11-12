@@ -66,7 +66,7 @@ export function useTextos(idioma) {
           throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
         }
         const respuesta = await fetch(
-          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies`,
+          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies,paginas`,
           {
             signal: controlador.signal,
           },

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import InicioHero from "./components/InicioHero.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
 import { obtenerTituloPagina } from "./utils/tituloPagina.js";
@@ -82,7 +83,11 @@ export default function App() {
           alternarTexto={() => setTextoGrande((valor) => !valor)}
         />
         <main id="contenido-principal" className="contenedor">
-          <h1>{tituloPagina}</h1>
+          {pathname === "/" ? (
+            <InicioHero textos={datos.textos} />
+          ) : (
+            <h1>{tituloPagina}</h1>
+          )}
         </main>
         <Footer textos={datos.textos} idioma={idioma} />
       </div>
