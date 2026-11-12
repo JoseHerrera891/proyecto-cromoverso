@@ -111,6 +111,8 @@ describe("CatalogoMundo", () => {
     expect(markup).toContain('href="/cromos/CV-001"');
     expect(markup).toContain("Ciudad Neón · Héroe");
     expect(markup).toContain("Voltia");
+    expect(markup).toContain('src="/images/cromo-general.png"');
+    expect(markup).toContain('alt="Voltia, Héroe"');
     expect(markup).toContain('aria-label="Filtrar por rareza"');
     expect(markup).toContain("♛");
     expect(markup).toContain("Legendaria");

@@ -4,7 +4,6 @@ import { useCatalogoMundo } from "../hooks/useCatalogoMundo.js";
 import Badge from "./Badge.jsx";
 import Card from "./Card.jsx";
 import Icono from "./Icono.jsx";
-import { FIGURAS } from "../utils/figuras.jsx";
 import "./CatalogoMundo.css";
 
 const ICONOS_RAREZA = {
@@ -334,28 +333,12 @@ export default function CatalogoMundo({ id, textos }) {
                         <span className="catalogo-cromo-numero">
                           #{String(cromo.numero).padStart(3, "0")}
                         </span>
-                        <svg
-                          className="catalogo-cromo-arte"
-                          viewBox="0 0 100 100"
-                          role="img"
-                          aria-label={`${cromo.nombre}, ${tipoNombre(cromo.tipo)}`}
-                          style={{
-                            "--color-figura":
-                              cromo.ilustracion?.colorBase ?? datos.mundo.color,
-                          }}
-                        >
-                          <circle
-                            className="catalogo-cromo-arte-fondo"
-                            cx="50"
-                            cy="50"
-                            r="48"
-                          />
-                          <g className="catalogo-cromo-figura">
-                            {FIGURAS[cromo.ilustracion?.figura] ??
-                              FIGURAS[datos.mundo.figura] ??
-                              FIGURAS.rayo}
-                          </g>
-                        </svg>
+                        <img
+                          className={`catalogo-cromo-arte${cromo.holografico ? " is-holografico" : ""}`}
+                          src="/images/cromo-general.png"
+                          alt={`${cromo.nombre}, ${tipoNombre(cromo.tipo)}`}
+                          loading="lazy"
+                        />
                         <span className="catalogo-cromo-nombre">
                           {cromo.nombre}
                         </span>

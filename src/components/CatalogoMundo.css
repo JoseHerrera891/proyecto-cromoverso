@@ -331,23 +331,9 @@
   display: block;
   width: 100%;
   aspect-ratio: 0.76;
+  object-fit: cover;
   border: var(--borde-grosor) solid var(--borde-sutil);
   border-radius: var(--radio-s);
-  color: var(--color-figura);
-  background:
-    radial-gradient(circle at 50% 35%, white 0 12%, transparent 58%),
-    color-mix(in srgb, var(--color-figura) 18%, white);
-}
-
-.catalogo-cromo-arte-fondo {
-  fill: transparent;
-}
-
-.catalogo-cromo-figura {
-  fill: currentColor;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 .catalogo-cromo-nombre {
