@@ -202,14 +202,26 @@
   margin-left: auto;
   color: var(--texto-terciario);
   font-size: var(--texto-micro);
+  white-space: nowrap;
 }
 
-.catalogo-opcion-icono {
-  display: grid;
-  flex: 0 0 1rem;
-  width: 1rem;
-  height: 1rem;
-  place-items: center;
+.catalogo-filtro-rareza {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  padding: 2px var(--espacio-2);
+  border: var(--borde-grosor) solid var(--color-rareza);
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: color-mix(in srgb, var(--color-rareza) 10%, white);
+  font-size: var(--texto-micro);
+  font-weight: var(--peso-negrita);
+  line-height: var(--interlineado-unidad);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.catalogo-filtro-rareza-icono {
   color: var(--color-rareza);
   font-size: var(--texto-pequeno);
   line-height: 1;

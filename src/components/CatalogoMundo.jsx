@@ -174,15 +174,18 @@ export default function CatalogoMundo({ id, textos }) {
                   onChange={() => cambiarFiltro("rareza", rareza.id)}
                 />
                 <span
-                  className={`catalogo-opcion-icono catalogo-opcion-icono--${rareza.icono}`}
+                  className="catalogo-filtro-rareza"
                   style={{ "--color-rareza": rareza.color }}
-                  aria-hidden="true"
                 >
-                  {ICONOS_RAREZA[rareza.icono]}
+                  <span className="catalogo-filtro-rareza-icono" aria-hidden="true">
+                    {ICONOS_RAREZA[rareza.icono]}
+                  </span>
+                  {rareza.nombre}
                 </span>
-                {rareza.nombre}
                 <span className="catalogo-filtro-cantidad">
-                  {cantidadPorRareza(rareza.id)}
+                  {insertarVariables(pagina.mundos.cromos, {
+                    cantidad: cantidadPorRareza(rareza.id),
+                  })}
                 </span>
               </label>
             ))}

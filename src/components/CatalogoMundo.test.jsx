@@ -116,6 +116,7 @@ describe("CatalogoMundo", () => {
     expect(markup).toContain(">Legendaria</span>");
     expect(markup).toContain('aria-label="Filtrar por rareza"');
     expect(markup).toContain("♛");
+    expect(markup).toContain("1 cromos");
     expect(markup).toContain("Legendaria");
   });
 });
