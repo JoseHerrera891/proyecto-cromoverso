@@ -454,6 +454,15 @@
   }
 }
 
+@media (min-width: 768px) {
+  .catalogo-cromos {
+    padding: var(--espacio-4);
+    border: var(--borde-grosor) solid var(--borde-fuerte);
+    border-radius: var(--radio-m);
+    background: var(--marca-primario-suave);
+  }
+}
+
 @media (max-width: 767px) {
   .catalogo-encabezado {
     padding: var(--espacio-3);
