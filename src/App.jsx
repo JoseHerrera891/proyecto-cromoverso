@@ -93,7 +93,7 @@ export default function App() {
               <InicioMundos textos={datos.textos} />
             </>
           ) : pathname === "/mundos" ? (
-            <InicioMundos textos={datos.textos} />
+            <InicioMundos textos={datos.textos} comoPagina />
           ) : pathname.startsWith("/mundos/") ? (
             <CatalogoMundo
               id={pathname.split("/")[2] ?? ""}

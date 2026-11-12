@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useInicioPublico } from "../hooks/useInicioPublico.js";
+import { FIGURAS } from "../utils/figuras.jsx";
 import "./InicioMundos.css";
 
 function insertarVariables(plantilla, variables) {
@@ -9,7 +10,7 @@ function insertarVariables(plantilla, variables) {
   );
 }
 
-export default function InicioMundos({ textos }) {
+export default function InicioMundos({ textos, comoPagina = false }) {
   const { datos, cargando, error, recargar } = useInicioPublico();
   const pagina = textos?.paginas?.inicio;
   const etiquetas = pagina?.mundos?.etiquetas;
@@ -42,7 +43,11 @@ export default function InicioMundos({ textos }) {
     >
       <div className="inicio-mundos-encabezado">
         <div>
-          <h2 id="inicio-mundos-titulo">{pagina.mundos.titulo}</h2>
+          {comoPagina ? (
+            <h1 id="inicio-mundos-titulo">{pagina.mundos.titulo}</h1>
+          ) : (
+            <h2 id="inicio-mundos-titulo">{pagina.mundos.titulo}</h2>
+          )}
           <p>{pagina.mundos.subtitulo}</p>
         </div>
         <span className="inicio-mundos-total">{datos.totalAlbum}</span>
@@ -55,8 +60,15 @@ export default function InicioMundos({ textos }) {
               to={`/mundos/${mundo.id}`}
               style={{ "--color-mundo": mundo.color }}
             >
-              <span className="inicio-mundo-orden">
-                {insertarVariables(etiquetas.mundo, { numero: indice + 1 })}
+              <span className="inicio-mundo-identificador">
+                <span className="inicio-mundo-icono" aria-hidden="true">
+                  <svg viewBox="0 0 100 100" focusable="false">
+                    {FIGURAS[mundo.figura]}
+                  </svg>
+                </span>
+                <span className="inicio-mundo-orden">
+                  {insertarVariables(etiquetas.mundo, { numero: indice + 1 })}
+                </span>
               </span>
               <span className="inicio-mundo-nombre">{mundo.nombre}</span>
               <span className="inicio-mundo-total">

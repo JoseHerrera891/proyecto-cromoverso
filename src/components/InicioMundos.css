@@ -10,7 +10,7 @@
   gap: var(--espacio-3);
 }
 
-.inicio-mundos-encabezado h2 {
+.inicio-mundos-encabezado :is(h1, h2) {
   margin: 0;
 }
 
@@ -77,6 +77,37 @@
   font-weight: var(--peso-semi-negrita);
 }
 
+.inicio-mundo-identificador {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+.inicio-mundo-icono {
+  display: grid;
+  flex: 0 0 var(--espacio-6);
+  width: var(--espacio-6);
+  height: var(--espacio-6);
+  place-items: center;
+  border-radius: var(--radio-pildora);
+  color: var(--color-mundo);
+  background: color-mix(
+    in srgb,
+    var(--color-mundo) 16%,
+    var(--fondo-superficie)
+  );
+}
+
+.inicio-mundo-icono svg {
+  width: var(--icono-tamano);
+  height: var(--icono-tamano);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
 .inicio-mundo-nombre {
   margin-top: auto;
   font-family: var(--fuente-unbounded);
@@ -120,8 +151,21 @@
   }
 
   .inicio-mundos-lista > li {
-    flex: 0 0 min(78vw, 17rem);
+    flex: 0 0 min(32vw, 8.5rem);
     scroll-snap-align: start;
+  }
+
+  .inicio-mundo {
+    min-height: 9rem;
+    padding: var(--espacio-3);
+  }
+
+  .inicio-mundo-nombre {
+    font-size: var(--texto-pequeno);
+  }
+
+  .inicio-mundo-total {
+    margin-top: var(--espacio-2);
   }
 }
 

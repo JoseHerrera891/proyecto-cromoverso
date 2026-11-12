@@ -13,11 +13,11 @@ describe("InicioMundos", () => {
     useInicioPublico.mockReturnValue({
       datos: {
         totalAlbum: 120,
-        rarezas: [],
         mundos: Array.from({ length: 6 }, (_, index) => ({
           id: `mundo-${index}`,
           nombre: `Mundo ${index}`,
           color: "#123456",
+          figura: "rayo",
           totalCromos: 20,
         })),
       },
@@ -48,5 +48,13 @@ describe("InicioMundos", () => {
     expect(markup).toContain("Los seis mundos");
     expect(markup).toContain(">120</span>");
     expect(markup).not.toContain("inicio-rarezas");
+    expect(markup).toContain('class="inicio-mundo-icono"');
+
+    const pagina = renderToStaticMarkup(
+      <MemoryRouter>
+        <InicioMundos textos={textos} comoPagina />
+      </MemoryRouter>,
+    );
+    expect(pagina).toContain('<h1 id="inicio-mundos-titulo">');
   });
 });
