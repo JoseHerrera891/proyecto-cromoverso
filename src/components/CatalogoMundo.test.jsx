@@ -113,6 +113,7 @@ describe("CatalogoMundo", () => {
     expect(markup).toContain("Voltia");
     expect(markup).toContain('src="/images/cromo-general.png"');
     expect(markup).toContain('alt="Voltia, Héroe"');
+    expect(markup).toContain(">Legendaria</span>");
     expect(markup).toContain('aria-label="Filtrar por rareza"');
     expect(markup).toContain("♛");
     expect(markup).toContain("Legendaria");

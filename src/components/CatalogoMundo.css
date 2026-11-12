@@ -304,7 +304,7 @@
 .catalogo-cromo {
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto 1fr auto auto auto;
   gap: var(--espacio-1);
   height: 100%;
   min-width: 0;
@@ -353,16 +353,8 @@
 }
 
 .catalogo-cromo-rareza {
-  position: absolute;
-  top: var(--espacio-2);
-  right: var(--espacio-2);
-  display: grid;
-  width: 1.5rem;
-  height: 1.5rem;
-  padding: 0;
-  place-items: center;
-  border-radius: var(--radio-pildora);
-  background: var(--fondo-superficie);
+  justify-self: start;
+  padding: 2px var(--espacio-2);
   font-size: var(--texto-micro);
 }
 

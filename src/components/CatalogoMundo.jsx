@@ -7,7 +7,7 @@ import Icono from "./Icono.jsx";
 import "./CatalogoMundo.css";
 
 const ICONOS_RAREZA = {
-  circulo: "●",
+  circulo: "○",
   rombo: "◆",
   estrella: "★",
   corona: "♛",
@@ -359,9 +359,7 @@ export default function CatalogoMundo({ id, textos }) {
                           >
                             {iconoRareza}
                           </span>
-                          <span className="catalogo-solo-lector">
-                            {rareza.nombre}
-                          </span>
+                          <span>{rareza.nombre}</span>
                         </Badge>
                       </Card>
                     </Link>
