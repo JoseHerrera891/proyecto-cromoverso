@@ -192,18 +192,12 @@ export default function CatalogoMundo({ id, textos }) {
           </fieldset>
           <fieldset>
             <legend>{pagina.filtros.tipo.titulo}</legend>
-            <label className="catalogo-opcion">
-              <input
-                type="radio"
-                name="tipo"
-                checked={!tipoSeleccionado}
-                onChange={() => cambiarFiltro("tipo", "")}
-              />
-              {pagina.filtros.tipo.todos}
-            </label>
             {Object.entries(pagina.filtros.tipo.opciones).map(
               ([tipo, etiqueta]) => (
-                <label className="catalogo-opcion" key={tipo}>
+                <label
+                  className="catalogo-opcion catalogo-opcion--tipo"
+                  key={tipo}
+                >
                   <input
                     type="radio"
                     name="tipo"
@@ -211,9 +205,11 @@ export default function CatalogoMundo({ id, textos }) {
                     checked={tipoSeleccionado === tipo}
                     onChange={() => cambiarFiltro("tipo", tipo)}
                   />
-                  {etiqueta}
+                  <span>{etiqueta}</span>
                   <span className="catalogo-filtro-cantidad">
-                    {cantidadPorTipo(tipo)}
+                    {insertarVariables(pagina.mundos.cromos, {
+                      cantidad: cantidadPorTipo(tipo),
+                    })}
                   </span>
                 </label>
               ),

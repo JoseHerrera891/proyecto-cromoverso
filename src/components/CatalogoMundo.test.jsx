@@ -107,6 +107,9 @@ describe("CatalogoMundo", () => {
     expect(markup).toContain("Filtrar por rareza");
     expect(markup).toContain('value="legendaria" selected');
     expect(markup).toContain("Filtrar por tipo");
+    expect(markup).toContain('class="catalogo-opcion catalogo-opcion--tipo"');
+    expect(markup).toContain('name="tipo" value="heroe"');
+    expect(markup).toContain("1 cromos");
     expect(markup).toContain("Quitar filtros");
     expect(markup).toContain('href="/cromos/CV-001"');
     expect(markup).toContain("Ciudad Neón · Héroe");

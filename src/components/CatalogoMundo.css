@@ -198,6 +198,32 @@
   accent-color: var(--marca-primario);
 }
 
+.catalogo-opcion--tipo {
+  position: relative;
+  justify-content: space-between;
+  font-weight: var(--peso-negrita);
+}
+
+.catalogo-opcion--tipo input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.catalogo-opcion--tipo:has(input:checked) {
+  color: var(--texto-principal);
+  background: transparent;
+}
+
+.catalogo-opcion--tipo:focus-within {
+  outline: var(--borde-foco-grosor) solid var(--marca-primario);
+  outline-offset: var(--borde-foco-offset);
+}
+
 .catalogo-filtro-cantidad {
   margin-left: auto;
   color: var(--texto-terciario);
