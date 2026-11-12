@@ -144,7 +144,7 @@
   grid-template-rows: minmax(0, 1fr) auto auto;
   gap: 2px;
   overflow: hidden;
-  width: 40%;
+  width: 34%;
   height: 82%;
   padding: 4px;
   border: 3px solid var(--fondo-inverso);
@@ -167,28 +167,30 @@
   font-weight: var(--peso-negrita);
 }
 
+.inicio-hero-carta-insignia {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 1;
+  display: grid;
+  width: 1rem;
+  height: 1rem;
+  place-items: center;
+  border: 1px solid var(--fondo-inverso);
+  border-radius: var(--radio-pildora);
+  color: #e8a900;
+  background: var(--fondo-superficie);
+  box-shadow: var(--sombra-pop-pequena);
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
 .inicio-hero-carta-arte {
+  display: block;
   width: 100%;
   height: 100%;
-  border: 1px solid color-mix(in srgb, var(--texto-principal) 35%, transparent);
   border-radius: var(--radio-s);
-  background:
-    radial-gradient(circle at 50% 40%, white 0 28%, transparent 29%),
-    linear-gradient(145deg, var(--arte-claro), var(--arte-oscuro));
-}
-
-.inicio-hero-carta-halo {
-  fill: color-mix(in srgb, white 30%, transparent);
-}
-
-.inicio-hero-carta-cuerpo,
-.inicio-hero-carta-cabeza {
-  fill: var(--personaje);
-}
-
-.inicio-hero-carta-visor,
-.inicio-hero-carta-destello {
-  fill: var(--marca-acento);
+  object-fit: cover;
 }
 
 .inicio-hero-carta strong {
@@ -209,50 +211,21 @@
 .inicio-hero-carta--raiz {
   top: 15%;
   left: 5%;
-  --arte-claro: #d3f0b5;
-  --arte-oscuro: #59ad74;
-  --personaje: #315d69;
   transform: rotate(-9deg);
 }
 
 .inicio-hero-carta--astra {
   top: 15%;
   right: 5%;
-  --arte-claro: #c4e7ff;
-  --arte-oscuro: #4aa9e8;
-  --personaje: #315d88;
   transform: rotate(9deg);
 }
 
 .inicio-hero-carta--voltia {
   top: 4%;
-  left: 31%;
+  left: 28%;
   z-index: 1;
-  width: 39%;
+  width: 44%;
   height: 90%;
-  --arte-claro: #e3c7ff;
-  --arte-oscuro: #9c68ee;
-  --personaje: #565b82;
-}
-
-.inicio-hero-carta--voltia .inicio-hero-carta-arte {
-  background:
-    repeating-conic-gradient(
-      from 15deg at 50% 35%,
-      transparent 0 12deg,
-      #ffffff24 12deg 24deg
-    ),
-    radial-gradient(circle at 50% 38%, #e4c9ff 0 32%, transparent 33%),
-    linear-gradient(145deg, var(--arte-claro), var(--arte-oscuro));
-}
-
-.inicio-hero-carta--voltia .inicio-hero-carta-destello {
-  display: initial;
-}
-
-.inicio-hero-carta--raiz .inicio-hero-carta-destello,
-.inicio-hero-carta--astra .inicio-hero-carta-destello {
-  display: none;
 }
 
 @media (max-width: 767px) {

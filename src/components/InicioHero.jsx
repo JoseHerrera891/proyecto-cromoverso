@@ -7,49 +7,32 @@ const PERSONAJES = [
     numero: "041",
     nombre: "Raíz Madre",
     mundo: "Bosque Eterno · Héroe",
+    imagen: "/images/cromo-raiz.png",
   },
   {
     className: "inicio-hero-carta--astra",
     numero: "081",
     nombre: "Astra",
     mundo: "Estación Órbita · Héroe",
+    imagen: "/images/cromo-astra.png",
   },
   {
     className: "inicio-hero-carta--voltia",
     numero: "001",
     nombre: "Voltia",
     mundo: "Ciudad Neón · Héroe",
+    imagen: "/images/cromo-voltia.png",
   },
 ];
 
-function CartaHeroe({ className, numero, nombre, mundo }) {
+function CartaHeroe({ className, numero, nombre, mundo, imagen }) {
   return (
     <article className={`inicio-hero-carta ${className}`}>
       <span className="inicio-hero-carta-numero">{numero}</span>
-      <svg
-        className="inicio-hero-carta-arte"
-        viewBox="0 0 160 190"
-        aria-hidden="true"
-      >
-        <circle className="inicio-hero-carta-halo" cx="80" cy="82" r="52" />
-        <path
-          className="inicio-hero-carta-cuerpo"
-          d="M29 190c2-42 20-67 51-67s49 25 51 67"
-        />
-        <circle className="inicio-hero-carta-cabeza" cx="80" cy="93" r="25" />
-        <rect
-          className="inicio-hero-carta-visor"
-          x="59"
-          y="88"
-          width="42"
-          height="12"
-          rx="6"
-        />
-        <path
-          className="inicio-hero-carta-destello"
-          d="m80 137 4 9 10 1-8 6 3 10-9-6-9 6 3-10-8-6 10-1z"
-        />
-      </svg>
+      <span className="inicio-hero-carta-insignia" aria-hidden="true">
+        ✦
+      </span>
+      <img className="inicio-hero-carta-arte" src={imagen} alt="" />
       <strong>{nombre}</strong>
       <span>{mundo}</span>
     </article>

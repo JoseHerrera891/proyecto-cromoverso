@@ -36,6 +36,10 @@ describe("InicioHero", () => {
     expect(markup).toContain("Raíz Madre");
     expect(markup).toContain("Voltia");
     expect(markup).toContain("Astra");
+    expect(markup).toContain('src="/images/cromo-raiz.png"');
+    expect(markup).toContain('src="/images/cromo-voltia.png"');
+    expect(markup).toContain('src="/images/cromo-astra.png"');
+    expect(markup.match(/class="inicio-hero-carta-insignia"/g)).toHaveLength(3);
     expect(markup).toContain(
       'class="inicio-hero-carta inicio-hero-carta--voltia"',
     );
