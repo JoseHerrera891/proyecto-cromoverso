@@ -47,5 +47,6 @@ describe("InicioMundos", () => {
     expect(markup.match(/20 cromos/g)).toHaveLength(6);
     expect(markup).toContain("Los seis mundos");
     expect(markup).toContain(">120</span>");
+    expect(markup).not.toContain("inicio-rarezas");
   });
 });

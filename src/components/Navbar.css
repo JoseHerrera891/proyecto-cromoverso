@@ -5,7 +5,7 @@
   top: 0;
   z-index: 10;
   color: var(--texto-principal);
-  padding-block: var(--espacio-3);
+  padding-block: 0;
   background: var(--fondo-superficie);
   font-family: var(--fuente-rubik);
 }
@@ -13,9 +13,7 @@
 .navbar-interior {
   width: min(100% - var(--espacio-5), var(--ancho-navbar-maximo));
   margin-inline: auto;
-  padding: var(--espacio-2);
-  border-radius: var(--radio-l);
-  background: var(--fondo-sutil);
+  padding: 0;
 }
 
 .navbar-bar {
@@ -25,7 +23,7 @@
   justify-content: space-between;
   min-height: var(--espacio-8);
   padding: var(--espacio-2) var(--espacio-3);
-  border-bottom: var(--borde-grosor) solid var(--borde-fuerte);
+  border-bottom: 0;
   background: var(--fondo-superficie);
   gap: 0 var(--espacio-3);
 }
@@ -299,7 +297,7 @@
 
 @media (min-width: 1200px) {
   .navbar-interior {
-    padding: var(--espacio-5);
+    padding: 0;
   }
 
   .navbar-bar {

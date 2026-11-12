@@ -92,6 +92,8 @@ export default function App() {
               <InicioHero textos={datos.textos} />
               <InicioMundos textos={datos.textos} />
             </>
+          ) : pathname === "/mundos" ? (
+            <InicioMundos textos={datos.textos} />
           ) : pathname.startsWith("/mundos/") ? (
             <CatalogoMundo
               id={pathname.split("/")[2] ?? ""}
