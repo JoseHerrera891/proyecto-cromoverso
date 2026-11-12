@@ -18,6 +18,9 @@ export function validarDetalleCromo(cromo) {
     ) ||
     !Number.isInteger(cromo.numero) ||
     !Number.isInteger(cromo.posicion) ||
+    typeof cromo.holografico !== "boolean" ||
+    typeof cromo.ilustracion?.colorBase !== "string" ||
+    typeof cromo.ilustracion?.figura !== "string" ||
     !cromo.atributos ||
     !Object.values(cromo.atributos).every(Number.isFinite)
   ) {

@@ -7,6 +7,7 @@ import {
 
 const detalle = {
   id: "CV-001",
+  holografico: true,
   numero: 1,
   nombre: "Voltia",
   mundo: "neon",
@@ -16,6 +17,7 @@ const detalle = {
   tipo: "heroe",
   poder: "Descarga eléctrica",
   descripcion: "Cuida la ciudad.",
+  ilustracion: { colorBase: "#7C4DFF", figura: "estrella" },
   atributos: { fuerza: 98, velocidad: 87, mente: 75, energia: 80 },
 };
 

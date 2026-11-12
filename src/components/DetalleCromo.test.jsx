@@ -53,12 +53,13 @@ describe("DetalleCromo", () => {
           icono: "corona",
           color: "#C9A227",
         },
+        holografico: true,
         poder: "Descarga eléctrica",
         descripcion: "Cuida la ciudad.",
         atributos: { fuerza: 98, velocidad: 87, mente: 75, energia: 80 },
         anterior: { id: "CV-000" },
         siguiente: { id: "CV-002" },
-        ilustracion: { colorBase: "#7C4DFF" },
+        ilustracion: { colorBase: "#7C4DFF", figura: "estrella" },
       },
       cargando: false,
       error: false,
@@ -74,6 +75,8 @@ describe("DetalleCromo", () => {
     expect(markup).toContain("CV-001 · Ciudad Neón, posición 1");
     expect(markup).toContain("Legendaria");
     expect(markup).toContain("♛");
+    expect(markup).toContain("detalle-cromo-ilustracion--estrella");
+    expect(markup).toContain("is-holografico");
     expect(markup).toContain("Descarga eléctrica");
     expect(markup).toContain('href="/mundos/neon"');
     expect(markup).toContain("Fuerza");
