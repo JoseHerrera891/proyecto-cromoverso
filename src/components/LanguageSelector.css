@@ -1,23 +1,26 @@
+/* Selector de idioma (Figma · «Selector de idioma»): píldora de 100 × 42. */
 .selector-idioma {
   display: inline-flex;
   align-items: center;
-  gap: var(--espacio-1);
-  padding: var(--espacio-1);
+  gap: var(--espacio-0);
+  padding: var(--relleno-selector-idioma);
   border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
   background: var(--fondo-superficie);
-  box-shadow: var(--sombra-pop-pequena);
 }
 
 .selector-idioma button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: var(--selector-idioma-boton-ancho-minimo);
   min-height: var(--selector-idioma-boton-alto-minimo);
-  padding-inline: var(--espacio-2);
+  padding: 0 var(--espacio-2);
   border: 0;
   border-radius: var(--radio-pildora);
   color: var(--texto-principal);
   background: transparent;
-  font: var(--peso-negrita) var(--texto-pequeno) / var(--interlineado-unidad)
+  font: var(--peso-semi-negrita) var(--texto-pequeno) / var(--linea-pequeno)
     var(--fuente-rubik);
   cursor: pointer;
   transition:
@@ -32,36 +35,15 @@
 }
 
 .selector-idioma button:hover:not(:disabled):not([aria-pressed="true"]) {
-  background: var(--fondo-sutil);
+  background: var(--marca-primario-suave);
 }
 
 .selector-idioma button:focus-visible {
   outline: var(--borde-foco-grosor) solid var(--marca-primario);
-  outline-offset: var(--espacio-1);
+  outline-offset: var(--espacio-0);
 }
 
 .selector-idioma button:disabled {
-  color: var(--texto-secundario);
   opacity: var(--opacidad-deshabilitado);
   cursor: not-allowed;
-}
-
-@media (min-width: 768px) {
-  .selector-idioma > .icono {
-    display: none;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .selector-idioma {
-    gap: 0;
-    padding: 2px;
-  }
-
-  .selector-idioma button {
-    min-width: 1.75rem;
-    min-height: 1.75rem;
-    padding-inline: var(--espacio-1);
-    font-size: var(--texto-micro);
-  }
 }

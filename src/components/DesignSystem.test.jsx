@@ -5,6 +5,7 @@ import Button from "./Button.jsx";
 import Card from "./Card.jsx";
 import CookieBanner from "./CookieBanner.jsx";
 import TextField from "./TextField.jsx";
+import { clasesBoton } from "../utils/clasesBoton.js";
 
 describe("componentes base del sistema de diseño", () => {
   it("renders a disabled button with its variant and native attributes", () => {
@@ -14,7 +15,7 @@ describe("componentes base del sistema de diseño", () => {
       </Button>,
     );
 
-    expect(markup).toContain('class="boton boton--secundario"');
+    expect(markup).toContain('class="boton boton--secundario boton--m"');
     expect(markup).toContain('type="submit"');
     expect(markup).toContain('disabled=""');
     expect(markup).toContain("Guardar");
@@ -80,7 +81,25 @@ describe("componentes base del sistema de diseño", () => {
     expect(markup).toContain('class="cookie-banner-copy"');
     expect(markup).toContain("Aceptar");
     expect(markup).toContain("Rechazar");
-    expect(markup).toContain('class="boton boton--secundario"');
-    expect(markup).toContain('class="boton boton--primario"');
+    expect(markup).toContain('class="boton boton--secundario boton--m"');
+    expect(markup).toContain('class="boton boton--primario boton--m"');
+  });
+
+  it("renders button sizes from the design system", () => {
+    const pequeno = renderToStaticMarkup(<Button tamano="p">Ingresar</Button>);
+    const grande = renderToStaticMarkup(
+      <Button variante="acento" tamano="g">
+        Crear cuenta gratis
+      </Button>,
+    );
+
+    expect(pequeno).toContain('class="boton boton--primario boton--p"');
+    expect(grande).toContain('class="boton boton--acento boton--g"');
+  });
+
+  it("builds the same button classes for links", () => {
+    expect(clasesBoton("secundario", "p", "extra")).toBe(
+      "boton boton--secundario boton--p extra",
+    );
   });
 });

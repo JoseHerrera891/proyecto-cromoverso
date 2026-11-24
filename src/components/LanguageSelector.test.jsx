@@ -29,4 +29,20 @@ describe("LanguageSelector", () => {
     expect(markup).not.toContain("disabled");
     expect(markup).toContain('lang="en" aria-pressed="true"');
   });
+
+  it("uses the language codes and names sent by the API", () => {
+    const markup = renderToStaticMarkup(
+      <LanguageSelector
+        idioma="es"
+        cambiarIdioma={vi.fn()}
+        etiqueta="Idioma"
+        codigos={{ es: "ES", en: "EN" }}
+        nombres={{ es: "Español", en: "English" }}
+      />,
+    );
+
+    expect(markup).toContain('aria-label="Español"');
+    expect(markup).toContain('aria-label="English"');
+    expect(markup).toContain(">EN</button>");
+  });
 });

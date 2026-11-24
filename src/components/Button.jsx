@@ -1,18 +1,24 @@
+import { clasesBoton } from "../utils/clasesBoton.js";
 import "./Button.css";
 
+/**
+ * Botón base del sistema de diseño.
+ * variante: primario | secundario | acento · tamano: p (36) | m (48) | g (60)
+ */
 export default function Button({
   children,
   variante = "primario",
+  tamano = "m",
   className = "",
   type = "button",
   ...props
 }) {
-  const clases = ["boton", `boton--${variante}`, className]
-    .filter(Boolean)
-    .join(" ");
-
   return (
-    <button className={clases} type={type} {...props}>
+    <button
+      className={clasesBoton(variante, tamano, className)}
+      type={type}
+      {...props}
+    >
       {children}
     </button>
   );

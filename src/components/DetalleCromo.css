@@ -45,7 +45,7 @@
   background: linear-gradient(
     125deg,
     transparent 20%,
-    rgb(255 255 255 / 55%) 45%,
+    var(--brillo-holografico) 45%,
     transparent 65%
   );
   content: "";
@@ -61,7 +61,7 @@
   width: min(60%, 12rem);
   overflow: visible;
   fill: var(--fondo-superficie);
-  filter: drop-shadow(4px 5px 0 var(--fondo-inverso));
+  filter: drop-shadow(var(--sombra-figura));
   stroke: var(--fondo-inverso);
   stroke-linecap: round;
   stroke-linejoin: round;

@@ -1,24 +1,38 @@
+/*
+ * Tokens del sistema de diseño de Cromoverso.
+ * Valores tomados de Figma («Sistema de diseño» y bloque «Sprint 1»).
+ * Los componentes solo deben usar estas variables, nunca valores sueltos.
+ */
 :root {
+  /* Color · fondos */
   --fondo-pagina: #fff8ec;
   --fondo-superficie: #ffffff;
   --fondo-sutil: #f5eee0;
   --fondo-inverso: #1a1033;
   --fondo-inverso-2: #2b1f52;
+
+  /* Color · marca */
   --marca-primario: #6c3bff;
   --marca-primario-hover: #5527e6;
   --marca-primario-suave: #ede6ff;
   --marca-acento: #ffd23f;
   --marca-acento-suave: #fff3c4;
   --marca-rosa: #ff4d7a;
+
+  /* Color · texto */
   --texto-principal: #1a1033;
   --texto-secundario: #4a4166;
   --texto-terciario: #4a4166;
   --texto-inverso: #ffffff;
   --texto-inverso-suave: #c9c1e8;
   --texto-marca: #5527e6;
+
+  /* Color · bordes */
   --borde-sutil: #e8ddc9;
   --borde-fuerte: #1a1033;
   --borde-inverso: #40326e;
+
+  /* Color · estados */
   --estado-exito: #1a7f45;
   --estado-exito-suave: #dff5e7;
   --estado-alerta: #9a5b00;
@@ -27,6 +41,8 @@
   --estado-error-suave: #fde6e3;
   --estado-info: #2457d6;
   --estado-info-suave: #e3ecff;
+
+  /* Color · mundos */
   --mundo-neon: #7c4dff;
   --mundo-neon-suave: #eee8ff;
   --mundo-coral: #00a3a3;
@@ -39,46 +55,141 @@
   --mundo-orbita-suave: #e1eaff;
   --mundo-niebla: #c026d3;
   --mundo-niebla-suave: #f9e3fb;
+
+  /* Color · rarezas */
   --rareza-comun: #7d7690;
   --rareza-rara: #2f6bff;
   --rareza-epica: #8b3dff;
   --rareza-legendaria: #d99a00;
   --rareza-legendaria-suave: #fff1c2;
+
+  /* Color · decorativos */
+  --rayos-claros: #6c3bff4d;
+  --rayos-oscuros: #1a10334d;
+  --velo: #1a103399;
+
+  /* Radios */
   --radio-s: 8px;
   --radio-m: 12px;
   --radio-l: 16px;
+  --radio-tarjeta: 18px;
+  --radio-panel: 20px;
   --radio-xl: 24px;
   --radio-pildora: 999px;
+
+  /* Espacios */
+  --espacio-0: 2px;
   --espacio-1: 4px;
+  --espacio-1-5: 6px;
   --espacio-2: 8px;
+  --espacio-2-5: 10px;
   --espacio-3: 12px;
+  --espacio-3-5: 14px;
   --espacio-4: 16px;
+  --espacio-4-5: 20px;
   --espacio-5: 24px;
+  --espacio-5-5: 28px;
   --espacio-6: 32px;
+  --espacio-6-5: 40px;
   --espacio-7: 48px;
+  --espacio-7-5: 56px;
   --espacio-8: 64px;
-  --control-alto-minimo: 44px;
-  --selector-idioma-boton-ancho-minimo: 40px;
-  --selector-idioma-boton-alto-minimo: 36px;
-  --alto-navbar-escritorio: 66px;
-  --ancho-navbar-maximo: 1448px;
-  --ancho-navbar-logo: 197px;
-  --alto-navbar-logo: 36px;
-  --icono-tamano: 20px;
-  --ancho-cookie-banner-maximo: 42rem;
+  --espacio-9: 72px;
+
+  /* Bordes y sombras */
   --borde-grosor-sutil: 1px;
+  --borde-grosor-medio: 1.5px;
   --borde-grosor: 2px;
+  --borde-grosor-cromo: 2.5px;
   --borde-foco-grosor: 3px;
   --borde-foco-offset: 3px;
-  --control-alto-minimo: 44px;
-  --peso-semi-negrita: 600;
-  --peso-negrita: 700;
   --sombra-pop: 4px 4px 0 0 var(--fondo-inverso);
   --sombra-pop-pequena: 2px 2px 0 0 var(--fondo-inverso);
   --sombra-flotante: 0 16px 40px -8px #1a10332e;
+  --sombra-figura: 4px 5px 0 var(--fondo-inverso);
+  --brillo-holografico: #ffffff8c;
+
+  /* Tipografía · familias */
   --fuente-unbounded: "Unbounded", system-ui, sans-serif;
   --fuente-rubik: "Rubik", system-ui, sans-serif;
+  --fuente-texto: var(--fuente-rubik);
+  --fuente-titulos: var(--fuente-unbounded);
 
+  /* Tipografía · tamaños (Figma: 11, 12, 14, 16, 18, 20, 28, 40, 56) */
+  --texto-micro: 0.6875rem;
+  --texto-xs: 0.75rem;
+  --texto-pequeno: 0.875rem;
+  --texto-base: 1rem;
+  --texto-l: 1.125rem;
+  --texto-xl: 1.25rem;
+  --texto-subtitulo: 1.5rem;
+  --texto-seccion: 1.75rem;
+  --texto-portada-movil: 2.5rem;
+  --texto-portada: 3.5rem;
+  --texto-titulo: clamp(2rem, 1.5rem + 2vw, 3rem);
+
+  /* Tipografía · interlineados (Figma) */
+  --linea-micro: 0.875rem;
+  --linea-xs: 1rem;
+  --linea-pequeno: 1.25rem;
+  --linea-base: 1.5rem;
+  --linea-l: 1.75rem;
+  --linea-xl: 1.625rem;
+  --linea-seccion: 2.125rem;
+  --linea-portada-movil: 2.875rem;
+  --linea-portada: 3.875rem;
+  --interlineado-compacto: 1.2;
+  --interlineado-unidad: 1;
+  --interlineado: 1.6;
+
+  /* Tipografía · pesos y espaciado entre letras */
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-semi-negrita: 600;
+  --peso-negrita: 700;
+  --letras-portada: -1.5px;
+  --letras-portada-movil: -1px;
+  --letras-seccion: -0.5px;
+  --letras-mayusculas: 0.06em;
+
+  /* Medidas de la interfaz */
+  --control-alto-minimo: 44px;
+  --boton-alto-p: 36px;
+  --boton-alto-m: 48px;
+  --boton-alto-g: 60px;
+  --relleno-boton-m: 22px;
+  --relleno-boton-g: var(--espacio-5-5);
+  --selector-idioma-boton-ancho-minimo: 44px;
+  --selector-idioma-boton-alto-minimo: 32px;
+  --relleno-selector-idioma: 3px;
+  --alto-navbar-escritorio: 76px;
+  --alto-navbar-movil: 60px;
+  --ancho-pagina: 1440px;
+  --margen-pagina: var(--espacio-7);
+  --margen-pagina-movil: var(--espacio-4);
+  --ancho-navbar-maximo: var(--ancho-pagina);
+  --ancho-navbar-logo: 197px;
+  --alto-navbar-logo: 36px;
+  --ancho-logo-movil: 158px;
+  --alto-logo-movil: 29px;
+  --icono-tamano: 20px;
+  --icono-tamano-etiqueta: 14px;
+  --icono-tamano-s: 16px;
+  --icono-tamano-m: 18px;
+  --icono-tamano-l: 22px;
+  --emblema-mundo: 44px;
+  --emblema-mundo-movil: 36px;
+  --ancho-columna-filtros: 296px;
+  --ancho-cookie-banner-maximo: 1200px;
+  --opacidad-cargando: 0.6;
+  --opacidad-deshabilitado: 0.5;
+  --texto-nav-enlace: var(--texto-pequeno);
+
+  /* Movimiento */
+  --duracion-transicion-corta: 150ms;
+  --curva-transicion-estandar: ease-out;
+
+  /* Alias semánticos */
   --color-fondo: var(--fondo-pagina);
   --color-superficie: var(--fondo-superficie);
   --color-texto: var(--texto-principal);
@@ -88,18 +199,21 @@
   --color-sobre-primario: var(--texto-inverso);
   --color-borde: var(--borde-sutil);
   --color-foco: var(--marca-acento);
-  --fuente-texto: var(--fuente-rubik);
-  --fuente-titulos: var(--fuente-unbounded);
-  --texto-pequeno: 0.875rem;
-  --texto-micro: 0.6875rem;
-  --texto-base: 1rem;
-  --texto-subtitulo: 1.5rem;
-  --texto-titulo: clamp(2rem, 1.5rem + 2vw, 3rem);
-  --peso-semi-negrita: 600;
-  --peso-negrita: 700;
-  --interlineado-compacto: 1.2;
-  --interlineado-unidad: 1;
-  --interlineado: 1.6;
   --radio: var(--radio-s);
   --ancho-contenido: 80rem;
+}
+
+/* Modo de alto contraste (panel de accesibilidad). */
+html[data-alto-contraste="true"] {
+  --fondo-pagina: #ffffff;
+  --fondo-superficie: #ffffff;
+  --fondo-sutil: #eeeeee;
+  --texto-principal: #000000;
+  --texto-secundario: #111111;
+  --texto-terciario: #222222;
+  --texto-marca: #240080;
+  --marca-primario: #3514a0;
+  --marca-primario-hover: #220a75;
+  --borde-sutil: #555555;
+  --borde-fuerte: #000000;
 }

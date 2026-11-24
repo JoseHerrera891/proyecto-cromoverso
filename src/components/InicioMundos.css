@@ -233,7 +233,7 @@
   }
 
   .inicio-mundo-total {
-    margin-top: 2px;
+    margin-top: 0.125rem;
     padding: 0;
     background: transparent;
     font-size: var(--texto-micro);
@@ -303,7 +303,7 @@
   }
 
   .inicio-mundos {
-    padding-block: var(--espacio-6) 20px;
+    padding-block: var(--espacio-6) 1.25rem;
   }
 
   .inicio-mundos-encabezado h2 {
