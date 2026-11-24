@@ -1,25 +1,28 @@
-import Icono from "./Icono.jsx";
 import "./LanguageSelector.css";
+
+const IDIOMAS = ["es", "en"];
 
 export default function LanguageSelector({
   idioma,
   cambiarIdioma,
   etiqueta,
+  codigos = {},
+  nombres = {},
   disabled = false,
 }) {
   return (
     <div className="selector-idioma" role="group" aria-label={etiqueta}>
-      <Icono nombre="idioma" />
-      {["es", "en"].map((valor) => (
+      {IDIOMAS.map((valor) => (
         <button
           type="button"
           key={valor}
           lang={valor}
           aria-pressed={idioma === valor}
+          aria-label={nombres[valor]}
           disabled={disabled}
           onClick={() => cambiarIdioma(valor)}
         >
-          {valor.toUpperCase()}
+          {codigos[valor] ?? valor.toUpperCase()}
         </button>
       ))}
     </div>
