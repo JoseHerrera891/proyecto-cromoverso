@@ -9,6 +9,9 @@ import InicioPublico from "./components/InicioPublico.jsx";
 const CatalogoMundo = lazy(() => import("./components/CatalogoMundo.jsx"));
 const PrimerMundo = lazy(() => import("./components/PrimerMundo.jsx"));
 const DetalleCromo = lazy(() => import("./components/DetalleCromo.jsx"));
+const Ingresar = lazy(() => import("./components/Ingresar.jsx"));
+// Vistas con su propio diseño a pantalla completa, sin barra ni pie del sitio.
+const RUTAS_PANTALLA_COMPLETA = ["/ingresar"];
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
 import { obtenerTituloPagina } from "./utils/tituloPagina.js";
@@ -39,6 +42,7 @@ export default function App() {
   );
   const { pathname } = useLocation();
   const activo = pathname.split("/").filter(Boolean)[0] || "inicio";
+  const pantallaCompleta = RUTAS_PANTALLA_COMPLETA.includes(pathname);
   const datos = useTextos(idioma);
   const tituloPagina = obtenerTituloPagina(pathname, datos.textos);
 
@@ -90,19 +94,21 @@ export default function App() {
             {datos.textos.general.aria.saltarAlContenido}
           </a>
         )}
-        <Navbar
-          {...datos}
-          idioma={idioma}
-          cambiarIdioma={cambiarIdioma}
-          activo={activo}
-          tono={pathname === "/" ? "oscuro" : "claro"}
-          ocultarEnMovil={/^\/(mundos|cromos)\/[^/]+/.test(pathname)}
-          preferenciasAccesibilidad={preferenciasAccesibilidad}
-          onCambiarAccesibilidad={cambiarPreferenciaAccesibilidad}
-          onRestablecerAccesibilidad={() =>
-            setPreferenciasAccesibilidad(PREFERENCIAS_ACCESIBILIDAD_INICIALES)
-          }
-        />
+        {!pantallaCompleta && (
+          <Navbar
+            {...datos}
+            idioma={idioma}
+            cambiarIdioma={cambiarIdioma}
+            activo={activo}
+            tono={pathname === "/" ? "oscuro" : "claro"}
+            ocultarEnMovil={/^\/(mundos|cromos)\/[^/]+/.test(pathname)}
+            preferenciasAccesibilidad={preferenciasAccesibilidad}
+            onCambiarAccesibilidad={cambiarPreferenciaAccesibilidad}
+            onRestablecerAccesibilidad={() =>
+              setPreferenciasAccesibilidad(PREFERENCIAS_ACCESIBILIDAD_INICIALES)
+            }
+          />
+        )}
         <main id="contenido-principal" tabIndex={-1}>
           <Suspense fallback={null}>
             {/^\/mundos\/?$/.test(pathname) ? (
@@ -114,6 +120,8 @@ export default function App() {
                 id={decodeURIComponent(pathname.split("/")[2])}
                 textos={datos.textos}
               />
+            ) : pathname === "/ingresar" ? (
+              <Ingresar textos={datos.textos} />
             ) : pathname.startsWith("/cromos/") ? (
               <DetalleCromo
                 id={decodeURIComponent(pathname.split("/")[2] ?? "")}
@@ -126,7 +134,7 @@ export default function App() {
             )}
           </Suspense>
         </main>
-        <Footer textos={datos.textos} idioma={idioma} />
+        {!pantallaCompleta && <Footer textos={datos.textos} idioma={idioma} />}
       </div>
       {mostrarAvisoCookies && datos.textos?.cookies?.banner && (
         <CookieBanner
