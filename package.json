@@ -7,8 +7,9 @@
     "test": "vitest run",
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"*.js\" package.json .prettierrc.json index.html vercel.json"
+    "lint": "eslint . && npm run lint:tokens",
+    "lint:tokens": "node scripts/verificar-tokens.mjs",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"scripts/*.mjs\" \"*.js\" package.json .prettierrc.json index.html vercel.json"
   },
   "keywords": [],
   "author": "",
