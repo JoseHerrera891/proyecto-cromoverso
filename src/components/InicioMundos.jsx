@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
-import { useInicioPublico } from "../hooks/useInicioPublico.js";
 import { FIGURAS } from "../utils/figuras.jsx";
+import { insertarVariables } from "../utils/textos.js";
 import "./InicioMundos.css";
 
-function insertarVariables(plantilla, variables) {
-  return Object.entries(variables).reduce(
-    (texto, [clave, valor]) => texto.replaceAll(`{${clave}}`, String(valor)),
-    plantilla,
-  );
-}
-
-export default function InicioMundos({ textos, comoPagina = false }) {
-  const { datos, cargando, error, recargar } = useInicioPublico();
+export default function InicioMundos({
+  textos,
+  datos,
+  cargando,
+  error,
+  recargar,
+  comoPagina = false,
+}) {
   const pagina = textos?.paginas?.inicio;
   const etiquetas = pagina?.mundos?.etiquetas;
   const estados = textos?.estados;

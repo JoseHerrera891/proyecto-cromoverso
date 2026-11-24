@@ -3,45 +3,82 @@ import { describe, expect, it } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import InicioHero from "./InicioHero.jsx";
 
-describe("InicioHero", () => {
-  it("uses API text and links to registration and the worlds section", () => {
-    const textos = {
-      paginas: {
-        inicio: {
-          hero: {
-            titulo: "Seis mundos. 120 héroes. Un álbum tuyo.",
-            subtitulo: "Empieza tu colección.",
-            subtituloMovil: "Explora los mundos.",
-            botones: {
-              crearCuentaGratis: "Crear cuenta gratis",
-              explorarMundos: "Explorar los mundos",
-            },
-          },
+const textos = {
+  paginas: {
+    inicio: {
+      hero: {
+        titulo: "Seis mundos. 120 héroes. Un álbum tuyo.",
+        subtitulo: "Empieza tu colección.",
+        subtituloMovil: "Explora los mundos.",
+        etiquetas: { guardiana: "Guardiana holográfica" },
+        botones: {
+          crearCuentaGratis: "Crear cuenta gratis",
+          explorarMundos: "Explorar los mundos",
         },
       },
-    };
-    const markup = renderToStaticMarkup(
-      <MemoryRouter>
-        <InicioHero textos={textos} />
-      </MemoryRouter>,
-    );
+      tarjeta: { tipo: "{mundo} · {tipo}" },
+    },
+    albumMundo: { filtros: { tipo: { opciones: { heroe: "Héroe" } } } },
+  },
+};
 
-    expect(markup).toContain("<h1");
-    expect(markup).toContain("Seis mundos. 120");
-    expect(markup).toContain("héroes.");
+const destacados = [
+  {
+    id: "CV-001",
+    numero: 1,
+    nombre: "Voltia",
+    mundoNombre: "Ciudad Neón",
+    tipo: "heroe",
+    rareza: "legendaria",
+    holografico: true,
+  },
+  {
+    id: "CV-041",
+    numero: 41,
+    nombre: "Raíz Madre",
+    mundoNombre: "Bosque Eterno",
+    tipo: "heroe",
+    rareza: "legendaria",
+    holografico: true,
+  },
+];
+
+const rarezas = [{ id: "legendaria", nombre: "Legendaria", icono: "corona" }];
+
+function renderizar(props) {
+  return renderToStaticMarkup(
+    <MemoryRouter>
+      <InicioHero textos={textos} {...props} />
+    </MemoryRouter>,
+  );
+}
+
+describe("InicioHero", () => {
+  it("uses API text and links to registration and the catalog", () => {
+    const markup = renderizar();
+
+    expect(markup).toContain('<h1 id="inicio-hero-titulo">');
+    expect(markup).toContain("Seis mundos. 120 héroes.");
     expect(markup).toContain("Un álbum tuyo.");
     expect(markup).toContain('href="/registro"');
-    expect(markup).toContain('href="#mundos"');
-    expect(markup).toContain('aria-label="Héroes de Cromoverso"');
-    expect(markup).toContain("Raíz Madre");
+    expect(markup).toContain('href="/mundos"');
+    expect(markup).toContain("Explora los mundos.");
+    expect(markup).toContain("Empieza tu colección.");
+  });
+
+  it("shows the featured cromos from the API, not hand-written data", () => {
+    const markup = renderizar({ destacados, rarezas });
+
+    expect(markup).toContain("Guardiana holográfica");
     expect(markup).toContain("Voltia");
-    expect(markup).toContain("Astra");
-    expect(markup).toContain('src="/images/cromo-raiz.png"');
-    expect(markup).toContain('src="/images/cromo-voltia.png"');
-    expect(markup).toContain('src="/images/cromo-astra.png"');
-    expect(markup.match(/class="inicio-hero-carta-insignia"/g)).toHaveLength(3);
-    expect(markup).toContain(
-      'class="inicio-hero-carta inicio-hero-carta--voltia"',
-    );
+    expect(markup).toContain("Ciudad Neón · Héroe");
+    expect(markup).toContain("Raíz Madre");
+    expect(markup).toContain("inicio-hero-carta--centro");
+    expect(markup).toContain("inicio-hero-carta--izquierda");
+    expect(markup).not.toContain("Astra");
+  });
+
+  it("does not render cards until the API answers", () => {
+    expect(renderizar()).not.toContain("inicio-hero-cartas");
   });
 });

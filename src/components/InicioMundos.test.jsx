@@ -1,16 +1,11 @@
-import { renderToStaticMarkup } from "react-dom/server";
+﻿import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
-import { useInicioPublico } from "../hooks/useInicioPublico.js";
 import InicioMundos from "./InicioMundos.jsx";
-
-vi.mock("../hooks/useInicioPublico.js", () => ({
-  useInicioPublico: vi.fn(),
-}));
 
 describe("InicioMundos", () => {
   it("muestra los seis mundos con sus totales y enlaces de catálogo", () => {
-    useInicioPublico.mockReturnValue({
+    const estado = {
       datos: {
         totalAlbum: 120,
         mundos: Array.from({ length: 6 }, (_, index) => ({
@@ -24,7 +19,7 @@ describe("InicioMundos", () => {
       cargando: false,
       error: false,
       recargar: vi.fn(),
-    });
+    };
     const textos = {
       paginas: {
         inicio: {
@@ -40,7 +35,7 @@ describe("InicioMundos", () => {
     };
     const markup = renderToStaticMarkup(
       <MemoryRouter>
-        <InicioMundos textos={textos} />
+        <InicioMundos textos={textos} {...estado} />
       </MemoryRouter>,
     );
 
@@ -54,7 +49,7 @@ describe("InicioMundos", () => {
 
     const pagina = renderToStaticMarkup(
       <MemoryRouter>
-        <InicioMundos textos={textos} comoPagina />
+        <InicioMundos textos={textos} {...estado} comoPagina />
       </MemoryRouter>,
     );
     expect(pagina).toContain('<h1 id="inicio-mundos-titulo">');
