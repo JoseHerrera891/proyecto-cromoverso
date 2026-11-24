@@ -62,6 +62,15 @@ a:hover {
   color: var(--color-primario-hover);
 }
 
+.solo-lector {
+  position: absolute;
+  width: var(--borde-grosor-sutil);
+  height: var(--borde-grosor-sutil);
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .contenedor {
   max-width: var(--ancho-contenido);
   margin-inline: auto;
