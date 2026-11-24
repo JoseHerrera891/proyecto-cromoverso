@@ -18,7 +18,7 @@ export default function LanguageSelector({
           key={valor}
           lang={valor}
           aria-pressed={idioma === valor}
-          aria-label={nombres[valor]}
+          title={nombres[valor]}
           disabled={disabled}
           onClick={() => cambiarIdioma(valor)}
         >

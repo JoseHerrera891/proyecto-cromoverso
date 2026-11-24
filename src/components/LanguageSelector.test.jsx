@@ -41,8 +41,9 @@ describe("LanguageSelector", () => {
       />,
     );
 
-    expect(markup).toContain('aria-label="Español"');
-    expect(markup).toContain('aria-label="English"');
+    expect(markup).toContain('title="Español"');
+    expect(markup).toContain('title="English"');
+    expect(markup).not.toContain('aria-label="Español"');
     expect(markup).toContain(">EN</button>");
   });
 });
