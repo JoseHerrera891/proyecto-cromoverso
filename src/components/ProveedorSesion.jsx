@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContextoSesion } from "../hooks/useSesion.js";
-import { cerrarSesion, obtenerSesion } from "../utils/sesion.js";
+import {
+  cerrarSesion,
+  debeCerrarSesionAlIniciar,
+  obtenerSesion,
+} from "../utils/sesion.js";
 
 /**
  * Sesión de la persona. La cookie httpOnly `sesion` la maneja el navegador;
@@ -37,7 +41,14 @@ export default function ProveedorSesion({
   }, [sesionVencida]);
 
   useEffect(() => {
-    if (verificarAlIniciar) verificar();
+    if (!verificarAlIniciar) return;
+    if (debeCerrarSesionAlIniciar()) {
+      cerrarSesion()
+        .catch(() => {})
+        .finally(verificar);
+    } else {
+      verificar();
+    }
     // Solo al cargar la aplicación.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

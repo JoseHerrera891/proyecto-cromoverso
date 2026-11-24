@@ -14,6 +14,48 @@ export async function obtenerSesion(opciones = {}) {
   }
 }
 
+// «Mantener la sesión iniciada» desmarcado: se guarda solo una marca (nunca el
+// token) para cerrar la sesión la próxima vez que se abra el navegador.
+const MARCA_CERRAR = "cromoverso.cerrarSesionAlSalir";
+const MARCA_ABIERTA = "cromoverso.navegadorAbierto";
+
+function guardar(almacen, clave, valor) {
+  try {
+    if (valor) almacen?.setItem(clave, "1");
+    else almacen?.removeItem(clave);
+  } catch {
+    // Almacenamiento bloqueado: la sesión se mantiene como siempre.
+  }
+}
+
+function leer(almacen, clave) {
+  try {
+    return almacen?.getItem(clave) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function recordarPreferenciaDeSesion(
+  mantener,
+  local = globalThis.localStorage,
+  pestana = globalThis.sessionStorage,
+) {
+  guardar(local, MARCA_CERRAR, !mantener);
+  guardar(pestana, MARCA_ABIERTA, true);
+}
+
+/** true si la sesión era temporal y el navegador se volvió a abrir. */
+export function debeCerrarSesionAlIniciar(
+  local = globalThis.localStorage,
+  pestana = globalThis.sessionStorage,
+) {
+  const cerrar = leer(local, MARCA_CERRAR) && !leer(pestana, MARCA_ABIERTA);
+  guardar(pestana, MARCA_ABIERTA, true);
+  if (cerrar) guardar(local, MARCA_CERRAR, false);
+  return cerrar;
+}
+
 /** DELETE /sesion (204): la API borra la cookie `sesion`. */
 export async function cerrarSesion(opciones = {}) {
   await pedirJson("sesion", { ...opciones, metodo: "DELETE", conSesion: true });

@@ -6,7 +6,7 @@ import { useSesion } from "../hooks/useSesion.js";
 import { useTituloDocumento } from "../hooks/useTituloDocumento.js";
 import { clasesBoton } from "../utils/clasesBoton.js";
 import { avisoDeError } from "../utils/erroresIngreso.js";
-import { iniciarSesion } from "../utils/sesion.js";
+import { iniciarSesion, recordarPreferenciaDeSesion } from "../utils/sesion.js";
 import { insertarVariables } from "../utils/textos.js";
 import CampoClave from "./CampoClave.jsx";
 import Icono from "./Icono.jsx";
@@ -92,6 +92,7 @@ export default function Ingresar({ textos }) {
     setEnviando(true);
     try {
       const usuario = await iniciarSesion(valores);
+      recordarPreferenciaDeSesion(mantener);
       setUsuario(usuario);
       navigate("/");
     } catch (error) {

@@ -1,6 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import { segundosDeEspera } from "./api.js";
-import { cerrarSesion, iniciarSesion, obtenerSesion } from "./sesion.js";
+import {
+  cerrarSesion,
+  debeCerrarSesionAlIniciar,
+  iniciarSesion,
+  obtenerSesion,
+  recordarPreferenciaDeSesion,
+} from "./sesion.js";
 
 const usuario = { id: "usr_laura", nombre: "Laura Cardona" };
 
@@ -88,6 +94,31 @@ describe("iniciar sesión", () => {
     await cerrarSesion({ fetcher });
     expect(fetcher.mock.calls[0][1].method).toBe("DELETE");
     expect(fetcher.mock.calls[0][1].credentials).toBe("include");
+  });
+
+  it("cierra la sesión temporal solo al volver a abrir el navegador", () => {
+    const almacen = () => {
+      const datos = new Map();
+      return {
+        getItem: (c) => datos.get(c) ?? null,
+        setItem: (c, v) => datos.set(c, v),
+        removeItem: (c) => datos.delete(c),
+        datos,
+      };
+    };
+    const local = almacen();
+    let pestana = almacen();
+
+    recordarPreferenciaDeSesion(false, local, pestana);
+    expect(debeCerrarSesionAlIniciar(local, pestana)).toBe(false);
+
+    pestana = almacen(); // se cerró el navegador
+    expect(debeCerrarSesionAlIniciar(local, pestana)).toBe(true);
+    expect(debeCerrarSesionAlIniciar(local, almacen())).toBe(false);
+    expect([...local.datos.values()].join()).not.toMatch(/token|sesion=/);
+
+    recordarPreferenciaDeSesion(true, local, almacen());
+    expect(debeCerrarSesionAlIniciar(local, almacen())).toBe(false);
   });
 
   it("interpreta Retry-After en segundos o como fecha", () => {
