@@ -77,7 +77,8 @@
   }
 
   .inicio-hero-bienvenida {
-    flex: 0 1 var(--ancho-bienvenida);
+    flex: 1 1 var(--ancho-bienvenida);
+    max-width: var(--ancho-bienvenida);
     gap: var(--espacio-5);
   }
 
@@ -125,7 +126,8 @@
   .inicio-hero-cartas {
     position: relative;
     display: block;
-    flex: 0 0 var(--ancho-cartas-portada);
+    flex: 0 1 var(--ancho-cartas-portada);
+    min-width: 0;
     aspect-ratio: 560 / 430;
     margin-left: auto;
   }
