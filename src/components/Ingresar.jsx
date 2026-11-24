@@ -117,6 +117,9 @@ export default function Ingresar({ textos }) {
           className="ingreso-abanico"
           src={abanico}
           srcSet={`${abanico} 1x, ${abanico2x} 2x`}
+          width="600"
+          height="420"
+          fetchPriority="high"
           alt=""
         />
         <div className="ingreso-lema">
