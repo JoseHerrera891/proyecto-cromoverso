@@ -96,6 +96,11 @@ export default function App() {
   return (
     <>
       <div className="sitio">
+        {datos.textos?.general?.aria?.saltarAlContenido && (
+          <a className="saltar-contenido" href="#contenido-principal">
+            {datos.textos.general.aria.saltarAlContenido}
+          </a>
+        )}
         <Navbar
           {...datos}
           idioma={idioma}
@@ -109,7 +114,7 @@ export default function App() {
             setPreferenciasAccesibilidad(PREFERENCIAS_ACCESIBILIDAD_INICIALES)
           }
         />
-        <main id="contenido-principal">
+        <main id="contenido-principal" tabIndex={-1}>
           {pathname === "/mundos" ? (
             <Navigate to="/mundos/neon" replace />
           ) : pathname === "/" ? (
