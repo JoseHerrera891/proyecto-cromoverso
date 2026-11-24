@@ -22,7 +22,26 @@ describe("datos del inicio público", () => {
         { datos: mundos, totalAlbum: 120 },
         { datos: rarezas },
       ),
-    ).toEqual({ mundos, rarezas, totalAlbum: 120 });
+    ).toEqual({ mundos, rarezas, destacados: [], totalAlbum: 120 });
+  });
+
+  it("destaca hasta tres guardianas que tienen arte en Figma", () => {
+    const guardiana = (id) => ({ id, nombre: id, mundoNombre: "Mundo" });
+    const { destacados } = validarDatosInicio(
+      { datos: mundos, totalAlbum: 120 },
+      { datos: rarezas },
+      {
+        datos: ["CV-001", "CV-021", "CV-041", "CV-081", "CV-101"].map(
+          guardiana,
+        ),
+      },
+    );
+
+    expect(destacados.map(({ id }) => id)).toEqual([
+      "CV-001",
+      "CV-041",
+      "CV-081",
+    ]);
   });
 
   it("rechaza listas incompletas", () => {
@@ -40,7 +59,7 @@ describe("datos del inicio público", () => {
     ).toThrow("La respuesta de rarezas no tiene el formato esperado.");
   });
 
-  it("solicita ambos endpoints y rechaza errores HTTP", async () => {
+  it("solicita mundos, rarezas y guardianas, y rechaza errores HTTP", async () => {
     const fetcher = vi.fn((url) =>
       Promise.resolve({
         ok: true,
@@ -48,16 +67,22 @@ describe("datos del inicio público", () => {
           Promise.resolve(
             url.endsWith("/mundos")
               ? { datos: mundos, totalAlbum: 120 }
-              : { datos: rarezas },
+              : url.endsWith("/rarezas")
+                ? { datos: rarezas }
+                : { datos: [] },
           ),
       }),
     );
     await expect(solicitarDatosInicio(undefined, fetcher)).resolves.toEqual({
       mundos,
       rarezas,
+      destacados: [],
       totalAlbum: 120,
     });
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(fetcher.mock.calls[2][0]).toContain(
+      "cromos?rareza=legendaria&tipo=heroe",
+    );
     await expect(
       solicitarDatosInicio(
         undefined,
