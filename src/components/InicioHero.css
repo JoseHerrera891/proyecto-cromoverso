@@ -14,6 +14,7 @@
   align-items: center;
   gap: var(--espacio-6-5);
   max-width: var(--ancho-pagina);
+  min-height: var(--alto-portada-movil);
   margin-inline: auto;
   padding: var(--espacio-2) var(--margen-pagina-movil) var(--espacio-5-5);
 }

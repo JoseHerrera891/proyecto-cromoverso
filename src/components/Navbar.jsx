@@ -259,23 +259,24 @@ export default function Navbar({
               nombres={textos?.idioma?.opciones}
             />
           </div>
-          {nav && (
-            <>
-              <Link className={clasesBoton("secundario", "p")} to="/ingresar">
-                {nav.botones.ingresar}
-              </Link>
-              <Link
-                className={clasesBoton(
-                  "primario",
-                  "p",
-                  "navbar-solo-escritorio",
-                )}
-                to="/registro"
-              >
-                {nav.botones.crearCuenta}
-              </Link>
-            </>
-          )}
+          {/* Se pintan desde el inicio con su ancho de Figma: no saltan al
+              llegar los textos. */}
+          <Link
+            className={clasesBoton("secundario", "p", "navbar-ingresar")}
+            to="/ingresar"
+          >
+            {nav?.botones?.ingresar}
+          </Link>
+          <Link
+            className={clasesBoton(
+              "primario",
+              "p",
+              "navbar-crear-cuenta navbar-solo-escritorio",
+            )}
+            to="/registro"
+          >
+            {nav?.botones?.crearCuenta}
+          </Link>
           <button
             ref={botonMenu}
             type="button"
