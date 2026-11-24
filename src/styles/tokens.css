@@ -162,8 +162,12 @@
   --selector-idioma-boton-ancho-minimo: 44px;
   --selector-idioma-boton-alto-minimo: 32px;
   --relleno-selector-idioma: 3px;
+  --alto-selector-idioma: 42px;
+  --alto-enlace-menu: 52px;
   --alto-navbar-escritorio: 76px;
   --alto-navbar-movil: 60px;
+  --alto-pie: 300px;
+  --alto-pie-movil: 347px;
   --ancho-pagina: 1440px;
   --margen-pagina: var(--espacio-7);
   --margen-pagina-movil: var(--espacio-4);

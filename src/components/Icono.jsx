@@ -1,94 +1,141 @@
 import "./Icono.css";
 
-const TRAZOS = {
-  buscar: (
-    <>
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <path d="m16 16 4.5 4.5" />
-    </>
-  ),
-  menu: (
-    <>
-      <path d="M4 6h16M4 12h16M4 18h16" />
-    </>
-  ),
-  cerrar: <path d="m6 6 12 12M6 18 18 6" />,
-  volver: <path d="m15 18-6-6 6-6M9 12h12" />,
-  regalo: (
-    <>
-      <path d="M20 8H4c-.6 0-1 .4-1 1v3h18V9c0-.6-.4-1-1-1Z" />
-      <path d="M5 12v9h14v-9M12 8v13M12 8c-2-4-5.5-3.5-4.5-1.2C8.2 8 12 8 12 8Zm0 0c2-4 5.5-3.5 4.5-1.2C15.8 8 12 8 12 8Z" />
-    </>
-  ),
-  album: (
-    <>
-      <path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" />
-      <path d="M9 3v18m4-13h4" />
-    </>
-  ),
-  destello: (
-    <>
-      <path d="m11 3 1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8L11 3Z" />
-      <path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z" />
-    </>
-  ),
-  estrella: (
-    <path
-      d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1 2.9-6Z"
-      fill="currentColor"
-      stroke="none"
-    />
-  ),
-  "rareza-circulo": (
-    <circle cx="12" cy="12" r="8" fill="currentColor" stroke="none" />
-  ),
-  "rareza-rombo": (
-    <path d="m12 3 9 9-9 9-9-9 9-9Z" fill="currentColor" stroke="none" />
-  ),
-  "rareza-estrella": (
-    <path
-      d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1 2.9-6Z"
-      fill="currentColor"
-      stroke="none"
-    />
-  ),
-  "rareza-corona": (
-    <path
-      d="M3 19h18M4.5 16 3 7l5 4 4-7 4 7 5-4-1.5 9h-15Z"
-      fill="currentColor"
-      stroke="none"
-    />
-  ),
-  favoritos: (
-    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
-  ),
-  idioma: (
-    <>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M3 12h18M12 3a18 18 0 0 1 0 18 18 18 0 0 1 0-18Z" />
-    </>
-  ),
-  accesibilidad: (
-    <>
-      <circle cx="12" cy="4" r="2" />
-      <path d="M4 8h16M12 6v8m0 0-4 7m4-7 4 7" />
-    </>
-  ),
+/*
+ * Íconos del sistema de diseño (Figma · «Iconos» e «Imágenes para exportar»).
+ * Cada ícono conserva el viewBox de Figma; el grosor del trazo es 1/12 del
+ * lienzo, igual que en el diseño. El color sale de `currentColor`.
+ */
+const ICONOS = {
+  buscar: {
+    lienzo: 22,
+    trazos: (
+      <>
+        <circle cx="10.08" cy="10.08" r="6.42" />
+        <path d="m15.13 15.13 4.12 4.12" />
+      </>
+    ),
+  },
+  menu: {
+    lienzo: 22,
+    trazos: <path d="M3.67 6.42h14.66M3.67 11h14.66M3.67 15.58h14.66" />,
+  },
+  cerrar: { lienzo: 22, trazos: <path d="m5.5 5.5 11 11m0-11-11 11" /> },
+  flechaIzq: {
+    lienzo: 22,
+    trazos: <path d="M17.42 11H4.58m5.5-5.5L4.58 11l5.5 5.5" />,
+  },
+  flechaDer: {
+    lienzo: 18,
+    trazos: <path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" />,
+  },
+  chevronAbajo: { lienzo: 16, trazos: <path d="m4 6 4 4 4-4" /> },
+  chevronDer: { lienzo: 16, trazos: <path d="m6 4 4 4-4 4" /> },
+  chevronIzq: { lienzo: 16, trazos: <path d="m10 4-4 4 4 4" /> },
+  inicio: {
+    lienzo: 24,
+    trazos: (
+      <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" />
+    ),
+  },
+  mundo: {
+    lienzo: 24,
+    trazos: (
+      <>
+        <circle cx="12" cy="12" r="5" />
+        <path d="M3 15c3-5 15-11 18-8" />
+      </>
+    ),
+  },
+  regalo: {
+    lienzo: 20,
+    trazos: (
+      <>
+        <rect x="2.5" y="6.67" width="15" height="4.17" rx="0.83" />
+        <path d="M4.17 10.83v6.67h11.66v-6.67M10 6.67V17.5" />
+        <path d="M10 6.67C8.33 3.33 5.42 3.75 6.25 5.67 6.83 6.67 10 6.67 10 6.67Zm0 0c1.67-3.34 4.58-2.92 3.75-1 -.58 1-3.75 1-3.75 1Z" />
+      </>
+    ),
+  },
+  album: {
+    lienzo: 20,
+    trazos: (
+      <>
+        <rect x="3.33" y="2.5" width="13.34" height="15" rx="1.67" />
+        <path d="M7.5 2.5v15m3.33-10.83h3.34" />
+      </>
+    ),
+  },
+  destellos: {
+    lienzo: 22,
+    trazos: (
+      <>
+        <path d="m10.08 2.75 1.65 4.77 4.77 1.65-4.77 1.65-1.65 4.76-1.65-4.76-4.76-1.65 4.76-1.65 1.65-4.77Z" />
+        <path d="m17.42 12.83.73 2.02 2.02.73-2.02.74-.73 2.01-.74-2.01-2.01-.74 2.01-.73.74-2.02Z" />
+      </>
+    ),
+  },
+  estrella: {
+    lienzo: 22,
+    trazos: (
+      <path d="m11 2.57 2.57 5.31 5.86.83-4.21 4.12 1 5.78L11 15.86l-5.22 2.75 1-5.78-4.21-4.12 5.86-.83L11 2.57Z" />
+    ),
+  },
+  accesibilidad: {
+    lienzo: 20,
+    trazos: (
+      <>
+        <circle cx="10" cy="3.75" r="1.5" />
+        <path d="M4 7.5h12M10 7.5v5m0 0-2.5 4.5m2.5-4.5 2.5 4.5" />
+      </>
+    ),
+  },
+  "rareza-circulo": {
+    lienzo: 14,
+    trazos: <circle cx="7" cy="7" r="4.5" />,
+  },
+  "rareza-rombo": {
+    lienzo: 14,
+    relleno: true,
+    trazos: <path d="m7 1.75 4.5 5.25L7 12.25 2.5 7 7 1.75Z" />,
+  },
+  "rareza-estrella": {
+    lienzo: 14,
+    relleno: true,
+    trazos: (
+      <path d="m7 1.6 1.65 3.4 3.75.52-2.7 2.63.64 3.7L7 10.1l-3.34 1.75.64-3.7-2.7-2.63 3.75-.52L7 1.6Z" />
+    ),
+  },
+  "rareza-corona": {
+    lienzo: 14,
+    relleno: true,
+    trazos: (
+      <path d="M1.75 4.67 4.08 7 7 2.92 9.92 7l2.33-2.33-1.16 5.25H2.91L1.75 4.67ZM2.92 11.67h8.16" />
+    ),
+  },
 };
 
-export default function Icono({ nombre }) {
+const ALIAS = { volver: "flechaIzq", destello: "destellos" };
+
+export default function Icono({ nombre, className = "" }) {
+  const icono = ICONOS[ALIAS[nombre] ?? nombre];
+  if (!icono) return null;
+  const { lienzo, trazos, relleno = false } = icono;
+
   return (
     <svg
-      className={`icono icono--${nombre}`}
-      viewBox="0 0 24 24"
-      fill="none"
+      className={["icono", `icono--${nombre}`, className]
+        .filter(Boolean)
+        .join(" ")}
+      viewBox={`0 0 ${lienzo} ${lienzo}`}
+      fill={relleno ? "currentColor" : "none"}
       stroke="currentColor"
+      strokeWidth={relleno ? lienzo / 16 : lienzo / 12}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
       focusable="false"
     >
-      {TRAZOS[nombre]}
+      {trazos}
     </svg>
   );
 }

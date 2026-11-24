@@ -8,3 +8,27 @@
 .sitio > main {
   flex: 1;
 }
+
+.sitio > main:focus {
+  outline: none;
+}
+
+/* Enlace para saltar la navegación con el teclado; aparece al enfocarlo. */
+.saltar-contenido {
+  position: absolute;
+  top: var(--espacio-2);
+  left: var(--espacio-2);
+  z-index: 50;
+  padding: var(--espacio-2) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: var(--marca-acento);
+  font-weight: var(--peso-semi-negrita);
+  transform: translateY(-200%);
+}
+
+.saltar-contenido:focus {
+  color: var(--texto-principal);
+  transform: none;
+}

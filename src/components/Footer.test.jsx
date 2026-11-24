@@ -6,7 +6,7 @@ import Footer from "./Footer.jsx";
 describe("Footer", () => {
   it("renders API content, grouped links, and legal text", () => {
     const textos = {
-      navbar: { logo: { texto: "Cromoverso" } },
+      navbar: { logo: { texto: "Cromoverso", aria: "Ir al inicio" } },
       footer: {
         lema: "Colecciona aventuras",
         columnas: {
@@ -23,20 +23,18 @@ describe("Footer", () => {
             enlaces: { terminos: "Términos", accesibilidad: "Accesibilidad" },
           },
         },
-        legal: {
-          derechos: "© {anio} Cromoverso",
-          nota: "Todos los derechos reservados.",
-        },
+        legal: { derechos: "© {anio} Cromoverso" },
       },
     };
     const markup = renderToStaticMarkup(
       <MemoryRouter>
-        <Footer textos={textos} idioma="es" />
+        <Footer textos={textos} />
       </MemoryRouter>,
     );
 
-    expect(markup).toContain('aria-label="Navegación del pie"');
-    expect(markup).toContain("logo-inverso.svg");
+    expect(markup).toContain('src="/marca/logo-inverso.svg"');
+    expect(markup).not.toContain("fly.dev");
+    expect(markup).toContain('aria-label="Ir al inicio"');
     expect(markup).toContain("Colecciona aventuras");
     expect(markup).toContain("<h2>Explora</h2>");
     expect(markup).toContain("<h2>Tu cuenta</h2>");
@@ -47,6 +45,15 @@ describe("Footer", () => {
     expect(markup).toContain('href="/terminos"');
     expect(markup).toContain('href="/accesibilidad"');
     expect(markup).toContain(`© ${new Date().getFullYear()} Cromoverso`);
-    expect(markup).toContain("Todos los derechos reservados.");
+  });
+
+  it("does not render hand-written fallback texts", () => {
+    const markup = renderToStaticMarkup(
+      <MemoryRouter>
+        <Footer textos={null} />
+      </MemoryRouter>,
+    );
+
+    expect(markup).not.toMatch(/Navegación|Go to home|Ir al inicio/);
   });
 });

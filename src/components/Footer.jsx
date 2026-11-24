@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Footer.css";
 
-const LOGO_FOOTER =
-  "https://yanethm-cromoverso-api.fly.dev/docs/diseno/logos/logo-inverso.svg";
+const LOGO_INVERSO = "/marca/logo-inverso.svg";
 
 const DESTINOS = {
   inicio: "/",
@@ -13,70 +12,50 @@ const DESTINOS = {
   accesibilidad: "/accesibilidad",
 };
 
-function EnlacesColumna({ titulo, enlaces }) {
-  return (
-    <section className="pie-pagina-columna" aria-label={titulo}>
-      <h2>{titulo}</h2>
-      <ul>
-        {Object.entries(enlaces)
-          .filter(([clave]) => DESTINOS[clave])
-          .map(([clave, etiqueta]) => (
-            <li key={clave}>
-              <Link to={DESTINOS[clave]}>{etiqueta}</Link>
-            </li>
-          ))}
-      </ul>
-    </section>
-  );
-}
+const COLUMNAS = ["explora", "cuenta", "legal"];
 
-export default function Footer({ textos, idioma }) {
+export default function Footer({ textos }) {
   const pie = textos?.footer;
-  const ingles = idioma === "en";
   const marca = textos?.navbar?.logo;
   const anio = new Date().getFullYear();
 
   return (
     <footer className="pie-pagina">
       <div className="pie-pagina-contenido">
-        <div className="pie-pagina-superior">
-          <div className="pie-pagina-identidad">
-            <Link
-              className="pie-pagina-marca"
-              to="/"
-              aria-label={
-                marca?.aria ?? (ingles ? "Go to home" : "Ir al inicio")
-              }
-            >
-              <img src={LOGO_FOOTER} alt="" />
+        <div className="pie-pagina-columnas">
+          <div className="pie-pagina-marca">
+            <Link to="/" aria-label={marca?.aria}>
+              <img src={LOGO_INVERSO} alt="" />
             </Link>
             {pie?.lema && <p>{pie.lema}</p>}
           </div>
           {pie?.columnas && (
-            <nav
-              className="pie-pagina-navegacion"
-              aria-label={ingles ? "Footer navigation" : "Navegación del pie"}
-            >
-              <EnlacesColumna
-                titulo={pie.columnas.explora.titulo}
-                enlaces={pie.columnas.explora.enlaces}
-              />
-              <EnlacesColumna
-                titulo={pie.columnas.cuenta.titulo}
-                enlaces={pie.columnas.cuenta.enlaces}
-              />
-              <EnlacesColumna
-                titulo={pie.columnas.legal.titulo}
-                enlaces={pie.columnas.legal.enlaces}
-              />
-            </nav>
+            <div className="pie-pagina-enlaces">
+              {COLUMNAS.map((clave) => {
+                const columna = pie.columnas[clave];
+                if (!columna) return null;
+                return (
+                  <section className="pie-pagina-columna" key={clave}>
+                    <h2>{columna.titulo}</h2>
+                    <ul>
+                      {Object.entries(columna.enlaces)
+                        .filter(([destino]) => DESTINOS[destino])
+                        .map(([destino, etiqueta]) => (
+                          <li key={destino}>
+                            <Link to={DESTINOS[destino]}>{etiqueta}</Link>
+                          </li>
+                        ))}
+                    </ul>
+                  </section>
+                );
+              })}
+            </div>
           )}
         </div>
-        {pie?.legal && (
-          <div className="pie-pagina-legal">
-            <p>{pie.legal.derechos.replaceAll("{anio}", String(anio))}</p>
-            <p>{pie.legal.nota}</p>
-          </div>
+        {pie?.legal?.derechos && (
+          <p className="pie-pagina-legal">
+            {pie.legal.derechos.replaceAll("{anio}", String(anio))}
+          </p>
         )}
       </div>
     </footer>
