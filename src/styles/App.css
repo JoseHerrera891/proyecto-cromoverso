@@ -5,8 +5,17 @@
   flex-direction: column;
 }
 
+/* El contenido ocupa al menos la pantalla: mientras llegan los datos de la
+   API el pie queda bajo el borde y no salta (evita desplazamientos, CLS). */
 .sitio > main {
   flex: 1;
+  min-height: calc(100dvh - var(--alto-navbar-movil));
+}
+
+@media (min-width: 1024px) {
+  .sitio > main {
+    min-height: calc(100dvh - var(--alto-navbar-escritorio));
+  }
 }
 
 .sitio > main:focus {

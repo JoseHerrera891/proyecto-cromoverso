@@ -58,6 +58,7 @@ export default function CartaCromo({
   detalle,
   mostrarDetalle = true,
   etiquetaNombre: EtiquetaNombre = "h3",
+  prioritaria = false,
   className = "",
 }) {
   const arte = arteDeCromo(cromo.id);
@@ -74,7 +75,13 @@ export default function CartaCromo({
       <div className="carta-cromo-marco">
         <div className="carta-cromo-arte">
           {arte ? (
-            <img src={arte.src} srcSet={arte.srcSet} alt="" loading="lazy" />
+            <img
+              src={arte.src}
+              srcSet={arte.srcSet}
+              alt=""
+              loading={prioritaria ? "eager" : "lazy"}
+              fetchPriority={prioritaria ? "high" : undefined}
+            />
           ) : (
             <ArteSvg ilustracion={cromo.ilustracion} />
           )}

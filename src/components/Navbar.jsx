@@ -1,10 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { clasesBoton } from "../utils/clasesBoton.js";
 import Icono from "./Icono.jsx";
 import LanguageSelector from "./LanguageSelector.jsx";
-import PanelAccesibilidad from "./PanelAccesibilidad.jsx";
 import "./Navbar.css";
+
+// El panel de accesibilidad se descarga solo al abrirlo.
+const PanelAccesibilidad = lazy(() => import("./PanelAccesibilidad.jsx"));
 
 // Rutas de las vistas del curso. Los textos de cada enlace vienen de la API.
 const DESTINOS = {
@@ -259,23 +268,24 @@ export default function Navbar({
               nombres={textos?.idioma?.opciones}
             />
           </div>
-          {nav && (
-            <>
-              <Link className={clasesBoton("secundario", "p")} to="/ingresar">
-                {nav.botones.ingresar}
-              </Link>
-              <Link
-                className={clasesBoton(
-                  "primario",
-                  "p",
-                  "navbar-solo-escritorio",
-                )}
-                to="/registro"
-              >
-                {nav.botones.crearCuenta}
-              </Link>
-            </>
-          )}
+          {/* Se pintan desde el inicio con su ancho de Figma: no saltan al
+              llegar los textos. */}
+          <Link
+            className={clasesBoton("secundario", "p", "navbar-ingresar")}
+            to="/ingresar"
+          >
+            {nav?.botones?.ingresar}
+          </Link>
+          <Link
+            className={clasesBoton(
+              "primario",
+              "p",
+              "navbar-crear-cuenta navbar-solo-escritorio",
+            )}
+            to="/registro"
+          >
+            {nav?.botones?.crearCuenta}
+          </Link>
           <button
             ref={botonMenu}
             type="button"
@@ -318,21 +328,23 @@ export default function Navbar({
       )}
 
       {panelAbierto && textosAccesibilidad && (
-        <PanelAccesibilidad
-          id="panel-accesibilidad"
-          textos={{
-            ...textosAccesibilidad,
-            botones: {
-              ...textosAccesibilidad.botones,
-              cerrar: textos?.general?.aria?.cerrarDialogo,
-            },
-          }}
-          preferencias={preferenciasAccesibilidad}
-          onCambiar={onCambiarAccesibilidad}
-          onRestablecer={onRestablecerAccesibilidad}
-          onCerrar={cerrarPanel}
-          botonAbrir={botonAccesibilidad}
-        />
+        <Suspense fallback={null}>
+          <PanelAccesibilidad
+            id="panel-accesibilidad"
+            textos={{
+              ...textosAccesibilidad,
+              botones: {
+                ...textosAccesibilidad.botones,
+                cerrar: textos?.general?.aria?.cerrarDialogo,
+              },
+            }}
+            preferencias={preferenciasAccesibilidad}
+            onCambiar={onCambiarAccesibilidad}
+            onRestablecer={onRestablecerAccesibilidad}
+            onCerrar={cerrarPanel}
+            botonAbrir={botonAccesibilidad}
+          />
+        </Suspense>
       )}
     </header>
   );

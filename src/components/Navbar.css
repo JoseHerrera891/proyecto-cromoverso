@@ -122,6 +122,14 @@
   display: none !important;
 }
 
+.navbar-ingresar {
+  min-width: var(--ancho-boton-ingresar);
+}
+
+.navbar-crear-cuenta {
+  min-width: var(--ancho-boton-crear-cuenta);
+}
+
 .navbar-estado[role="status"] {
   position: absolute;
   width: var(--borde-grosor-sutil);

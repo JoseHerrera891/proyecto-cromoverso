@@ -1,12 +1,14 @@
 import "./styles/App.css";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import InicioPublico from "./components/InicioPublico.jsx";
-import CatalogoMundo from "./components/CatalogoMundo.jsx";
-import PrimerMundo from "./components/PrimerMundo.jsx";
-import DetalleCromo from "./components/DetalleCromo.jsx";
+
+// Cada vista se descarga solo cuando se visita.
+const CatalogoMundo = lazy(() => import("./components/CatalogoMundo.jsx"));
+const PrimerMundo = lazy(() => import("./components/PrimerMundo.jsx"));
+const DetalleCromo = lazy(() => import("./components/DetalleCromo.jsx"));
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
 import { obtenerTituloPagina } from "./utils/tituloPagina.js";
@@ -102,27 +104,29 @@ export default function App() {
           }
         />
         <main id="contenido-principal" tabIndex={-1}>
-          {/^\/mundos\/?$/.test(pathname) ? (
-            <PrimerMundo textos={datos.textos} />
-          ) : pathname === "/" ? (
-            <InicioPublico textos={datos.textos} />
-          ) : pathname.startsWith("/mundos/") ? (
-            <CatalogoMundo
-              id={decodeURIComponent(pathname.split("/")[2])}
-              textos={datos.textos}
-            />
-          ) : (
-            <div className="contenedor">
-              {pathname.startsWith("/cromos/") ? (
-                <DetalleCromo
-                  id={pathname.split("/")[2] ?? ""}
-                  textos={datos.textos}
-                />
-              ) : (
-                <h1>{tituloPagina}</h1>
-              )}
-            </div>
-          )}
+          <Suspense fallback={null}>
+            {/^\/mundos\/?$/.test(pathname) ? (
+              <PrimerMundo textos={datos.textos} />
+            ) : pathname === "/" ? (
+              <InicioPublico textos={datos.textos} />
+            ) : pathname.startsWith("/mundos/") ? (
+              <CatalogoMundo
+                id={decodeURIComponent(pathname.split("/")[2])}
+                textos={datos.textos}
+              />
+            ) : (
+              <div className="contenedor">
+                {pathname.startsWith("/cromos/") ? (
+                  <DetalleCromo
+                    id={pathname.split("/")[2] ?? ""}
+                    textos={datos.textos}
+                  />
+                ) : (
+                  <h1>{tituloPagina}</h1>
+                )}
+              </div>
+            )}
+          </Suspense>
         </main>
         <Footer textos={datos.textos} idioma={idioma} />
       </div>

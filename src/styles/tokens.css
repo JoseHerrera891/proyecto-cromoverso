@@ -149,7 +149,6 @@
 
   /* Tipografía · pesos y espaciado entre letras */
   --peso-normal: 400;
-  --peso-medio: 500;
   --peso-semi-negrita: 600;
   --peso-negrita: 700;
   --letras-portada: -1.5px;
@@ -190,6 +189,7 @@
   --emblema-mundo-movil: 36px;
   --ancho-columna-filtros: 296px;
   --alto-portada: 558px;
+  --alto-portada-movil: 458px;
   --ancho-bienvenida: 744px;
   --ancho-cartas-portada: 560px;
   --alto-mundo: 146px;
@@ -202,6 +202,8 @@
   --linea-nombre-mundo: 1.375rem;
   --ancho-cookie-banner-maximo: 1200px;
   --ancho-boton-cookies: 113px;
+  --ancho-boton-ingresar: 86px;
+  --ancho-boton-crear-cuenta: 113px;
   --opacidad-cargando: 0.6;
   --opacidad-deshabilitado: 0.5;
   --texto-nav-enlace: var(--texto-pequeno);

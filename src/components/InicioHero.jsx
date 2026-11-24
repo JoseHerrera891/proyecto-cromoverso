@@ -17,7 +17,14 @@ function partesDelTitulo(titulo) {
 
 export default function InicioHero({ textos, destacados = [], rarezas = [] }) {
   const hero = textos?.paginas?.inicio?.hero;
-  if (!hero) return null;
+  // Mientras llegan los textos se reserva el alto de la portada (sin saltos).
+  if (!hero) {
+    return (
+      <section className="inicio-hero" aria-busy="true">
+        <div className="inicio-hero-interior" />
+      </section>
+    );
+  }
   const plantillaDetalle = textos.paginas.inicio.tarjeta?.tipo;
   const tipos = textos.paginas.albumMundo?.filtros?.tipo?.opciones ?? {};
 
@@ -64,6 +71,7 @@ export default function InicioHero({ textos, destacados = [], rarezas = [] }) {
                 cromo={cromo}
                 rareza={rarezas.find(({ id }) => id === cromo.rareza)}
                 etiquetaNombre="p"
+                prioritaria
                 detalle={
                   plantillaDetalle &&
                   insertarVariables(plantillaDetalle, {
