@@ -12,11 +12,27 @@ export function crearUrlApi(recurso) {
 
 /** Error de la API con su código HTTP y el `codigo` de su cuerpo. */
 export class ErrorHttp extends Error {
-  constructor(status, codigo = null) {
+  constructor(
+    status,
+    codigo = null,
+    { campos = null, reintentarEn = null } = {},
+  ) {
     super(`Error HTTP ${status}.`);
     this.status = status;
     this.codigo = codigo;
+    this.campos = campos;
+    this.reintentarEn = reintentarEn;
   }
+}
+
+/** Segundos de la cabecera Retry-After (número o fecha HTTP). */
+export function segundosDeEspera(valor, ahora = Date.now()) {
+  if (!valor) return null;
+  if (/^\d+$/.test(valor.trim())) return Number(valor);
+  const fecha = Date.parse(valor);
+  return Number.isNaN(fecha)
+    ? null
+    : Math.max(0, Math.ceil((fecha - ahora) / 1000));
 }
 
 /**
@@ -33,17 +49,33 @@ export function cabecerasDeSimulacion(busqueda = globalThis.location?.search) {
   return cabeceras;
 }
 
-/** GET a la API que devuelve JSON o lanza ErrorHttp con el código de error. */
-export async function pedirJson(ruta, { signal, fetcher = fetch } = {}) {
+/**
+ * Petición a la API que devuelve JSON (o null en 204) o lanza ErrorHttp con
+ * el código, los campos y la espera que indique la API. Con `conSesion` el
+ * navegador envía la cookie httpOnly `sesion`; el token nunca pasa por aquí.
+ */
+export async function pedirJson(
+  ruta,
+  { signal, fetcher = fetch, metodo = "GET", cuerpo, conSesion = false } = {},
+) {
   const respuesta = await fetcher(crearUrlApi(ruta), {
+    method: metodo,
     signal,
-    headers: cabecerasDeSimulacion(),
+    credentials: conSesion ? "include" : "same-origin",
+    headers: {
+      ...cabecerasDeSimulacion(),
+      ...(cuerpo ? { "Content-Type": "application/json" } : {}),
+    },
+    body: cuerpo ? JSON.stringify(cuerpo) : undefined,
   });
   if (!respuesta.ok) {
-    const cuerpo = await Promise.resolve()
+    const datos = await Promise.resolve()
       .then(() => respuesta.json())
       .catch(() => null);
-    throw new ErrorHttp(respuesta.status, cuerpo?.error?.codigo ?? null);
+    throw new ErrorHttp(respuesta.status, datos?.error?.codigo ?? null, {
+      campos: datos?.error?.campos ?? null,
+      reintentarEn: segundosDeEspera(respuesta.headers?.get?.("Retry-After")),
+    });
   }
-  return respuesta.json();
+  return respuesta.status === 204 ? null : respuesta.json();
 }

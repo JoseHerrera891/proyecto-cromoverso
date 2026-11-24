@@ -1,15 +1,25 @@
-import { useId } from "react";
+import { forwardRef, useId } from "react";
+import Icono from "./Icono.jsx";
 import "./TextField.css";
 
-export default function TextField({
-  label,
-  id,
-  description,
-  error,
-  "aria-describedby": ariaDescribedBy,
-  className = "",
-  ...props
-}) {
+/**
+ * Campo del sistema de diseño (Figma · «Campo»): etiqueta visible asociada,
+ * descripción y error enlazados con aria-describedby y un accesorio opcional
+ * dentro de la caja (por ejemplo, el botón para ver la contraseña).
+ */
+const TextField = forwardRef(function TextField(
+  {
+    label,
+    id,
+    description,
+    error,
+    accesorio,
+    "aria-describedby": ariaDescribedBy,
+    className = "",
+    ...props
+  },
+  ref,
+) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
   const descriptionId = `${inputId}-description`;
@@ -27,23 +37,30 @@ export default function TextField({
       <label className="campo-etiqueta" htmlFor={inputId}>
         {label}
       </label>
-      <input
-        className="campo-control"
-        id={inputId}
-        aria-describedby={describedBy || undefined}
-        aria-invalid={error ? true : undefined}
-        {...props}
-      />
+      <div className="campo-caja">
+        <input
+          ref={ref}
+          className="campo-control"
+          id={inputId}
+          aria-describedby={describedBy || undefined}
+          aria-invalid={error ? true : undefined}
+          {...props}
+        />
+        {accesorio}
+      </div>
       {description && (
         <p className="campo-descripcion" id={descriptionId}>
           {description}
         </p>
       )}
       {error && (
-        <p className="campo-error" id={errorId} role="alert">
+        <p className="campo-error" id={errorId}>
+          <Icono nombre="alerta" />
           {error}
         </p>
       )}
     </div>
   );
-}
+});
+
+export default TextField;

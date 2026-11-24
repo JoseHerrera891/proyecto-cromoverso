@@ -1,33 +1,51 @@
+/* Campo (Figma · «Campo» y «Campo de contraseña»). */
 .campo {
-  display: grid;
-  gap: var(--espacio-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1-5);
 }
 
 .campo-etiqueta {
   color: var(--texto-principal);
   font-size: var(--texto-pequeno);
   font-weight: var(--peso-semi-negrita);
+  line-height: var(--linea-pequeno);
+}
+
+.campo-caja {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .campo-control {
   width: 100%;
-  min-height: var(--espacio-7);
-  padding: var(--espacio-2) var(--espacio-3);
-  border: var(--borde-grosor) solid var(--borde-sutil);
+  min-height: var(--boton-alto-m);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-m);
   color: var(--texto-principal);
   background: var(--fondo-superficie);
-  font: inherit;
+  font: var(--peso-normal) var(--texto-base) / var(--linea-base)
+    var(--fuente-rubik);
+}
+
+.campo-control::placeholder {
+  color: var(--texto-secundario);
+}
+
+.campo-caja:has(.campo-accesorio) .campo-control {
+  padding-right: calc(var(--alto-accesorio-campo) + var(--espacio-3));
 }
 
 .campo-control:hover:not(:disabled) {
-  border-color: var(--borde-fuerte);
+  background: var(--fondo-pagina);
 }
 
 .campo-control:focus-visible {
   border-color: var(--marca-primario);
   outline: var(--borde-foco-grosor) solid var(--marca-primario);
-  outline-offset: var(--espacio-1);
+  outline-offset: var(--espacio-0);
 }
 
 .campo-control:disabled {
@@ -40,10 +58,34 @@
   border-color: var(--estado-error);
 }
 
+.campo-accesorio {
+  position: absolute;
+  right: var(--espacio-1-5);
+  display: grid;
+  place-items: center;
+  width: var(--alto-accesorio-campo);
+  height: var(--alto-accesorio-campo);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio-s);
+  color: var(--texto-principal);
+  background: transparent;
+  cursor: pointer;
+}
+
+.campo-accesorio:hover {
+  background: var(--fondo-sutil);
+}
+
+.campo-accesorio:focus-visible {
+  outline: var(--borde-foco-grosor) solid var(--marca-primario);
+}
+
 .campo-descripcion,
 .campo-error {
   margin: 0;
-  font-size: var(--texto-pequeno);
+  font-size: var(--texto-xs);
+  line-height: var(--linea-xs);
 }
 
 .campo-descripcion {
@@ -51,5 +93,13 @@
 }
 
 .campo-error {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1-5);
   color: var(--estado-error);
+}
+
+.campo-error .icono {
+  width: var(--icono-tamano-etiqueta);
+  height: var(--icono-tamano-etiqueta);
 }
