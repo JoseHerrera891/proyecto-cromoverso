@@ -1,11 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import abanico from "../assets/ilustraciones/abanico-de-cromos.webp";
 import abanico2x from "../assets/ilustraciones/abanico-de-cromos@2x.webp";
 import { useSesion } from "../hooks/useSesion.js";
 import { useTituloDocumento } from "../hooks/useTituloDocumento.js";
 import { clasesBoton } from "../utils/clasesBoton.js";
+import { avisoDeError } from "../utils/erroresIngreso.js";
 import { iniciarSesion } from "../utils/sesion.js";
+import { insertarVariables } from "../utils/textos.js";
 import CampoClave from "./CampoClave.jsx";
 import Icono from "./Icono.jsx";
 import TextField from "./TextField.jsx";
@@ -22,14 +24,14 @@ export function validarIngreso({ correo, clave }, errores) {
   return resultado;
 }
 
-function Aviso({ titulo, texto, children }) {
+function Aviso({ titulo, texto }) {
   return (
     <div className="ingreso-aviso" role="alert">
       <Icono nombre="alerta" />
       <div>
         <p className="ingreso-aviso-titulo">{titulo}</p>
-        <p>{texto}</p>
-        {children}
+        {/* La cuenta regresiva cambia cada segundo: no se vuelve a anunciar. */}
+        <p aria-live="off">{texto}</p>
       </div>
     </div>
   );
@@ -44,12 +46,26 @@ export default function Ingresar({ textos }) {
   const [mantener, setMantener] = useState(true);
   const [errores, setErrores] = useState({});
   const [aviso, setAviso] = useState(null);
+  const [enviando, setEnviando] = useState(false);
+  const [segundos, setSegundos] = useState(0);
   const campos = { correo: useRef(null), clave: useRef(null) };
 
   useTituloDocumento(pagina?.seo?.titulo, pagina?.seo?.descripcion);
 
+  // Cuenta regresiva del bloqueo por demasiados intentos (Retry-After).
+  useEffect(() => {
+    if (segundos <= 0) return undefined;
+    const temporizador = setTimeout(() => setSegundos((s) => s - 1), 1000);
+    return () => clearTimeout(temporizador);
+  }, [segundos]);
+
   if (!pagina) return null;
   const { formulario, presentacion } = pagina;
+  const bloqueado = segundos > 0;
+  const textoAviso =
+    aviso?.tipo === "bloqueo"
+      ? insertarVariables(aviso.texto, { segundos })
+      : aviso?.texto;
 
   function cambiar(evento) {
     const { name, value } = evento.target;
@@ -58,28 +74,39 @@ export default function Ingresar({ textos }) {
       setErrores((actuales) => ({ ...actuales, [name]: null }));
   }
 
-  async function enviar(evento) {
-    evento.preventDefault();
-    const nuevosErrores = validarIngreso(valores, pagina.errores);
+  function marcarCampos(nuevosErrores) {
     setErrores(nuevosErrores);
     const primero = Object.keys(nuevosErrores)[0];
-    if (primero) {
+    if (primero) campos[primero].current?.focus();
+    return Boolean(primero);
+  }
+
+  async function enviar(evento) {
+    evento.preventDefault();
+    if (enviando || bloqueado) return;
+    if (marcarCampos(validarIngreso(valores, pagina.errores))) {
       setAviso(pagina.errores.camposObligatorios);
-      campos[primero].current?.focus();
       return;
     }
     setAviso(null);
+    setEnviando(true);
     try {
       const usuario = await iniciarSesion(valores);
       setUsuario(usuario);
       navigate("/");
-    } catch {
-      setAviso({
-        titulo: textos.estados?.error?.titulo,
-        texto: textos.estados?.error?.texto,
-      });
+    } catch (error) {
+      const resultado = avisoDeError(error, pagina, textos);
+      setAviso({ ...resultado.aviso, tipo: resultado.tipo });
+      if (resultado.campos) marcarCampos(resultado.campos);
+      if (resultado.segundos) setSegundos(resultado.segundos);
+      setEnviando(false);
     }
   }
+
+  let etiquetaBoton = formulario.botones.ingresar;
+  if (enviando) etiquetaBoton = formulario.mensajes.ingresando;
+  else if (aviso?.tipo === "conexion")
+    etiquetaBoton = pagina.errores.conexion.botones.reintentar;
 
   return (
     <div className="ingreso">
@@ -116,31 +143,33 @@ export default function Ingresar({ textos }) {
           <h1>{formulario.titulo}</h1>
           <p className="ingreso-subtitulo">{formulario.subtitulo}</p>
 
-          {aviso && <Aviso titulo={aviso.titulo} texto={aviso.texto} />}
+          {aviso && <Aviso titulo={aviso.titulo} texto={textoAviso} />}
 
-          <TextField
-            ref={campos.correo}
-            id="ingreso-correo"
-            name="correo"
-            type="email"
-            autoComplete="email"
-            label={formulario.etiquetas.correo}
-            placeholder={formulario.placeholders.correo}
-            value={valores.correo}
-            onChange={cambiar}
-            error={errores.correo}
-          />
-          <CampoClave
-            ref={campos.clave}
-            id="ingreso-clave"
-            name="clave"
-            label={formulario.etiquetas.clave}
-            etiquetaMostrar={formulario.botones.mostrarClave}
-            etiquetaOcultar={formulario.botones.ocultarClave}
-            value={valores.clave}
-            onChange={cambiar}
-            error={errores.clave}
-          />
+          <fieldset className="ingreso-campos" disabled={bloqueado}>
+            <TextField
+              ref={campos.correo}
+              id="ingreso-correo"
+              name="correo"
+              type="email"
+              autoComplete="email"
+              label={formulario.etiquetas.correo}
+              placeholder={formulario.placeholders.correo}
+              value={valores.correo}
+              onChange={cambiar}
+              error={errores.correo}
+            />
+            <CampoClave
+              ref={campos.clave}
+              id="ingreso-clave"
+              name="clave"
+              label={formulario.etiquetas.clave}
+              etiquetaMostrar={formulario.botones.mostrarClave}
+              etiquetaOcultar={formulario.botones.ocultarClave}
+              value={valores.clave}
+              onChange={cambiar}
+              error={errores.clave}
+            />
+          </fieldset>
 
           <div className="ingreso-recordar">
             <label className="ingreso-casilla">
@@ -159,8 +188,16 @@ export default function Ingresar({ textos }) {
             </Link>
           </div>
 
-          <button type="submit" className={clasesBoton("primario", "g")}>
-            {formulario.botones.ingresar}
+          <button
+            type="submit"
+            className={clasesBoton("primario", "g", "ingreso-enviar")}
+            disabled={enviando || bloqueado}
+            aria-busy={enviando}
+          >
+            {enviando && (
+              <span className="ingreso-girando" aria-hidden="true" />
+            )}
+            {etiquetaBoton}
           </button>
 
           <p className="ingreso-pie">
