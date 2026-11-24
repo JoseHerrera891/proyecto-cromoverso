@@ -1,10 +1,11 @@
 import "./styles/App.css";
 import { useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import InicioPublico from "./components/InicioPublico.jsx";
 import CatalogoMundo from "./components/CatalogoMundo.jsx";
+import PrimerMundo from "./components/PrimerMundo.jsx";
 import DetalleCromo from "./components/DetalleCromo.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
@@ -114,13 +115,13 @@ export default function App() {
           }
         />
         <main id="contenido-principal" tabIndex={-1}>
-          {pathname === "/mundos" ? (
-            <Navigate to="/mundos/neon" replace />
+          {/^\/mundos\/?$/.test(pathname) ? (
+            <PrimerMundo textos={datos.textos} />
           ) : pathname === "/" ? (
             <InicioPublico textos={datos.textos} />
           ) : pathname.startsWith("/mundos/") ? (
             <CatalogoMundo
-              id={pathname.split("/")[2] ?? ""}
+              id={decodeURIComponent(pathname.split("/")[2])}
               textos={datos.textos}
             />
           ) : (
