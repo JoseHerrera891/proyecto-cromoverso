@@ -221,6 +221,7 @@ export default function CatalogoMundo({ id, textos }) {
                     to={`/cromos/${encodeURIComponent(cromo.id)}`}
                   >
                     <CartaCromo
+                      etiquetaNombre="h2"
                       cromo={cromo}
                       rareza={rarezas.find(({ id: r }) => r === cromo.rareza)}
                       detalle={insertarVariables(pagina.tarjeta.tipo, {
