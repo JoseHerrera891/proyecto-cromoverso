@@ -41,6 +41,15 @@ describe("CartaCromo", () => {
     expect(markup).toContain("--color-base:#7C4DFF");
   });
 
+  it("can always draw the art in SVG, even when an image exists", () => {
+    const markup = renderToStaticMarkup(
+      <CartaCromo cromo={cromo("CV-001", 1)} rareza={legendaria} soloSvg />,
+    );
+
+    expect(markup).not.toContain("<img");
+    expect(markup).toContain('class="carta-cromo-svg"');
+  });
+
   it("names the rarity for screen readers next to its icon", () => {
     const markup = renderToStaticMarkup(
       <CartaCromo cromo={cromo("CV-001", 1)} rareza={legendaria} />,

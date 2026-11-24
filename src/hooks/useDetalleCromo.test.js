@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   obtenerCromosAdyacentes,
+  solicitarDetalleCompleto,
   solicitarDetalleCromo,
   validarRarezaCromo,
 } from "./useDetalleCromo.js";
@@ -48,9 +49,48 @@ describe("solicitarDetalleCromo", () => {
         json: () => Promise.resolve({ ...detalle, numero: "1" }),
       }),
     ).rejects.toThrow("La respuesta del cromo no tiene el formato esperado.");
-    await expect(invocador({ ok: false, status: 404 })).rejects.toThrow(
-      "Error HTTP 404.",
+    const error = await invocador({ ok: false, status: 404 }).catch((e) => e);
+    expect(error.message).toBe("Error HTTP 404.");
+    expect(error.status).toBe(404);
+  });
+});
+
+describe("solicitarDetalleCompleto", () => {
+  it("suma la rareza y los cromos vecinos del mismo mundo", async () => {
+    const fetcher = vi.fn((url) =>
+      Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve(
+            url.includes("/cromos/")
+              ? detalle
+              : url.includes("/mundos/")
+                ? {
+                    cromos: [
+                      { id: "CV-001", posicion: 1 },
+                      { id: "CV-002", posicion: 2 },
+                    ],
+                  }
+                : {
+                    datos: [
+                      {
+                        id: "legendaria",
+                        nombre: "Legendaria",
+                        icono: "corona",
+                        color: "#C9A227",
+                      },
+                    ],
+                  },
+          ),
+      }),
     );
+
+    const cromo = await solicitarDetalleCompleto("CV-001", undefined, fetcher);
+
+    expect(cromo.anterior).toBeNull();
+    expect(cromo.siguiente.id).toBe("CV-002");
+    expect(cromo.datosRareza.nombre).toBe("Legendaria");
+    expect(fetcher).toHaveBeenCalledTimes(3);
   });
 });
 

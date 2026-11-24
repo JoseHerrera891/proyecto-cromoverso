@@ -96,7 +96,7 @@ export default function App() {
           cambiarIdioma={cambiarIdioma}
           activo={activo}
           tono={pathname === "/" ? "oscuro" : "claro"}
-          ocultarEnMovil={/^\/mundos\/[^/]+/.test(pathname)}
+          ocultarEnMovil={/^\/(mundos|cromos)\/[^/]+/.test(pathname)}
           preferenciasAccesibilidad={preferenciasAccesibilidad}
           onCambiarAccesibilidad={cambiarPreferenciaAccesibilidad}
           onRestablecerAccesibilidad={() =>
@@ -114,16 +114,14 @@ export default function App() {
                 id={decodeURIComponent(pathname.split("/")[2])}
                 textos={datos.textos}
               />
+            ) : pathname.startsWith("/cromos/") ? (
+              <DetalleCromo
+                id={decodeURIComponent(pathname.split("/")[2] ?? "")}
+                textos={datos.textos}
+              />
             ) : (
               <div className="contenedor">
-                {pathname.startsWith("/cromos/") ? (
-                  <DetalleCromo
-                    id={pathname.split("/")[2] ?? ""}
-                    textos={datos.textos}
-                  />
-                ) : (
-                  <h1>{tituloPagina}</h1>
-                )}
+                <h1>{tituloPagina}</h1>
               </div>
             )}
           </Suspense>

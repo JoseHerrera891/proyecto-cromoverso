@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { crearUrlApi } from "../utils/api.js";
+import { ErrorHttp } from "./useCatalogoMundo.js";
 
 export function validarDetalleCromo(cromo) {
   const camposTexto = [
@@ -29,13 +30,30 @@ export function validarDetalleCromo(cromo) {
   return cromo;
 }
 
+async function pedirJson(ruta, signal, fetcher) {
+  const respuesta = await fetcher(crearUrlApi(ruta), { signal });
+  if (!respuesta.ok) throw new ErrorHttp(respuesta.status);
+  return respuesta.json();
+}
+
 export async function solicitarDetalleCromo(id, signal, fetcher = fetch) {
-  const respuesta = await fetcher(
-    crearUrlApi(`cromos/${encodeURIComponent(id)}`),
-    { signal },
+  return validarDetalleCromo(
+    await pedirJson(`cromos/${encodeURIComponent(id)}`, signal, fetcher),
   );
-  if (!respuesta.ok) throw new Error(`Error HTTP ${respuesta.status}.`);
-  return validarDetalleCromo(await respuesta.json());
+}
+
+/** GET /cromos/:id y, con su mundo, GET /mundos/:id (vecinos) y GET /rarezas. */
+export async function solicitarDetalleCompleto(id, signal, fetcher = fetch) {
+  const cromo = await solicitarDetalleCromo(id, signal, fetcher);
+  const [mundo, rarezas] = await Promise.all([
+    pedirJson(`mundos/${encodeURIComponent(cromo.mundo)}`, signal, fetcher),
+    pedirJson("rarezas", signal, fetcher),
+  ]);
+  return {
+    ...cromo,
+    ...obtenerCromosAdyacentes(cromo, mundo.cromos),
+    datosRareza: validarRarezaCromo(cromo.rareza, rarezas.datos),
+  };
 }
 
 export function obtenerCromosAdyacentes(cromo, cromosMundo) {
@@ -72,59 +90,32 @@ export function validarRarezaCromo(rareza, rarezas) {
   return resultado;
 }
 
+/**
+ * Detalle de un cromo. Al pasar al cromo anterior o siguiente se conserva el
+ * actual en pantalla hasta que llega el nuevo.
+ */
 export function useDetalleCromo(id) {
-  const [cromo, setCromo] = useState(null);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(false);
-  const [noEncontrado, setNoEncontrado] = useState(false);
+  const [estado, setEstado] = useState({ cromo: null, error: null });
   const [intento, setIntento] = useState(0);
+  const cargando =
+    !estado.error && estado.cromo?.id?.toUpperCase() !== id.toUpperCase();
 
   useEffect(() => {
     const controlador = new AbortController();
     const limite = setTimeout(() => controlador.abort(), 12000);
     let vigente = true;
-    setCargando(true);
-    setError(false);
-    setNoEncontrado(false);
-    setCromo(null);
+    setEstado((anterior) => ({ ...anterior, error: null }));
 
-    solicitarDetalleCromo(id, controlador.signal)
-      .then(async (dato) => {
-        const [respuestaMundo, respuestaRarezas] = await Promise.all([
-          fetch(crearUrlApi(`mundos/${encodeURIComponent(dato.mundo)}`), {
-            signal: controlador.signal,
-          }),
-          fetch(crearUrlApi("rarezas"), { signal: controlador.signal }),
-        ]);
-        const fallo = [respuestaMundo, respuestaRarezas].find(
-          (respuesta) => !respuesta.ok,
-        );
-        if (fallo) throw new Error(`Error HTTP ${fallo.status}.`);
-        const [mundo, listaRarezas] = await Promise.all([
-          respuestaMundo.json(),
-          respuestaRarezas.json(),
-        ]);
-        return {
-          ...dato,
-          ...obtenerCromosAdyacentes(dato, mundo.cromos),
-          datosRareza: validarRarezaCromo(dato.rareza, listaRarezas.datos),
-        };
-      })
-      .then((dato) => vigente && setCromo(dato))
+    solicitarDetalleCompleto(id, controlador.signal)
+      .then((cromo) => vigente && setEstado({ cromo, error: null }))
       .catch((error) => {
-        if (vigente) {
-          setError(true);
-          if (error.message === "Error HTTP 404.") {
-            setNoEncontrado(true);
-          } else {
-            console.error("Error al cargar el detalle del cromo:", error);
-          }
+        if (!vigente) return;
+        if (error.status !== 404) {
+          console.error("Error al cargar el detalle del cromo:", error);
         }
+        setEstado((anterior) => ({ ...anterior, error }));
       })
-      .finally(() => {
-        clearTimeout(limite);
-        if (vigente) setCargando(false);
-      });
+      .finally(() => clearTimeout(limite));
 
     return () => {
       vigente = false;
@@ -134,10 +125,10 @@ export function useDetalleCromo(id) {
   }, [id, intento]);
 
   return {
-    cromo,
+    cromo: estado.cromo,
     cargando,
-    error,
-    noEncontrado,
+    error: Boolean(estado.error),
+    noEncontrado: estado.error?.status === 404,
     recargar: () => setIntento((valor) => valor + 1),
   };
 }

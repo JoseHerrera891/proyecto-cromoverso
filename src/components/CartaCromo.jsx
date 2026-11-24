@@ -59,9 +59,11 @@ export default function CartaCromo({
   mostrarDetalle = true,
   etiquetaNombre: EtiquetaNombre = "h3",
   prioritaria = false,
+  soloSvg = false,
   className = "",
 }) {
-  const arte = arteDeCromo(cromo.id);
+  // En el detalle la carta no es una imagen: se dibuja con ilustracion.
+  const arte = soloSvg ? null : arteDeCromo(cromo.id);
   const clases = [
     "carta-cromo",
     cromo.holografico ? "carta-cromo--holografica" : "",
