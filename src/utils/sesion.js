@@ -7,9 +7,13 @@ import { ErrorHttp, pedirJson } from "./api.js";
 export async function obtenerSesion(opciones = {}) {
   try {
     const datos = await pedirJson("sesion", { ...opciones, conSesion: true });
+    marcarHuboSesion(Boolean(datos?.usuario));
     return datos?.usuario ?? null;
   } catch (error) {
-    if (error instanceof ErrorHttp && error.status === 401) return null;
+    if (error instanceof ErrorHttp && error.status === 401) {
+      marcarHuboSesion(false);
+      return null;
+    }
     throw error;
   }
 }
@@ -36,6 +40,18 @@ function leer(almacen, clave) {
   }
 }
 
+// Marca (no el token) de que en este navegador se inició sesión: evita
+// consultar GET /sesion, y su 401, a quien nunca ingresó.
+const MARCA_HUBO_SESION = "cromoverso.huboSesion";
+
+export function marcarHuboSesion(hubo, local = globalThis.localStorage) {
+  guardar(local, MARCA_HUBO_SESION, hubo);
+}
+
+export function puedeHaberSesion(local = globalThis.localStorage) {
+  return leer(local, MARCA_HUBO_SESION);
+}
+
 export function recordarPreferenciaDeSesion(
   mantener,
   local = globalThis.localStorage,
@@ -58,7 +74,15 @@ export function debeCerrarSesionAlIniciar(
 
 /** DELETE /sesion (204): la API borra la cookie `sesion`. */
 export async function cerrarSesion(opciones = {}) {
-  await pedirJson("sesion", { ...opciones, metodo: "DELETE", conSesion: true });
+  try {
+    await pedirJson("sesion", {
+      ...opciones,
+      metodo: "DELETE",
+      conSesion: true,
+    });
+  } finally {
+    marcarHuboSesion(false);
+  }
 }
 
 /**
@@ -75,5 +99,6 @@ export async function iniciarSesion({ correo, clave }, opciones = {}) {
   if (typeof datos?.usuario?.nombre !== "string") {
     throw new Error("La respuesta de la sesión no tiene el formato esperado.");
   }
+  marcarHuboSesion(true);
   return datos.usuario;
 }

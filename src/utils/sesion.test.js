@@ -4,7 +4,9 @@ import {
   cerrarSesion,
   debeCerrarSesionAlIniciar,
   iniciarSesion,
+  marcarHuboSesion,
   obtenerSesion,
+  puedeHaberSesion,
   recordarPreferenciaDeSesion,
 } from "./sesion.js";
 
@@ -119,6 +121,22 @@ describe("iniciar sesión", () => {
 
     recordarPreferenciaDeSesion(true, local, almacen());
     expect(debeCerrarSesionAlIniciar(local, almacen())).toBe(false);
+  });
+
+  it("solo marca que puede haber sesión tras ingresar y la borra al salir", () => {
+    const datos = new Map();
+    const local = {
+      getItem: (c) => datos.get(c) ?? null,
+      setItem: (c, v) => datos.set(c, v),
+      removeItem: (c) => datos.delete(c),
+    };
+
+    expect(puedeHaberSesion(local)).toBe(false);
+    marcarHuboSesion(true, local);
+    expect(puedeHaberSesion(local)).toBe(true);
+    expect([...datos.values()]).toEqual(["1"]);
+    marcarHuboSesion(false, local);
+    expect(puedeHaberSesion(local)).toBe(false);
   });
 
   it("interpreta Retry-After en segundos o como fecha", () => {

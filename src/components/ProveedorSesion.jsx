@@ -5,6 +5,7 @@ import {
   cerrarSesion,
   debeCerrarSesionAlIniciar,
   obtenerSesion,
+  puedeHaberSesion,
 } from "../utils/sesion.js";
 
 /**
@@ -42,6 +43,11 @@ export default function ProveedorSesion({
 
   useEffect(() => {
     if (!verificarAlIniciar) return;
+    // Quien nunca ingresó en este navegador no tiene sesión que consultar.
+    if (!puedeHaberSesion()) {
+      setVerificada(true);
+      return;
+    }
     if (debeCerrarSesionAlIniciar()) {
       cerrarSesion()
         .catch(() => {})
