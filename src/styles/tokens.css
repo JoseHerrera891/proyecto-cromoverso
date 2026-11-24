@@ -67,6 +67,11 @@
   --rayos-claros: #6c3bff4d;
   --rayos-oscuros: #1a10334d;
   --velo: #1a103399;
+  --rayos-arte: #ffffff24;
+  --halo-arte: #ffffff38;
+  --holograma-1: #ff4d7a99;
+  --holograma-2: #ffd23f66;
+  --holograma-3: #00a3a399;
 
   /* Radios */
   --radio-s: 8px;
@@ -184,6 +189,12 @@
   --emblema-mundo: 44px;
   --emblema-mundo-movil: 36px;
   --ancho-columna-filtros: 296px;
+  --alto-portada: 558px;
+  --ancho-bienvenida: 744px;
+  --ancho-cartas-portada: 560px;
+  --alto-mundo: 146px;
+  --ancho-mundo-movil: 156px;
+  --linea-nombre-mundo: 1.375rem;
   --ancho-cookie-banner-maximo: 1200px;
   --opacidad-cargando: 0.6;
   --opacidad-deshabilitado: 0.5;

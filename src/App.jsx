@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
-import InicioHero from "./components/InicioHero.jsx";
-import InicioMundos from "./components/InicioMundos.jsx";
+import InicioPublico from "./components/InicioPublico.jsx";
 import CatalogoMundo from "./components/CatalogoMundo.jsx";
 import DetalleCromo from "./components/DetalleCromo.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
@@ -118,12 +117,7 @@ export default function App() {
           {pathname === "/mundos" ? (
             <Navigate to="/mundos/neon" replace />
           ) : pathname === "/" ? (
-            <>
-              <InicioHero textos={datos.textos} />
-              <div className="contenedor inicio-contenedor">
-                <InicioMundos textos={datos.textos} />
-              </div>
-            </>
+            <InicioPublico textos={datos.textos} />
           ) : pathname.startsWith("/mundos/") ? (
             <CatalogoMundo
               id={pathname.split("/")[2] ?? ""}

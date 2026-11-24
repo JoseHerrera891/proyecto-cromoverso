@@ -1,0 +1,156 @@
+/*
+ * Cromo (Figma · «Cromo»). Medidas tomadas del cromo de 240 px de ancho y
+ * expresadas en cqw para que el mismo diseño escale a 168 y 111 px.
+ */
+.carta-cromo {
+  --tam-nombre: 7.1cqw;
+  --tam-detalle: var(--texto-xs);
+  container-type: inline-size;
+}
+
+.carta-cromo-marco {
+  display: flex;
+  flex-direction: column;
+  gap: 3cqw;
+  padding: 3.3cqw 3.3cqw 4.5cqw;
+  border: var(--borde-grosor-cromo) solid var(--borde-fuerte);
+  border-radius: 7.5cqw;
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+  box-shadow: var(--sombra-pop);
+}
+
+.carta-cromo-arte {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 224 / 270;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: 5cqw;
+  background: var(--fondo-inverso);
+}
+
+.carta-cromo-arte img,
+.carta-cromo-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carta-cromo--holografica .carta-cromo-arte::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--holograma-1),
+    var(--holograma-2) 45%,
+    var(--holograma-3)
+  );
+  content: "";
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.carta-cromo:has(img) .carta-cromo-arte::after {
+  content: none;
+}
+
+.carta-cromo-svg-fondo {
+  fill: var(--color-base, var(--marca-primario));
+}
+
+.carta-cromo-svg-rayos {
+  fill: var(--rayos-arte);
+}
+
+.carta-cromo-svg-halo {
+  fill: var(--halo-arte);
+}
+
+.carta-cromo-svg-silueta {
+  fill: var(--fondo-inverso);
+}
+
+.carta-cromo-svg-antifaz {
+  fill: var(--marca-acento);
+}
+
+.carta-cromo-svg-emblema {
+  fill: var(--marca-acento);
+  stroke: var(--fondo-inverso);
+  stroke-width: 4;
+}
+
+.carta-cromo-numero {
+  position: absolute;
+  top: 3.3cqw;
+  left: 3.3cqw;
+  padding: 1.25cqw 3.3cqw;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+  font-family: var(--fuente-unbounded);
+  font-size: 5.8cqw;
+  font-weight: var(--peso-negrita);
+  line-height: var(--interlineado-unidad);
+}
+
+.carta-cromo-rareza {
+  position: absolute;
+  top: 3.3cqw;
+  right: 3.3cqw;
+  display: grid;
+  place-items: center;
+  width: 8cqw;
+  height: 11.7cqw;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  color: var(--rareza-comun);
+  background: var(--fondo-superficie);
+}
+
+.carta-cromo-rareza .icono {
+  width: 6.25cqw;
+  height: 6.25cqw;
+}
+
+.carta-cromo-rareza--rara {
+  color: var(--rareza-rara);
+}
+
+.carta-cromo-rareza--epica {
+  color: var(--rareza-epica);
+}
+
+.carta-cromo-rareza--legendaria {
+  color: var(--rareza-legendaria);
+}
+
+.carta-cromo-pie {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-0);
+  min-width: 0;
+  padding-inline: 1.7cqw;
+}
+
+.carta-cromo-nombre {
+  overflow: hidden;
+  margin: 0;
+  font-family: var(--fuente-unbounded);
+  font-size: var(--tam-nombre);
+  font-weight: var(--peso-semi-negrita);
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.carta-cromo-detalle {
+  overflow: hidden;
+  margin: 0;
+  color: var(--texto-secundario);
+  font-size: var(--tam-detalle);
+  line-height: var(--linea-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

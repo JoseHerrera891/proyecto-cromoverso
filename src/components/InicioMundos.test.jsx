@@ -1,62 +1,69 @@
-import { renderToStaticMarkup } from "react-dom/server";
+﻿import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
-import { useInicioPublico } from "../hooks/useInicioPublico.js";
 import InicioMundos from "./InicioMundos.jsx";
 
-vi.mock("../hooks/useInicioPublico.js", () => ({
-  useInicioPublico: vi.fn(),
-}));
+const textos = {
+  paginas: {
+    inicio: {
+      mundos: {
+        titulo: "Los seis mundos",
+        subtitulo: "Cada mundo tiene cromos.",
+        etiquetas: { mundo: "Mundo {numero}", cromos: "{cantidad} cromos" },
+        enlaces: { ver: "Ver {mundo}" },
+      },
+    },
+  },
+  estados: {
+    cargando: "Cargando…",
+    error: {
+      texto: "No pudimos cargar",
+      botones: { reintentar: "Reintentar" },
+    },
+  },
+};
+
+const ids = ["neon", "coral", "bosque", "forja", "orbita", "otro"];
+const datos = {
+  totalAlbum: 120,
+  mundos: ids.map((id, indice) => ({
+    id,
+    nombre: `Nombre ${indice}`,
+    color: "#123456",
+    figura: "rayo",
+    totalCromos: 20,
+  })),
+};
+
+function renderizar(estado) {
+  return renderToStaticMarkup(
+    <MemoryRouter>
+      <InicioMundos textos={textos} recargar={vi.fn()} {...estado} />
+    </MemoryRouter>,
+  );
+}
 
 describe("InicioMundos", () => {
   it("muestra los seis mundos con sus totales y enlaces de catálogo", () => {
-    useInicioPublico.mockReturnValue({
-      datos: {
-        totalAlbum: 120,
-        mundos: Array.from({ length: 6 }, (_, index) => ({
-          id: `mundo-${index}`,
-          nombre: `Mundo ${index}`,
-          color: "#123456",
-          figura: "rayo",
-          totalCromos: 20,
-        })),
-      },
-      cargando: false,
-      error: false,
-      recargar: vi.fn(),
-    });
-    const textos = {
-      paginas: {
-        inicio: {
-          mundos: {
-            titulo: "Los seis mundos",
-            subtitulo: "Cada mundo tiene cromos.",
-            etiquetas: { mundo: "Mundo {numero}", cromos: "{cantidad} cromos" },
-            enlaces: { ver: "Ver {mundo}" },
-          },
-        },
-      },
-      estados: {},
-    };
-    const markup = renderToStaticMarkup(
-      <MemoryRouter>
-        <InicioMundos textos={textos} />
-      </MemoryRouter>,
-    );
+    const markup = renderizar({ datos });
 
-    expect(markup.match(/href="\/mundos\/mundo-/g)).toHaveLength(7);
+    expect(markup.match(/href="\/mundos\//g)).toHaveLength(7);
     expect(markup.match(/20 cromos/g)).toHaveLength(6);
-    expect(markup).toContain("Los seis mundos");
-    expect(markup).toContain("Ver Mundo 0");
-    expect(markup).not.toContain(">120</span>");
-    expect(markup).not.toContain("inicio-rarezas");
-    expect(markup).toContain('class="inicio-mundo-icono"');
+    expect(markup).toContain('<h2 id="inicio-mundos-titulo">');
+    expect(markup).toContain("Ver Nombre 0");
+    expect(markup.match(/>Mundo 1</g)).toHaveLength(1);
+    expect(markup).toContain("--color-mundo:#123456");
+  });
 
-    const pagina = renderToStaticMarkup(
-      <MemoryRouter>
-        <InicioMundos textos={textos} comoPagina />
-      </MemoryRouter>,
-    );
-    expect(pagina).toContain('<h1 id="inicio-mundos-titulo">');
+  it("usa el emblema de Figma y dibuja la figura si un mundo no lo tiene", () => {
+    const markup = renderizar({ datos });
+
+    expect(markup.match(/<img class="inicio-mundo-emblema"/g)).toHaveLength(5);
+    expect(markup.match(/<span class="inicio-mundo-emblema"/g)).toHaveLength(1);
+  });
+
+  it("muestra los estados de carga y error con textos de la API", () => {
+    expect(renderizar({ cargando: true })).toContain("Cargando…");
+    expect(renderizar({ error: true })).toContain("Reintentar");
   });
 });

@@ -1,98 +1,109 @@
 import { Link } from "react-router-dom";
-import { useInicioPublico } from "../hooks/useInicioPublico.js";
+import { emblemaDeMundo } from "../utils/emblemasMundos.js";
 import { FIGURAS } from "../utils/figuras.jsx";
+import { insertarVariables } from "../utils/textos.js";
+import Icono from "./Icono.jsx";
 import "./InicioMundos.css";
 
-function insertarVariables(plantilla, variables) {
-  return Object.entries(variables).reduce(
-    (texto, [clave, valor]) => texto.replaceAll(`{${clave}}`, String(valor)),
-    plantilla,
+function Emblema({ mundo }) {
+  const emblema = emblemaDeMundo(mundo.id);
+  if (emblema) {
+    return <img className="inicio-mundo-emblema" src={emblema} alt="" />;
+  }
+  return (
+    <span className="inicio-mundo-emblema" aria-hidden="true">
+      <svg viewBox="0 0 100 100" focusable="false">
+        {FIGURAS[mundo.figura]}
+      </svg>
+    </span>
   );
 }
 
-export default function InicioMundos({ textos, comoPagina = false }) {
-  const { datos, cargando, error, recargar } = useInicioPublico();
+/** Sección «Los seis mundos» del inicio (Figma · «Tus mundos»). */
+export default function InicioMundos({
+  textos,
+  datos,
+  cargando,
+  error,
+  recargar,
+}) {
   const pagina = textos?.paginas?.inicio;
   const etiquetas = pagina?.mundos?.etiquetas;
   const estados = textos?.estados;
-
-  if (cargando || !pagina) {
-    return (
-      <p className="inicio-mundos-estado" role="status">
-        {estados?.cargando}
-      </p>
-    );
-  }
-
-  if (error || !datos) {
-    return (
-      <div className="inicio-mundos-estado" role="alert">
-        <p>{estados?.error?.texto}</p>
-        <button type="button" onClick={recargar}>
-          {estados?.error?.botones?.reintentar}
-        </button>
-      </div>
-    );
-  }
+  const primero = datos?.mundos?.[0];
 
   return (
     <section
-      className={`inicio-mundos${comoPagina ? " inicio-mundos--pagina" : ""}`}
+      className="inicio-mundos"
       id="mundos"
       aria-labelledby="inicio-mundos-titulo"
+      aria-busy={cargando}
     >
-      <div className="inicio-mundos-encabezado">
-        <div>
-          {comoPagina ? (
-            <h1 id="inicio-mundos-titulo">{pagina.mundos.titulo}</h1>
-          ) : (
-            <h2 id="inicio-mundos-titulo">{pagina.mundos.titulo}</h2>
-          )}
-          <p>{pagina.mundos.subtitulo}</p>
-        </div>
-        {!comoPagina && datos.mundos[0] && (
-          <Link
-            className="inicio-mundos-enlace"
-            to={`/mundos/${datos.mundos[0].id}`}
-          >
-            {insertarVariables(pagina.mundos.enlaces.ver, {
-              mundo: datos.mundos[0].nombre,
-            })}
-            <span aria-hidden="true">→</span>
-          </Link>
+      <div className="inicio-mundos-interior">
+        {pagina && (
+          <div className="inicio-mundos-cabecera">
+            <div>
+              <h2 id="inicio-mundos-titulo">{pagina.mundos.titulo}</h2>
+              <p>{pagina.mundos.subtitulo}</p>
+            </div>
+            {primero && (
+              <Link
+                className="inicio-mundos-enlace"
+                to={`/mundos/${encodeURIComponent(primero.id)}`}
+              >
+                <Icono nombre="flechaDer" />
+                {insertarVariables(pagina.mundos.enlaces.ver, {
+                  mundo: primero.nombre,
+                })}
+              </Link>
+            )}
+          </div>
         )}
-        {comoPagina && (
-          <span className="inicio-mundos-total">{datos.totalAlbum}</span>
+
+        {datos ? (
+          <ul className="inicio-mundos-lista" data-desplazable>
+            {datos.mundos.map((mundo, indice) => (
+              <li key={mundo.id}>
+                <Link
+                  className="inicio-mundo"
+                  to={`/mundos/${encodeURIComponent(mundo.id)}`}
+                  style={{ "--color-mundo": mundo.color }}
+                >
+                  <span className="inicio-mundo-arriba">
+                    <Emblema mundo={mundo} />
+                    {indice === 0 && etiquetas && (
+                      <span className="inicio-mundo-orden">
+                        {insertarVariables(etiquetas.mundo, {
+                          numero: indice + 1,
+                        })}
+                      </span>
+                    )}
+                  </span>
+                  <span className="inicio-mundo-nombre">{mundo.nombre}</span>
+                  {etiquetas && (
+                    <span className="inicio-mundo-total">
+                      {insertarVariables(etiquetas.cromos, {
+                        cantidad: mundo.totalCromos,
+                      })}
+                    </span>
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : error ? (
+          <div className="inicio-mundos-estado" role="alert">
+            <p>{estados?.error?.texto}</p>
+            <button type="button" onClick={recargar}>
+              {estados?.error?.botones?.reintentar}
+            </button>
+          </div>
+        ) : (
+          <p className="inicio-mundos-estado" role="status">
+            {estados?.cargando}
+          </p>
         )}
       </div>
-      <ul className="inicio-mundos-lista">
-        {datos.mundos.map((mundo, indice) => (
-          <li key={mundo.id}>
-            <Link
-              className="inicio-mundo"
-              to={`/mundos/${mundo.id}`}
-              style={{ "--color-mundo": mundo.color }}
-            >
-              <span className="inicio-mundo-identificador">
-                <span className="inicio-mundo-icono" aria-hidden="true">
-                  <svg viewBox="0 0 100 100" focusable="false">
-                    {FIGURAS[mundo.figura]}
-                  </svg>
-                </span>
-                <span className="inicio-mundo-orden">
-                  {insertarVariables(etiquetas.mundo, { numero: indice + 1 })}
-                </span>
-              </span>
-              <span className="inicio-mundo-nombre">{mundo.nombre}</span>
-              <span className="inicio-mundo-total">
-                {insertarVariables(etiquetas.cromos, {
-                  cantidad: mundo.totalCromos,
-                })}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
