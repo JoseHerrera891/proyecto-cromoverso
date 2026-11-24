@@ -2,14 +2,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--espacio-7);
-  padding: var(--espacio-2) var(--espacio-5);
+  gap: var(--espacio-2);
+  min-height: var(--boton-alto-m);
+  padding: var(--espacio-3) var(--relleno-boton-m);
   border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
-  font: var(--peso-semi-negrita) var(--texto-base) /
-    var(--interlineado-compacto) var(--fuente-rubik);
+  font: var(--peso-semi-negrita) var(--texto-pequeno) / var(--linea-pequeno)
+    var(--fuente-rubik);
   text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
+  box-shadow: var(--sombra-pop-pequena);
   transition:
     background-color var(--duracion-transicion-corta)
       var(--curva-transicion-estandar),
@@ -17,23 +21,39 @@
     color var(--duracion-transicion-corta) var(--curva-transicion-estandar);
 }
 
-.boton:focus-visible {
-  outline: var(--borde-foco-grosor) solid var(--marca-primario);
-  outline-offset: var(--espacio-1);
+.boton--p {
+  min-height: var(--boton-alto-p);
+  padding: var(--espacio-2) var(--espacio-4);
+  font-size: var(--texto-xs);
+  line-height: var(--linea-xs);
 }
 
-.boton:disabled {
+.boton--g {
+  min-height: var(--boton-alto-g);
+  padding: var(--espacio-4) var(--relleno-boton-g);
+  font-size: var(--texto-base);
+  line-height: var(--linea-base);
+}
+
+.boton:focus-visible {
+  outline: var(--borde-foco-grosor) solid var(--marca-primario);
+  outline-offset: var(--borde-foco-offset);
+}
+
+.boton:disabled,
+.boton[aria-disabled="true"] {
   opacity: var(--opacidad-deshabilitado);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
 .boton--primario {
   color: var(--texto-inverso);
   background: var(--marca-primario);
-  box-shadow: var(--sombra-pop-pequena);
 }
 
 .boton--primario:hover:not(:disabled) {
+  color: var(--texto-inverso);
   background: var(--marca-primario-hover);
   box-shadow: var(--sombra-pop);
 }
@@ -41,10 +61,10 @@
 .boton--acento {
   color: var(--texto-principal);
   background: var(--marca-acento);
-  box-shadow: var(--sombra-pop-pequena);
 }
 
 .boton--acento:hover:not(:disabled) {
+  color: var(--texto-principal);
   background: var(--marca-acento-suave);
   box-shadow: var(--sombra-pop);
 }
@@ -52,10 +72,16 @@
 .boton--secundario {
   color: var(--texto-principal);
   background: var(--fondo-superficie);
-  box-shadow: var(--sombra-pop-pequena);
 }
 
 .boton--secundario:hover:not(:disabled) {
+  color: var(--texto-principal);
   background: var(--fondo-sutil);
   box-shadow: var(--sombra-pop);
+}
+
+.boton .icono {
+  width: var(--icono-tamano);
+  height: var(--icono-tamano);
+  stroke-width: 1.7;
 }
