@@ -1,11 +1,11 @@
 /* Portada del inicio (Figma · «Portada» web y «Cabecera» móvil). */
 .inicio-hero {
   color: var(--texto-inverso);
-  background: var(--fondo-inverso) url("/fondos/rayos-movil.png") center top /
+  background: var(--fondo-inverso) url("/fondos/rayos-movil.webp") center top /
     cover no-repeat;
   background-image: image-set(
-    url("/fondos/rayos-movil.png") 1x,
-    url("/fondos/rayos-movil@2x.png") 2x
+    url("/fondos/rayos-movil.webp") 1x,
+    url("/fondos/rayos-movil@2x.webp") 2x
   );
 }
 
@@ -67,8 +67,8 @@
 @media (min-width: 1024px) {
   .inicio-hero {
     background-image: image-set(
-      url("/fondos/rayos-web.png") 1x,
-      url("/fondos/rayos-web@2x.png") 2x
+      url("/fondos/rayos-web.webp") 1x,
+      url("/fondos/rayos-web@2x.webp") 2x
     );
   }
 

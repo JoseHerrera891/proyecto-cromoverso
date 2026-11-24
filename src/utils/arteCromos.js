@@ -1,7 +1,7 @@
 // Arte exportado de Figma («Imágenes para exportar» › cromos). Cada archivo se
 // llama como el id del cromo en la API. Los cromos sin arte se dibujan en SVG
 // con ilustracion.colorBase e ilustracion.figura.
-const archivos = import.meta.glob("../assets/cromos/*.png", {
+const archivos = import.meta.glob("../assets/cromos/*.webp", {
   eager: true,
   query: "?url",
   import: "default",
@@ -9,7 +9,7 @@ const archivos = import.meta.glob("../assets/cromos/*.png", {
 
 const ARTE = {};
 for (const [ruta, url] of Object.entries(archivos)) {
-  const [, id, doble] = ruta.match(/\/(CV-\d+)(@2x)?\.png$/) ?? [];
+  const [, id, doble] = ruta.match(/\/(CV-\d+)(@2x)?\.webp$/) ?? [];
   if (!id) continue;
   ARTE[id] = { ...ARTE[id], [doble ? "x2" : "x1"]: url };
 }
