@@ -1,31 +1,40 @@
+/* Etiqueta de rareza (Figma · «Etiqueta de rareza»): icono + palabra. */
 .etiqueta {
+  --color-rareza: var(--rareza-comun);
   display: inline-flex;
   align-items: center;
-  gap: var(--espacio-1);
-  padding: var(--espacio-1) var(--espacio-2);
-  border: var(--borde-grosor) solid currentColor;
+  gap: var(--espacio-1-5);
+  padding: var(--espacio-1) var(--espacio-2-5);
+  border: var(--borde-grosor-medio) solid var(--color-rareza);
   border-radius: var(--radio-pildora);
-  font-size: var(--texto-pequeno);
-  font-weight: var(--peso-semi-negrita);
-  line-height: var(--interlineado-unidad);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+  font: var(--peso-negrita) var(--texto-micro) / var(--linea-micro)
+    var(--fuente-rubik);
+  letter-spacing: var(--letras-mayusculas);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.etiqueta .icono {
+  width: var(--icono-tamano-etiqueta);
+  height: var(--icono-tamano-etiqueta);
+  color: var(--color-rareza);
 }
 
 .etiqueta--comun {
-  color: var(--rareza-comun);
-  background: var(--fondo-sutil);
+  --color-rareza: var(--rareza-comun);
 }
 
 .etiqueta--rara {
-  color: var(--rareza-rara);
-  background: var(--estado-info-suave);
+  --color-rareza: var(--rareza-rara);
 }
 
 .etiqueta--epica {
-  color: var(--rareza-epica);
-  background: var(--mundo-neon-suave);
+  --color-rareza: var(--rareza-epica);
 }
 
 .etiqueta--legendaria {
-  color: var(--rareza-legendaria);
+  --color-rareza: var(--rareza-legendaria);
   background: var(--rareza-legendaria-suave);
 }
