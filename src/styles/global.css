@@ -10,20 +10,6 @@ html[data-tamano-texto="muyGrande"] {
   font-size: 125%;
 }
 
-html[data-alto-contraste="true"] {
-  --fondo-pagina: #fff;
-  --fondo-superficie: #fff;
-  --fondo-sutil: #eee;
-  --texto-principal: #000;
-  --texto-secundario: #111;
-  --texto-terciario: #222;
-  --texto-marca: #240080;
-  --marca-primario: #3514a0;
-  --marca-primario-hover: #220a75;
-  --borde-sutil: #555;
-  --borde-fuerte: #000;
-}
-
 html[data-subrayar-enlaces="true"] a {
   text-decoration: underline !important;
   text-underline-offset: 0.15em;
