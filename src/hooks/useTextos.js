@@ -12,6 +12,7 @@ export const SECCIONES = [
   "footer",
   "idioma",
   "general",
+  "errores",
 ];
 
 export function validarTextos(datos) {

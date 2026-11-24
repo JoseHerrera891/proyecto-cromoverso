@@ -6,7 +6,13 @@ import "./Estados.css";
  * Estado de error con botón para reintentar. El título sale de
  * textos.estados.error y el mensaje de textos.errores[codigo] de la API.
  */
-export function EstadoError({ textos, error, onReintentar, className = "" }) {
+export function EstadoError({
+  textos,
+  error,
+  onReintentar,
+  etiquetaTitulo: EtiquetaTitulo = "h2",
+  className = "",
+}) {
   const estados = textos?.estados?.error;
   const mensaje =
     (error?.codigo && textos?.errores?.[error.codigo]) || estados?.texto;
@@ -15,7 +21,9 @@ export function EstadoError({ textos, error, onReintentar, className = "" }) {
       <span className="estado-icono" aria-hidden="true">
         <Icono nombre="alerta" />
       </span>
-      <h2 className="estado-titulo">{estados?.titulo}</h2>
+      <EtiquetaTitulo className="estado-titulo">
+        {estados?.titulo}
+      </EtiquetaTitulo>
       <p className="estado-texto">{mensaje}</p>
       {onReintentar && (
         <button

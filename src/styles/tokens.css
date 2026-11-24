@@ -196,6 +196,10 @@
   --rayos-cabecera: 1400px;
   --alto-selector: 40px;
   --alto-estado-catalogo: 320px;
+  --alto-cabecera-mundo: 222px;
+  --alto-cabecera-mundo-movil: 76px;
+  --ancho-esqueleto-titulo: 435px;
+  --alto-panel-esqueleto: 300px;
   --texto-nombre-cromo: 0.8125rem;
   --texto-nombre-cromo-grande: 1.0625rem;
   --texto-titulo-detalle: 2.75rem;
