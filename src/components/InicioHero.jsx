@@ -71,6 +71,7 @@ export default function InicioHero({ textos, destacados = [], rarezas = [] }) {
                 cromo={cromo}
                 rareza={rarezas.find(({ id }) => id === cromo.rareza)}
                 etiquetaNombre="p"
+                prioritaria
                 detalle={
                   plantillaDetalle &&
                   insertarVariables(plantillaDetalle, {

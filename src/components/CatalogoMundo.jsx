@@ -11,6 +11,10 @@ import FiltrosCatalogo from "./FiltrosCatalogo.jsx";
 import Icono from "./Icono.jsx";
 import "./CatalogoMundo.css";
 
+// Cromos que se ven sin desplazar (2 filas en móvil, 1 en escritorio): su arte
+// se pide de inmediato para no retrasar el primer pintado (LCP).
+const CARTAS_VISIBLES_AL_INICIO = 6;
+
 function Selector({ etiqueta, valor, onCambiar, opciones }) {
   return (
     <label className="catalogo-selector">
@@ -214,7 +218,7 @@ export default function CatalogoMundo({ id, textos }) {
 
           {cromos.length > 0 ? (
             <ul className="catalogo-casillas">
-              {cromos.map((cromo) => (
+              {cromos.map((cromo, indice) => (
                 <li key={cromo.id}>
                   <Link
                     className="catalogo-cromo-enlace"
@@ -222,6 +226,7 @@ export default function CatalogoMundo({ id, textos }) {
                   >
                     <CartaCromo
                       etiquetaNombre="h2"
+                      prioritaria={indice < CARTAS_VISIBLES_AL_INICIO}
                       cromo={cromo}
                       rareza={rarezas.find(({ id: r }) => r === cromo.rareza)}
                       detalle={insertarVariables(pagina.tarjeta.tipo, {
