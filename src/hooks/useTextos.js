@@ -92,47 +92,64 @@ export function validarTextos(datos) {
   return textos;
 }
 
+/** GET /textos?idioma=…&seccion=… validado. */
+export async function solicitarTextos(idioma, signal, fetcher = fetch) {
+  if (!API_BASE_URL) {
+    throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
+  }
+  const parametros = new URLSearchParams({
+    idioma,
+    seccion: SECCIONES.join(","),
+  });
+  const respuesta = await fetcher(`${crearUrlApi("textos")}?${parametros}`, {
+    signal,
+  });
+  if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+  return validarTextos(await respuesta.json());
+}
+
+// Textos ya descargados por idioma: volver a un idioma es instantáneo.
+const textosPorIdioma = new Map();
+
+/**
+ * Textos de la interfaz en el idioma pedido. Mientras llegan los del idioma
+ * nuevo se siguen mostrando los anteriores, para que la vista no se vacíe.
+ */
 export function useTextos(idioma) {
-  const [textos, setTextos] = useState(null);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(false);
+  const [estado, setEstado] = useState(() => ({
+    textos: textosPorIdioma.get(idioma) ?? null,
+    idiomaTextos: textosPorIdioma.has(idioma) ? idioma : null,
+    error: false,
+  }));
   const [intento, setIntento] = useState(0);
+  const cargando = estado.idiomaTextos !== idioma && !estado.error;
 
   useEffect(() => {
+    if (textosPorIdioma.has(idioma)) {
+      setEstado({
+        textos: textosPorIdioma.get(idioma),
+        idiomaTextos: idioma,
+        error: false,
+      });
+      return undefined;
+    }
     const controlador = new AbortController();
     const limite = setTimeout(() => controlador.abort(), 12000);
     let vigente = true;
-    setCargando(true);
-    setError(false);
-    setTextos(null);
+    setEstado((anterior) => ({ ...anterior, error: false }));
 
-    async function cargarTextosNavbar() {
-      try {
-        if (!API_BASE_URL) {
-          throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
-        }
-        const respuesta = await fetch(
-          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=${SECCIONES.join(",")}`,
-          {
-            signal: controlador.signal,
-          },
-        );
-        if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
-        const datos = await respuesta.json();
-        const nuevosTextos = validarTextos(datos);
-        if (vigente) setTextos(nuevosTextos);
-      } catch (error) {
-        if (vigente) {
-          console.error("Error al cargar los textos:", error);
-          setError(true);
-        }
-      } finally {
-        clearTimeout(limite);
-        if (vigente) setCargando(false);
-      }
-    }
+    solicitarTextos(idioma, controlador.signal)
+      .then((textos) => {
+        textosPorIdioma.set(idioma, textos);
+        if (vigente) setEstado({ textos, idiomaTextos: idioma, error: false });
+      })
+      .catch((error) => {
+        if (!vigente) return;
+        console.error("Error al cargar los textos:", error);
+        setEstado((anterior) => ({ ...anterior, error: true }));
+      })
+      .finally(() => clearTimeout(limite));
 
-    cargarTextosNavbar();
     return () => {
       vigente = false;
       clearTimeout(limite);
@@ -141,9 +158,10 @@ export function useTextos(idioma) {
   }, [idioma, intento]);
 
   return {
-    textos,
+    textos: estado.textos,
+    idiomaTextos: estado.idiomaTextos,
     cargando,
-    error,
+    error: estado.error,
     recargar: () => setIntento((valor) => valor + 1),
   };
 }

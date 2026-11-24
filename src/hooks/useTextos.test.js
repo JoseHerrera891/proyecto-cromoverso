@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { validarTextos } from "./useTextos.js";
+import { describe, expect, it, vi } from "vitest";
+import { SECCIONES, solicitarTextos, validarTextos } from "./useTextos.js";
 
 const textosRequeridos = {
   navbar: {
@@ -84,6 +84,20 @@ describe("validarTextos", () => {
     expect(() => validarTextos(datos)).toThrow(
       "La respuesta no contiene todos los textos requeridos de la interfaz.",
     );
+  });
+
+  it("requests every interface section in the chosen language", async () => {
+    const fetcher = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ textos: textosRequeridos }),
+    });
+
+    await expect(solicitarTextos("en", undefined, fetcher)).resolves.toEqual(
+      textosRequeridos,
+    );
+    const url = new URL(fetcher.mock.calls[0][0]);
+    expect(url.searchParams.get("idioma")).toBe("en");
+    expect(url.searchParams.get("seccion").split(",")).toEqual(SECCIONES);
   });
 
   it("rejects a response missing required footer text", () => {
