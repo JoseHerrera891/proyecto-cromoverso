@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { segundosDeEspera } from "./api.js";
-import { iniciarSesion } from "./sesion.js";
+import { cerrarSesion, iniciarSesion, obtenerSesion } from "./sesion.js";
 
 const usuario = { id: "usr_laura", nombre: "Laura Cardona" };
 
@@ -63,6 +63,31 @@ describe("iniciar sesión", () => {
       },
     ).catch((e) => e);
     expect(bloqueo.reintentarEn).toBe(30);
+  });
+
+  it("recupera la sesión con la cookie o devuelve null si no hay", async () => {
+    const conSesion = vi.fn(() =>
+      respuesta({ status: 200, cuerpo: { usuario } }),
+    );
+    await expect(obtenerSesion({ fetcher: conSesion })).resolves.toEqual(
+      usuario,
+    );
+    expect(conSesion.mock.calls[0][1].credentials).toBe("include");
+
+    const sinSesion = () =>
+      respuesta({
+        ok: false,
+        status: 401,
+        cuerpo: { error: { codigo: "no_autenticado" } },
+      });
+    await expect(obtenerSesion({ fetcher: sinSesion })).resolves.toBeNull();
+  });
+
+  it("cierra la sesión con DELETE /sesion", async () => {
+    const fetcher = vi.fn(() => respuesta({ status: 204 }));
+    await cerrarSesion({ fetcher });
+    expect(fetcher.mock.calls[0][1].method).toBe("DELETE");
+    expect(fetcher.mock.calls[0][1].credentials).toBe("include");
   });
 
   it("interpreta Retry-After en segundos o como fecha", () => {
