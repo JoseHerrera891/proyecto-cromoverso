@@ -3,3 +3,6 @@
 !.env.example
 node_modules/
 .tsupgrader/
+
+# Build de Vite
+dist/
