@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
 import { API_BASE_URL, crearUrlApi } from "../utils/api.js";
 
+export const SECCIONES = [
+  "sitio",
+  "navbar",
+  "menuMovil",
+  "estados",
+  "accesibilidad",
+  "cookies",
+  "paginas",
+  "footer",
+  "idioma",
+  "general",
+];
+
 export function validarTextos(datos) {
   const textos = datos?.textos;
   const nav = textos?.navbar;
@@ -99,7 +112,7 @@ export function useTextos(idioma) {
           throw new Error("Falta configurar la variable VITE_API_BASE_URL.");
         }
         const respuesta = await fetch(
-          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=navbar,menuMovil,estados,accesibilidad,cookies,paginas,footer`,
+          `${crearUrlApi("textos")}?idioma=${idioma}&seccion=${SECCIONES.join(",")}`,
           {
             signal: controlador.signal,
           },
