@@ -265,3 +265,40 @@
     justify-content: space-between;
   }
 }
+
+/* Estados del envío (US-CRO-S2-04). */
+.ingreso-campos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4-5);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ingreso-enviar:disabled {
+  opacity: var(--opacidad-cargando);
+  cursor: progress;
+}
+
+.ingreso-girando {
+  width: var(--icono-tamano);
+  height: var(--icono-tamano);
+  border: var(--borde-grosor) solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radio-pildora);
+  animation: ingreso-girar 0.8s linear infinite;
+}
+
+@keyframes ingreso-girar {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ingreso-girando {
+    animation: none;
+  }
+}
