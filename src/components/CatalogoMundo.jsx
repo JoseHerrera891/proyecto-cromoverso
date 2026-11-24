@@ -43,9 +43,9 @@ function Estado({ children, rol = "status" }) {
 }
 
 /** Vista 2 · Catálogo de un mundo, en la ruta /mundos/:id. */
-export default function CatalogoMundo({ id, textos }) {
+export default function CatalogoMundo({ id, textos, fondo = false }) {
   const [parametros, setParametros] = useSearchParams();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [buscadorAbierto, setBuscadorAbierto] = useState(false);
   const [busqueda, setBusqueda] = useState("");
   const pagina = textos?.paginas?.albumMundo;
@@ -61,10 +61,12 @@ export default function CatalogoMundo({ id, textos }) {
   );
   const nombreMundo = estado.datos?.mundo.nombre;
   useTituloDocumento(
-    nombreMundo &&
+    !fondo &&
+      nombreMundo &&
       pagina?.seo?.titulo &&
       insertarVariables(pagina.seo.titulo, { mundo: nombreMundo }),
-    nombreMundo &&
+    !fondo &&
+      nombreMundo &&
       pagina?.seo?.descripcion &&
       insertarVariables(pagina.seo.descripcion, { mundo: nombreMundo }),
   );
@@ -223,6 +225,7 @@ export default function CatalogoMundo({ id, textos }) {
                   <Link
                     className="catalogo-cromo-enlace"
                     to={`/cromos/${encodeURIComponent(cromo.id)}`}
+                    state={{ mundo: mundo.id, volverA: `${pathname}${search}` }}
                   >
                     <CartaCromo
                       etiquetaNombre="h2"
