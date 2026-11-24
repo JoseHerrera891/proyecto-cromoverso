@@ -1,20 +1,12 @@
 import { useEffect, useState } from "react";
-import { crearUrlApi } from "../utils/api.js";
+import { ErrorHttp, pedirJson as pedirApi } from "../utils/api.js";
+
+export { ErrorHttp };
 
 const TIEMPO_LIMITE = 12000;
 
-export class ErrorHttp extends Error {
-  constructor(status) {
-    super(`Error HTTP ${status}.`);
-    this.status = status;
-  }
-}
-
-async function pedirJson(ruta, signal, fetcher) {
-  const respuesta = await fetcher(crearUrlApi(ruta), { signal });
-  if (!respuesta.ok) throw new ErrorHttp(respuesta.status);
-  return respuesta.json();
-}
+const pedirJson = (ruta, signal, fetcher) =>
+  pedirApi(ruta, { signal, fetcher });
 
 const esTexto = (valor) => typeof valor === "string";
 
