@@ -6,6 +6,9 @@
   --tam-nombre: 7.1cqw;
   --tam-detalle: var(--texto-xs);
   container-type: inline-size;
+}
+
+.carta-cromo-marco {
   display: flex;
   flex-direction: column;
   gap: 3cqw;

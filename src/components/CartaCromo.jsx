@@ -71,31 +71,33 @@ export default function CartaCromo({
 
   return (
     <article className={clases}>
-      <div className="carta-cromo-arte">
-        {arte ? (
-          <img src={arte.src} srcSet={arte.srcSet} alt="" loading="lazy" />
-        ) : (
-          <ArteSvg ilustracion={cromo.ilustracion} />
-        )}
-        <span className="carta-cromo-numero">
-          {String(cromo.numero).padStart(3, "0")}
-        </span>
-        {rareza && (
-          <span
-            className={`carta-cromo-rareza carta-cromo-rareza--${rareza.id}`}
-          >
-            <Icono nombre={`rareza-${rareza.icono}`} />
-            <span className="solo-lector">{rareza.nombre}</span>
+      <div className="carta-cromo-marco">
+        <div className="carta-cromo-arte">
+          {arte ? (
+            <img src={arte.src} srcSet={arte.srcSet} alt="" loading="lazy" />
+          ) : (
+            <ArteSvg ilustracion={cromo.ilustracion} />
+          )}
+          <span className="carta-cromo-numero">
+            {String(cromo.numero).padStart(3, "0")}
           </span>
-        )}
-      </div>
-      <div className="carta-cromo-pie">
-        <EtiquetaNombre className="carta-cromo-nombre">
-          {cromo.nombre}
-        </EtiquetaNombre>
-        {mostrarDetalle && detalle && (
-          <p className="carta-cromo-detalle">{detalle}</p>
-        )}
+          {rareza && (
+            <span
+              className={`carta-cromo-rareza carta-cromo-rareza--${rareza.id}`}
+            >
+              <Icono nombre={`rareza-${rareza.icono}`} />
+              <span className="solo-lector">{rareza.nombre}</span>
+            </span>
+          )}
+        </div>
+        <div className="carta-cromo-pie">
+          <EtiquetaNombre className="carta-cromo-nombre">
+            {cromo.nombre}
+          </EtiquetaNombre>
+          {mostrarDetalle && detalle && (
+            <p className="carta-cromo-detalle">{detalle}</p>
+          )}
+        </div>
       </div>
     </article>
   );
