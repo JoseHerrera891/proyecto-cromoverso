@@ -27,7 +27,7 @@
   max-width: var(--ancho-pagina);
   min-height: calc(var(--alto-navbar-movil) - var(--borde-grosor-sutil));
   margin-inline: auto;
-  padding: var(--espacio-2) var(--margen-pagina-movil);
+  padding: 0 var(--margen-pagina-movil);
 }
 
 .navbar-izquierda,
