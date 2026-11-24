@@ -193,6 +193,11 @@
   --ancho-bienvenida: 744px;
   --ancho-cartas-portada: 560px;
   --alto-mundo: 146px;
+  --rayos-cabecera: 1400px;
+  --alto-selector: 40px;
+  --alto-estado-catalogo: 320px;
+  --texto-nombre-cromo: 0.8125rem;
+  --texto-nombre-cromo-movil: 0.6rem;
   --ancho-mundo-movil: 156px;
   --linea-nombre-mundo: 1.375rem;
   --ancho-cookie-banner-maximo: 1200px;
