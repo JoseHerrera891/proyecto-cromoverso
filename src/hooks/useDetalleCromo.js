@@ -123,7 +123,7 @@ export function useDetalleCromo(id) {
   return {
     cromo: estado.cromo,
     cargando,
-    error: Boolean(estado.error),
+    error: estado.error,
     noEncontrado: estado.error?.status === 404,
     recargar: () => setIntento((valor) => valor + 1),
   };

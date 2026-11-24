@@ -472,3 +472,71 @@
     display: none;
   }
 }
+
+/* Esqueleto y error del detalle (US-CRO-S2-02). */
+.detalle--estado {
+  display: block;
+  padding: 0;
+}
+
+.detalle--esqueleto {
+  grid-template-areas: "carta info";
+}
+
+.detalle-esqueleto-carta {
+  grid-area: carta;
+  aspect-ratio: 168 / 235;
+  border-radius: var(--radio-tarjeta);
+}
+
+.detalle-esqueleto-info {
+  grid-area: info;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.detalle-esqueleto-etiquetas {
+  width: 60%;
+  height: var(--linea-pequeno);
+}
+
+.detalle-esqueleto-titulo {
+  height: var(--linea-xl);
+}
+
+.detalle-esqueleto-poder {
+  height: var(--alto-selector);
+  border-radius: var(--radio-l);
+}
+
+.detalle-esqueleto-atributos {
+  height: var(--alto-mundo);
+  border-radius: var(--radio-l);
+}
+
+@media (min-width: 1024px) {
+  .detalle--esqueleto {
+    grid-template-rows: auto;
+    grid-template-areas: "carta info";
+    min-height: var(--alto-modal-detalle);
+  }
+
+  .detalle-esqueleto-carta {
+    aspect-ratio: 316 / 420;
+    border-radius: var(--radio-panel);
+  }
+
+  .detalle-esqueleto-titulo {
+    width: 50%;
+    height: var(--linea-titulo-detalle);
+  }
+
+  .detalle-esqueleto-poder {
+    height: var(--alto-poder-detalle);
+  }
+
+  .detalle-esqueleto-atributos {
+    height: var(--alto-atributos-detalle);
+  }
+}
