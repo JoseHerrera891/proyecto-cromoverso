@@ -201,6 +201,7 @@
   --ancho-mundo-movil: 156px;
   --linea-nombre-mundo: 1.375rem;
   --ancho-cookie-banner-maximo: 1200px;
+  --ancho-boton-cookies: 113px;
   --opacidad-cargando: 0.6;
   --opacidad-deshabilitado: 0.5;
   --texto-nav-enlace: var(--texto-pequeno);
