@@ -169,6 +169,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
       <CabeceraMundo
         mundo={mundo}
         posicion={posicion}
+        etiquetaTitulo={fondo ? "p" : "h1"}
         pagina={pagina}
         general={textos.general}
         buscadorAbierto={buscadorAbierto}

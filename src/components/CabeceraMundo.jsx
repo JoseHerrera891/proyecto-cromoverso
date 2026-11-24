@@ -15,6 +15,7 @@ const conCeros = (numero) => String(numero).padStart(3, "0");
 export default function CabeceraMundo({
   mundo,
   posicion,
+  etiquetaTitulo: EtiquetaTitulo = "h1",
   pagina,
   general,
   buscadorAbierto,
@@ -57,7 +58,12 @@ export default function CabeceraMundo({
             <Icono nombre="flechaIzq" />
           </Link>
           <div className="cabecera-mundo-titulos">
-            <h1 id="catalogo-titulo">{mundo.nombre}</h1>
+            <EtiquetaTitulo
+              id="catalogo-titulo"
+              className="cabecera-mundo-titulo"
+            >
+              {mundo.nombre}
+            </EtiquetaTitulo>
             {rango && <p className="cabecera-mundo-rango">{rango}</p>}
             {mundo.tema && <p className="cabecera-mundo-tema">{mundo.tema}</p>}
           </div>
