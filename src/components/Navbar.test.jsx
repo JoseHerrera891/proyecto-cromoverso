@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
+import { ContextoSesion } from "../hooks/useSesion.js";
 import Navbar from "./Navbar.jsx";
 
 const textos = {
@@ -56,6 +57,36 @@ describe("Navbar", () => {
     expect(markup).toContain('aria-label="Abrir menú"');
     expect(markup).toContain('aria-expanded="false"');
     expect(markup).toContain('aria-controls="menu-movil"');
+  });
+
+  it("with a session shows the account menu instead of sign in", () => {
+    const markup = renderToStaticMarkup(
+      <MemoryRouter>
+        <ContextoSesion.Provider
+          value={{
+            usuario: { nombre: "Laura Cardona", correo: "l@c.test" },
+            salir: vi.fn(),
+          }}
+        >
+          <Navbar
+            textos={{
+              ...textos,
+              navbar: {
+                ...textos.navbar,
+                usuario: { menu: "Menú de tu cuenta" },
+              },
+            }}
+            idioma="es"
+            cambiarIdioma={vi.fn()}
+            activo="inicio"
+          />
+        </ContextoSesion.Provider>
+      </MemoryRouter>,
+    );
+
+    expect(markup).toContain("Menú de tu cuenta: Laura Cardona");
+    expect(markup).not.toContain('href="/ingresar"');
+    expect(markup).not.toContain('href="/registro"');
   });
 
   it("applies the dark tone and mobile hiding classes", () => {

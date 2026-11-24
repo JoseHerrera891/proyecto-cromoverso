@@ -112,7 +112,9 @@ describe("CatalogoMundo", () => {
       "/mundos/neon?rareza=legendaria",
     );
 
-    expect(markup).toContain('<h1 id="catalogo-titulo">Ciudad Neón</h1>');
+    expect(markup).toContain(
+      '<h1 id="catalogo-titulo" class="cabecera-mundo-titulo">Ciudad Neón</h1>',
+    );
     expect(markup).toContain("Mundo 1 de 6 · cromos 001 a 020.");
     expect(markup).toContain("Filtrar por rareza");
     expect(markup).toContain('<option value="legendaria" selected="">');

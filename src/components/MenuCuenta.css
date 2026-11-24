@@ -1,0 +1,107 @@
+/* Menú de cuenta (Figma · «Botón · Cuenta» y «Menú de cuenta»). */
+.avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: var(--tamano-avatar);
+  height: var(--tamano-avatar);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: var(--marca-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-negrita);
+  line-height: var(--interlineado-unidad);
+}
+
+.avatar--propio {
+  border-color: transparent;
+  color: var(--texto-inverso);
+  background: var(--color-avatar, var(--marca-primario));
+}
+
+.menu-cuenta {
+  position: relative;
+}
+
+.menu-cuenta-boton {
+  display: grid;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio-pildora);
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-cuenta-boton:hover .avatar {
+  box-shadow: var(--sombra-pop-pequena);
+}
+
+.menu-cuenta-panel {
+  position: absolute;
+  top: calc(100% + var(--espacio-2));
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  width: var(--ancho-menu-cuenta);
+  padding: var(--espacio-2);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-l);
+  background: var(--fondo-superficie);
+  box-shadow: var(--sombra-pop);
+}
+
+.menu-cuenta-persona {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-2-5);
+  border-bottom: var(--borde-grosor-sutil) solid var(--borde-sutil);
+}
+
+.menu-cuenta-persona p {
+  margin: 0;
+}
+
+.menu-cuenta-nombre {
+  font-size: var(--texto-pequeno);
+  font-weight: var(--peso-semi-negrita);
+  line-height: var(--linea-pequeno);
+}
+
+.menu-cuenta-correo {
+  color: var(--texto-secundario);
+  font-size: var(--texto-xs);
+  line-height: var(--linea-xs);
+}
+
+.menu-cuenta-opcion {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2-5);
+  padding: var(--espacio-2-5) var(--espacio-2);
+  border: 0;
+  border-radius: var(--radio-s);
+  color: var(--texto-principal);
+  background: transparent;
+  font: var(--peso-semi-negrita) var(--texto-pequeno) / var(--linea-pequeno)
+    var(--fuente-rubik);
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-cuenta-opcion:hover {
+  background: var(--marca-primario-suave);
+}
+
+.menu-cuenta-opcion .icono {
+  width: var(--icono-tamano-m);
+  height: var(--icono-tamano-m);
+}
+
+.menu-cuenta :focus-visible {
+  outline: var(--borde-foco-grosor) solid var(--marca-primario);
+  outline-offset: var(--espacio-0);
+}

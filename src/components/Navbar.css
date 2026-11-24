@@ -337,3 +337,41 @@
 .menu-movil-sesion .boton {
   flex: 1;
 }
+
+/* Sesión iniciada en el menú móvil (US-CRO-S2-05). */
+.menu-movil-sesion--usuario {
+  align-items: center;
+}
+
+.menu-movil-persona {
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-movil-persona p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-movil-nombre {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrita);
+  line-height: var(--linea-nombre-mundo);
+}
+
+.menu-movil-alias {
+  color: var(--texto-secundario);
+  font-size: var(--texto-xs);
+  line-height: var(--linea-xs);
+}
+
+.menu-movil-sesion--usuario .boton {
+  flex: 0 0 auto;
+}
+
+.menu-movil-sesion--usuario .boton .icono {
+  width: var(--icono-tamano-s);
+  height: var(--icono-tamano-s);
+}

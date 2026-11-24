@@ -4,6 +4,9 @@ import { createContext, useContext } from "react";
 export const ContextoSesion = createContext({
   usuario: null,
   setUsuario: () => {},
+  verificada: true,
+  salir: () => {},
+  sesionVencida: () => {},
 });
 
 export function useSesion() {

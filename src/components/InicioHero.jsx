@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useSesion } from "../hooks/useSesion.js";
 import { clasesBoton } from "../utils/clasesBoton.js";
 import { insertarVariables } from "../utils/textos.js";
 import CartaCromo from "./CartaCromo.jsx";
@@ -16,6 +17,7 @@ function partesDelTitulo(titulo) {
 }
 
 export default function InicioHero({ textos, destacados = [], rarezas = [] }) {
+  const { usuario } = useSesion();
   const hero = textos?.paginas?.inicio?.hero;
   // Mientras llegan los textos se reserva el alto de la portada (sin saltos).
   if (!hero) {
@@ -41,19 +43,23 @@ export default function InicioHero({ textos, destacados = [], rarezas = [] }) {
           </h1>
           <p className="inicio-hero-descripcion">{hero.subtituloMovil}</p>
           <div className="inicio-hero-acciones">
-            <Link className={clasesBoton("acento", "g")} to="/registro">
-              <Icono nombre="regalo" />
-              {hero.botones.crearCuentaGratis}
-            </Link>
+            {!usuario && (
+              <Link className={clasesBoton("acento", "g")} to="/registro">
+                <Icono nombre="regalo" />
+                {hero.botones.crearCuentaGratis}
+              </Link>
+            )}
             <Link className={clasesBoton("secundario", "g")} to="/mundos">
               <Icono nombre="album" />
               {hero.botones.explorarMundos}
             </Link>
           </div>
-          <p className="inicio-hero-nota">
-            <Icono nombre="destellos" />
-            {hero.subtitulo}
-          </p>
+          {!usuario && (
+            <p className="inicio-hero-nota">
+              <Icono nombre="destellos" />
+              {hero.subtitulo}
+            </p>
+          )}
         </div>
 
         {destacados.length > 0 && (

@@ -31,11 +31,32 @@ describe("CabeceraMundo", () => {
       </MemoryRouter>,
     );
 
-    expect(markup).toContain('<h1 id="catalogo-titulo">Abismo Coral</h1>');
+    expect(markup).toContain(
+      '<h1 id="catalogo-titulo" class="cabecera-mundo-titulo">Abismo Coral</h1>',
+    );
     expect(markup).toContain("Mundo 2 de 6 · cromos 021 a 040.");
     expect(markup).toContain("Un océano profundo");
     expect(markup).toContain('aria-current="page">Abismo Coral');
     expect(markup).toContain("--color-mundo:#00A3A3");
+  });
+
+  it("can render the title without h1 when it is a background", () => {
+    const markup = renderToStaticMarkup(
+      <MemoryRouter>
+        <CabeceraMundo
+          mundo={mundo}
+          posicion={2}
+          pagina={pagina}
+          general={general}
+          etiquetaTitulo="p"
+          buscadorAbierto={false}
+          onAlternarBuscador={vi.fn()}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(markup).not.toContain("<h1");
+    expect(markup).toContain('<p id="catalogo-titulo"');
   });
 
   it("labels the mobile back and search buttons with API texts", () => {

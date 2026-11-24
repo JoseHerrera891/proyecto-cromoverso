@@ -40,7 +40,7 @@
   min-width: 0;
 }
 
-.cabecera-mundo h1 {
+.cabecera-mundo-titulo {
   margin: 0;
   color: var(--texto-inverso);
   font-family: var(--fuente-unbounded);
@@ -127,7 +127,7 @@
     display: none;
   }
 
-  .cabecera-mundo h1 {
+  .cabecera-mundo-titulo {
     font-size: var(--texto-portada);
     font-weight: var(--peso-negrita);
     line-height: var(--linea-portada);

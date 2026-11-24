@@ -7,9 +7,11 @@ import {
   useState,
 } from "react";
 import { Link } from "react-router-dom";
+import { useSesion } from "../hooks/useSesion.js";
 import { clasesBoton } from "../utils/clasesBoton.js";
 import Icono from "./Icono.jsx";
 import LanguageSelector from "./LanguageSelector.jsx";
+import MenuCuenta, { Avatar } from "./MenuCuenta.jsx";
 import "./Navbar.css";
 
 // El panel de accesibilidad se descarga solo al abrirlo.
@@ -33,6 +35,7 @@ function MenuMovil({
   onAbrirAccesibilidad,
 }) {
   const menu = useRef(null);
+  const { usuario, salir } = useSesion();
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
   const enlaces = Object.entries(menuMovil?.enlaces ?? {}).filter(
@@ -149,22 +152,43 @@ function MenuMovil({
         </div>
       </div>
 
-      <div className="menu-movil-sesion">
-        <Link
-          className={clasesBoton("secundario", "m")}
-          to="/ingresar"
-          onClick={onCerrar}
-        >
-          {menuMovil?.botones?.ingresar}
-        </Link>
-        <Link
-          className={clasesBoton("primario", "m")}
-          to="/registro"
-          onClick={onCerrar}
-        >
-          {menuMovil?.botones?.crearCuenta}
-        </Link>
-      </div>
+      {usuario ? (
+        <div className="menu-movil-sesion menu-movil-sesion--usuario">
+          <Avatar usuario={usuario} />
+          <div className="menu-movil-persona">
+            <p className="menu-movil-nombre">{usuario.nombre}</p>
+            <p className="menu-movil-alias">@{usuario.alias}</p>
+          </div>
+          <button
+            type="button"
+            className={clasesBoton("secundario", "p")}
+            onClick={() => {
+              onCerrar();
+              salir();
+            }}
+          >
+            <Icono nombre="salir" />
+            {menuMovil?.botones?.cerrarSesion}
+          </button>
+        </div>
+      ) : (
+        <div className="menu-movil-sesion">
+          <Link
+            className={clasesBoton("secundario", "m")}
+            to="/ingresar"
+            onClick={onCerrar}
+          >
+            {menuMovil?.botones?.ingresar}
+          </Link>
+          <Link
+            className={clasesBoton("primario", "m")}
+            to="/registro"
+            onClick={onCerrar}
+          >
+            {menuMovil?.botones?.crearCuenta}
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
@@ -184,6 +208,7 @@ export default function Navbar({
   onRestablecerAccesibilidad,
 }) {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { usuario } = useSesion();
   const [panelAbierto, setPanelAbierto] = useState(false);
   const botonMenu = useRef(null);
   const botonAccesibilidad = useRef(null);
@@ -268,24 +293,32 @@ export default function Navbar({
               nombres={textos?.idioma?.opciones}
             />
           </div>
-          {/* Se pintan desde el inicio con su ancho de Figma: no saltan al
-              llegar los textos. */}
-          <Link
-            className={clasesBoton("secundario", "p", "navbar-ingresar")}
-            to="/ingresar"
-          >
-            {nav?.botones?.ingresar}
-          </Link>
-          <Link
-            className={clasesBoton(
-              "primario",
-              "p",
-              "navbar-crear-cuenta navbar-solo-escritorio",
-            )}
-            to="/registro"
-          >
-            {nav?.botones?.crearCuenta}
-          </Link>
+          {usuario ? (
+            <div className="navbar-solo-escritorio">
+              <MenuCuenta textos={nav?.usuario} />
+            </div>
+          ) : (
+            <>
+              {/* Se pintan desde el inicio con su ancho de Figma: no saltan
+                  al llegar los textos. */}
+              <Link
+                className={clasesBoton("secundario", "p", "navbar-ingresar")}
+                to="/ingresar"
+              >
+                {nav?.botones?.ingresar}
+              </Link>
+              <Link
+                className={clasesBoton(
+                  "primario",
+                  "p",
+                  "navbar-crear-cuenta navbar-solo-escritorio",
+                )}
+                to="/registro"
+              >
+                {nav?.botones?.crearCuenta}
+              </Link>
+            </>
+          )}
           <button
             ref={botonMenu}
             type="button"
