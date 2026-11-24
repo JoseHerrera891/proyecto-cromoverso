@@ -101,6 +101,12 @@ const ICONOS = {
     ),
   },
   check: { lienzo: 14, trazos: <path d="m2.92 7.29 2.62 2.63 5.54-5.84" /> },
+  salir: {
+    lienzo: 18,
+    trazos: (
+      <path d="M6.75 15.75h-3a1.5 1.5 0 0 1-1.5-1.5V3.75a1.5 1.5 0 0 1 1.5-1.5h3M12 12.75 15.75 9 12 5.25M15.75 9h-9" />
+    ),
+  },
   alerta: {
     lienzo: 20,
     trazos: (
