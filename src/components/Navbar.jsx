@@ -1,21 +1,164 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { clasesBoton } from "../utils/clasesBoton.js";
 import Icono from "./Icono.jsx";
 import LanguageSelector from "./LanguageSelector.jsx";
 import PanelAccesibilidad from "./PanelAccesibilidad.jsx";
 import "./Navbar.css";
 
+// Rutas de las vistas del curso. Los textos de cada enlace vienen de la API.
 const DESTINOS = {
   inicio: "/",
-  album: "/album",
-  sobres: "/sobres",
-  intercambios: "/intercambios",
-  mundos: "/mundos/neon",
-  ranking: "/ranking",
+  mundos: "/mundos",
 };
+const ICONOS_ENLACE = { inicio: "inicio", mundos: "mundo" };
+const LOGO_NORMAL = "/marca/logo-normal.svg";
+const LOGO_INVERSO = "/marca/logo-inverso.svg";
 
-const LOGO =
-  "https://yanethm-cromoverso-api.fly.dev/docs/diseno/logos/logo-normal.svg";
+function MenuMovil({
+  textos,
+  idioma,
+  cambiarIdioma,
+  activo,
+  onCerrar,
+  onAbrirAccesibilidad,
+}) {
+  const menu = useRef(null);
+  const nav = textos?.navbar;
+  const menuMovil = textos?.menuMovil;
+  const enlaces = Object.entries(menuMovil?.enlaces ?? {}).filter(
+    ([clave]) => DESTINOS[clave],
+  );
+
+  useEffect(() => {
+    const overflowAnterior = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    menu.current?.querySelector("button")?.focus();
+
+    function gestionarTeclado(evento) {
+      if (evento.key === "Escape") {
+        onCerrar();
+        return;
+      }
+      if (evento.key !== "Tab") return;
+      const enfocables = [...menu.current.querySelectorAll("a, button")];
+      const primero = enfocables[0];
+      const ultimo = enfocables[enfocables.length - 1];
+      if (evento.shiftKey && document.activeElement === primero) {
+        evento.preventDefault();
+        ultimo.focus();
+      } else if (!evento.shiftKey && document.activeElement === ultimo) {
+        evento.preventDefault();
+        primero.focus();
+      }
+    }
+
+    document.addEventListener("keydown", gestionarTeclado);
+    return () => {
+      document.removeEventListener("keydown", gestionarTeclado);
+      document.body.style.overflow = overflowAnterior;
+    };
+  }, [onCerrar]);
+
+  return (
+    <div
+      ref={menu}
+      id="menu-movil"
+      className="menu-movil"
+      role="dialog"
+      aria-modal="true"
+      aria-label={menuMovil?.abrir}
+    >
+      <div className="menu-movil-encabezado">
+        <Link
+          className="navbar-marca"
+          to={DESTINOS.inicio}
+          aria-label={nav?.logo?.aria}
+          onClick={onCerrar}
+        >
+          <img src={LOGO_NORMAL} alt="" />
+        </Link>
+        <button
+          type="button"
+          className="navbar-icono"
+          aria-label={menuMovil?.cerrar}
+          onClick={onCerrar}
+        >
+          <Icono nombre="cerrar" />
+        </button>
+      </div>
+
+      <nav aria-label={menuMovil?.abrir}>
+        <ul className="menu-movil-enlaces">
+          {enlaces.map(([clave, etiqueta]) => {
+            const actual = activo === clave;
+            return (
+              <li key={clave}>
+                <Link
+                  to={DESTINOS[clave]}
+                  aria-current={actual ? "page" : undefined}
+                  onClick={onCerrar}
+                >
+                  <Icono nombre={ICONOS_ENLACE[clave]} />
+                  <span className="menu-movil-enlace-texto">{etiqueta}</span>
+                  {actual ? (
+                    <span className="menu-movil-aqui">
+                      {menuMovil?.aria?.estasAqui}
+                    </span>
+                  ) : (
+                    <Icono nombre="chevronDer" />
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      <div className="menu-movil-ajustes">
+        <div className="menu-movil-fila">
+          <span>{menuMovil?.secciones?.idioma}</span>
+          <LanguageSelector
+            idioma={idioma}
+            cambiarIdioma={cambiarIdioma}
+            etiqueta={nav?.aria?.idioma}
+            codigos={textos?.idioma?.codigos}
+            nombres={textos?.idioma?.opciones}
+          />
+        </div>
+        <div className="menu-movil-fila">
+          <span>{menuMovil?.secciones?.accesibilidad}</span>
+          <button
+            type="button"
+            className="navbar-icono navbar-icono--borde"
+            aria-label={nav?.aria?.accesibilidad}
+            aria-haspopup="dialog"
+            onClick={onAbrirAccesibilidad}
+          >
+            <Icono nombre="accesibilidad" />
+          </button>
+        </div>
+      </div>
+
+      <div className="menu-movil-sesion">
+        <Link
+          className={clasesBoton("secundario", "m")}
+          to="/ingresar"
+          onClick={onCerrar}
+        >
+          {menuMovil?.botones?.ingresar}
+        </Link>
+        <Link
+          className={clasesBoton("primario", "m")}
+          to="/registro"
+          onClick={onCerrar}
+        >
+          {menuMovil?.botones?.crearCuenta}
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 export default function Navbar({
   textos,
@@ -25,200 +168,169 @@ export default function Navbar({
   idioma,
   cambiarIdioma,
   activo,
+  tono = "claro",
+  ocultarEnMovil = false,
   preferenciasAccesibilidad,
   onCambiarAccesibilidad,
   onRestablecerAccesibilidad,
 }) {
-  const [abierto, setAbierto] = useState(false);
-  const [panelAccesibilidadAbierto, setPanelAccesibilidadAbierto] =
-    useState(false);
+  const [menuAbierto, setMenuAbierto] = useState(false);
+  const [panelAbierto, setPanelAbierto] = useState(false);
   const botonMenu = useRef(null);
   const botonAccesibilidad = useRef(null);
   const nav = textos?.navbar;
   const menuMovil = textos?.menuMovil;
   const estados = textos?.estados;
   const textosAccesibilidad = textos?.accesibilidad;
-  const ingles = idioma === "en";
-  const abrir = menuMovil?.abrir ?? (ingles ? "Open menu" : "Abrir menú");
-  const cerrar = menuMovil?.cerrar ?? (ingles ? "Close menu" : "Cerrar menú");
-  const cerrarPanelAccesibilidad = useCallback(
-    () => setPanelAccesibilidadAbierto(false),
-    [],
-  );
-  const cerrarAccesibilidad =
-    textosAccesibilidad?.botones?.cerrar ??
-    (ingles
-      ? "Close accessibility options"
-      : "Cerrar opciones de accesibilidad");
   const enlaces = Object.entries(nav?.enlaces ?? {}).filter(
     ([clave]) => DESTINOS[clave],
   );
-  const enlacesMoviles = Object.entries(menuMovil?.enlaces ?? {}).filter(
-    ([clave]) => DESTINOS[clave],
-  );
 
-  useEffect(() => {
-    function cerrarConEscape(evento) {
-      if (evento.key === "Escape" && abierto && !panelAccesibilidadAbierto) {
-        setAbierto(false);
-        botonMenu.current?.focus();
-      }
-    }
-    document.addEventListener("keydown", cerrarConEscape);
-    return () => document.removeEventListener("keydown", cerrarConEscape);
-  }, [abierto, panelAccesibilidadAbierto]);
+  const cerrarMenu = useCallback(() => {
+    setMenuAbierto(false);
+    botonMenu.current?.focus();
+  }, []);
+  const cerrarPanel = useCallback(() => setPanelAbierto(false), []);
+  const abrirAccesibilidadDesdeMenu = useCallback(() => {
+    setMenuAbierto(false);
+    setPanelAbierto(true);
+  }, []);
+
+  const clases = [
+    "navbar",
+    `navbar--${tono}`,
+    ocultarEnMovil ? "navbar--oculta-movil" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <header className="navbar">
-      <nav className="navbar-interior">
-        <div className="navbar-bar">
+    <header className={clases}>
+      <nav className="navbar-barra" aria-label={nav?.logo?.texto}>
+        <div className="navbar-izquierda">
           <Link
             className="navbar-marca"
             to={DESTINOS.inicio}
-            aria-label={nav?.logo.aria ?? "Cromoverso"}
-            onClick={() => setAbierto(false)}
+            aria-label={nav?.logo?.aria}
           >
-            <img src={LOGO} alt="" />
+            <img
+              className="navbar-logo navbar-logo--normal"
+              src={LOGO_NORMAL}
+              alt=""
+            />
+            <img
+              className="navbar-logo navbar-logo--inverso"
+              src={LOGO_INVERSO}
+              alt=""
+            />
           </Link>
+          <ul className="navbar-enlaces">
+            {enlaces.map(([clave, etiqueta]) => (
+              <li key={clave}>
+                <Link
+                  to={DESTINOS[clave]}
+                  aria-current={activo === clave ? "page" : undefined}
+                >
+                  {etiqueta}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          <div className="navbar-movil-acciones">
-            {nav && (
-              <Link
-                className="navbar-ingresar navbar-ingresar-movil"
-                to="/ingresar"
-              >
+        <div className="navbar-derecha">
+          <button
+            ref={botonAccesibilidad}
+            className="navbar-icono navbar-icono--borde navbar-solo-escritorio"
+            type="button"
+            aria-label={nav?.aria?.accesibilidad}
+            aria-expanded={panelAbierto}
+            aria-haspopup="dialog"
+            onClick={() => setPanelAbierto(true)}
+          >
+            <Icono nombre="accesibilidad" />
+          </button>
+          <div className="navbar-solo-escritorio">
+            <LanguageSelector
+              idioma={idioma}
+              cambiarIdioma={cambiarIdioma}
+              etiqueta={nav?.aria?.idioma}
+              codigos={textos?.idioma?.codigos}
+              nombres={textos?.idioma?.opciones}
+            />
+          </div>
+          {nav && (
+            <>
+              <Link className={clasesBoton("secundario", "p")} to="/ingresar">
                 {nav.botones.ingresar}
               </Link>
-            )}
-            <button
-              ref={botonMenu}
-              type="button"
-              className="navbar-icono"
-              aria-label={abierto ? cerrar : abrir}
-              aria-expanded={abierto}
-              aria-controls="navbar-panel"
-              onClick={() => setAbierto((valor) => !valor)}
-            >
-              <Icono nombre={abierto ? "cerrar" : "menu"} />
-            </button>
-          </div>
-
-          <div
-            id="navbar-panel"
-            className={`navbar-panel${abierto ? " is-abierto" : ""}`}
-            aria-busy={cargando}
-          >
-            {cargando && (
-              <p className="navbar-estado" role="status">
-                {estados?.cargando ??
-                  (ingles ? "Loading navigation…" : "Cargando navegación…")}
-              </p>
-            )}
-            {error && (
-              <div className="navbar-estado" role="alert">
-                <p>
-                  {estados?.error?.texto ??
-                    (ingles
-                      ? "Navigation could not be loaded."
-                      : "No pudimos cargar el menú.")}
-                </p>
-                <button type="button" onClick={recargar}>
-                  {estados?.error?.botones?.reintentar ??
-                    (ingles ? "Try again" : "Reintentar")}
-                </button>
-              </div>
-            )}
-            {nav && (
-              <>
-                <ul className="navbar-enlaces navbar-enlaces-escritorio">
-                  {enlaces.map(([clave, etiqueta]) => (
-                    <li key={clave}>
-                      <Link
-                        to={DESTINOS[clave]}
-                        aria-current={activo === clave ? "page" : undefined}
-                        onClick={() => setAbierto(false)}
-                      >
-                        {etiqueta}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <div className="navbar-cuenta">
-                  <Link className="navbar-ingresar" to="/ingresar">
-                    {nav.botones.ingresar}
-                  </Link>
-                  <Link className="navbar-accion" to="/registro">
-                    {nav.botones.crearCuenta}
-                  </Link>
-                </div>
-              </>
-            )}
-            {menuMovil && (
-              <>
-                <ul className="navbar-enlaces navbar-enlaces-movil">
-                  {enlacesMoviles.map(([clave, etiqueta]) => (
-                    <li key={clave}>
-                      <Link
-                        to={DESTINOS[clave]}
-                        aria-current={activo === clave ? "page" : undefined}
-                        onClick={() => setAbierto(false)}
-                      >
-                        {etiqueta}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <div className="navbar-cuenta navbar-cuenta-movil">
-                  <Link className="navbar-ingresar" to="/ingresar">
-                    {menuMovil.botones.ingresar}
-                  </Link>
-                  <Link className="navbar-accion" to="/registro">
-                    {menuMovil.botones.crearCuenta}
-                  </Link>
-                </div>
-              </>
-            )}
-            <div className="navbar-utilidades">
-              <LanguageSelector
-                idioma={idioma}
-                cambiarIdioma={cambiarIdioma}
-                etiqueta={nav?.aria.idioma ?? "Cambiar idioma"}
-              />
-              <button
-                ref={botonAccesibilidad}
-                className="navbar-icono navbar-accesibilidad"
-                type="button"
-                aria-label={
-                  textosAccesibilidad?.botones?.abrir ??
-                  (ingles
-                    ? "Open accessibility options"
-                    : "Abrir opciones de accesibilidad")
-                }
-                aria-expanded={panelAccesibilidadAbierto}
-                aria-haspopup="dialog"
-                aria-controls="panel-accesibilidad"
-                onClick={() => setPanelAccesibilidadAbierto(true)}
+              <Link
+                className={clasesBoton(
+                  "primario",
+                  "p",
+                  "navbar-solo-escritorio",
+                )}
+                to="/registro"
               >
-                <Icono nombre="accesibilidad" />
-              </button>
-            </div>
-          </div>
+                {nav.botones.crearCuenta}
+              </Link>
+            </>
+          )}
+          <button
+            ref={botonMenu}
+            type="button"
+            className="navbar-icono navbar-menu"
+            aria-label={menuMovil?.abrir}
+            aria-expanded={menuAbierto}
+            aria-controls="menu-movil"
+            onClick={() => setMenuAbierto(true)}
+          >
+            <Icono nombre="menu" />
+          </button>
         </div>
       </nav>
-      {panelAccesibilidadAbierto && textosAccesibilidad && (
+
+      {cargando && (
+        <p className="navbar-estado" role="status">
+          {estados?.cargando}
+        </p>
+      )}
+      {error && (
+        <div className="navbar-estado" role="alert">
+          <p>{estados?.error?.texto}</p>
+          {recargar && (
+            <button type="button" onClick={recargar}>
+              {estados?.error?.botones?.reintentar}
+            </button>
+          )}
+        </div>
+      )}
+
+      {menuAbierto && (
+        <MenuMovil
+          textos={textos}
+          idioma={idioma}
+          cambiarIdioma={cambiarIdioma}
+          activo={activo}
+          onCerrar={cerrarMenu}
+          onAbrirAccesibilidad={abrirAccesibilidadDesdeMenu}
+        />
+      )}
+
+      {panelAbierto && textosAccesibilidad && (
         <PanelAccesibilidad
           id="panel-accesibilidad"
           textos={{
             ...textosAccesibilidad,
             botones: {
               ...textosAccesibilidad.botones,
-              cerrar: cerrarAccesibilidad,
+              cerrar: textos?.general?.aria?.cerrarDialogo,
             },
           }}
           preferencias={preferenciasAccesibilidad}
           onCambiar={onCambiarAccesibilidad}
           onRestablecer={onRestablecerAccesibilidad}
-          onCerrar={cerrarPanelAccesibilidad}
+          onCerrar={cerrarPanel}
           botonAbrir={botonAccesibilidad}
         />
       )}

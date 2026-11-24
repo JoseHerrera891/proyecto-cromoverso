@@ -101,6 +101,8 @@ export default function App() {
           idioma={idioma}
           cambiarIdioma={cambiarIdioma}
           activo={activo}
+          tono={pathname === "/" ? "oscuro" : "claro"}
+          ocultarEnMovil={/^\/mundos\/[^/]+/.test(pathname)}
           preferenciasAccesibilidad={preferenciasAccesibilidad}
           onCambiarAccesibilidad={cambiarPreferenciaAccesibilidad}
           onRestablecerAccesibilidad={() =>
