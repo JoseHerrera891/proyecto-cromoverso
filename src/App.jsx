@@ -10,10 +10,13 @@ import DetalleCromo from "./components/DetalleCromo.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
 import { obtenerTituloPagina } from "./utils/tituloPagina.js";
+import {
+  decidioCookies,
+  guardarConsentimiento,
+  idiomaGuardado,
+  recordarIdioma,
+} from "./utils/cookies.js";
 
-const COOKIE_CONSENT_NAME = "consentimiento";
-const COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365;
-const LANGUAGE_COOKIE_NAME = "idioma";
 // Etiquetas lang que indica la API (textos.idioma.mensajes.recordatorioMovil).
 const ETIQUETAS_LANG = { es: "es-CO", en: "en" };
 const PREFERENCIAS_ACCESIBILIDAD_INICIALES = {
@@ -24,26 +27,13 @@ const PREFERENCIAS_ACCESIBILIDAD_INICIALES = {
   fuenteLecturaFacil: false,
 };
 
-function leerCookie(nombre) {
-  const prefijo = `${nombre}=`;
-  const cookie = document.cookie
-    .split("; ")
-    .find((valor) => valor.startsWith(prefijo));
-  return cookie?.slice(prefijo.length);
-}
-
-function leerIdiomaInicial() {
-  if (leerCookie(COOKIE_CONSENT_NAME) !== "aceptado") return "es";
-  return leerCookie(LANGUAGE_COOKIE_NAME) === "en" ? "en" : "es";
-}
-
 export default function App() {
-  const [idioma, setIdioma] = useState(leerIdiomaInicial);
+  const [idioma, setIdioma] = useState(() => idiomaGuardado());
   const [preferenciasAccesibilidad, setPreferenciasAccesibilidad] = useState(
     PREFERENCIAS_ACCESIBILIDAD_INICIALES,
   );
   const [mostrarAvisoCookies, setMostrarAvisoCookies] = useState(
-    () => !leerCookie(COOKIE_CONSENT_NAME),
+    () => !decidioCookies(),
   );
   const { pathname } = useLocation();
   const activo = pathname.split("/").filter(Boolean)[0] || "inicio";
@@ -82,18 +72,11 @@ export default function App() {
 
   function cambiarIdioma(nuevoIdioma) {
     setIdioma(nuevoIdioma);
-    if (leerCookie(COOKIE_CONSENT_NAME) === "aceptado") {
-      document.cookie = `${LANGUAGE_COOKIE_NAME}=${nuevoIdioma}; Max-Age=${COOKIE_CONSENT_MAX_AGE}; Path=/; SameSite=Lax`;
-    }
+    recordarIdioma(nuevoIdioma);
   }
 
-  function guardarConsentimiento(valor) {
-    document.cookie = `${COOKIE_CONSENT_NAME}=${valor}; Max-Age=${COOKIE_CONSENT_MAX_AGE}; Path=/; SameSite=Lax`;
-    if (valor === "aceptado") {
-      document.cookie = `${LANGUAGE_COOKIE_NAME}=${idioma}; Max-Age=${COOKIE_CONSENT_MAX_AGE}; Path=/; SameSite=Lax`;
-    } else {
-      document.cookie = `${LANGUAGE_COOKIE_NAME}=; Max-Age=0; Path=/; SameSite=Lax`;
-    }
+  function decidirCookies(valor) {
+    guardarConsentimiento(valor, idioma);
     setMostrarAvisoCookies(false);
   }
 
@@ -146,8 +129,8 @@ export default function App() {
       {mostrarAvisoCookies && datos.textos?.cookies?.banner && (
         <CookieBanner
           texts={datos.textos.cookies.banner}
-          onAccept={() => guardarConsentimiento("aceptado")}
-          onReject={() => guardarConsentimiento("rechazado")}
+          onAccept={() => decidirCookies("aceptado")}
+          onReject={() => decidirCookies("rechazado")}
         />
       )}
     </>
