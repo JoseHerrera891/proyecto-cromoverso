@@ -234,3 +234,71 @@
     padding: var(--espacio-6) var(--espacio-5-5);
   }
 }
+
+/* Esqueleto de carga (US-CRO-S2-02). */
+.catalogo-esqueleto-cabecera {
+  background: var(--fondo-inverso-2);
+}
+
+.catalogo-esqueleto-cabecera-interior {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  max-width: var(--ancho-pagina);
+  min-height: var(--alto-cabecera-mundo-movil);
+  margin-inline: auto;
+  padding: var(--espacio-4) var(--margen-pagina-movil);
+}
+
+.catalogo-esqueleto-titulo {
+  width: min(60%, var(--ancho-esqueleto-titulo));
+  height: var(--linea-xl);
+}
+
+.catalogo-esqueleto-linea {
+  width: min(80%, var(--ancho-bienvenida));
+  height: var(--linea-xs);
+}
+
+.catalogo-esqueleto-columna {
+  display: none;
+}
+
+.catalogo-esqueleto-carta {
+  aspect-ratio: 168 / 235;
+  border-radius: var(--radio-m);
+}
+
+.catalogo-error {
+  max-width: var(--ancho-pagina);
+  min-height: var(--alto-estado-catalogo);
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .catalogo-esqueleto-cabecera-interior {
+    justify-content: flex-end;
+    min-height: var(--alto-cabecera-mundo);
+    padding: var(--espacio-6-5) var(--margen-pagina) var(--espacio-7);
+  }
+
+  .catalogo-esqueleto-titulo {
+    height: var(--linea-portada);
+  }
+
+  .catalogo-esqueleto-columna {
+    display: flex;
+    flex: 0 0 var(--ancho-columna-filtros);
+    flex-direction: column;
+    gap: var(--espacio-5);
+  }
+
+  .catalogo-esqueleto-panel {
+    height: var(--alto-panel-esqueleto);
+    border-radius: var(--radio-panel);
+  }
+
+  .catalogo-error {
+    padding-inline: var(--margen-pagina);
+  }
+}

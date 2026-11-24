@@ -7,6 +7,7 @@ import { clasesBoton } from "../utils/clasesBoton.js";
 import { insertarVariables } from "../utils/textos.js";
 import CabeceraMundo from "./CabeceraMundo.jsx";
 import CartaCromo from "./CartaCromo.jsx";
+import { AvisoCarga, Esqueleto, EstadoError } from "./Estados.jsx";
 import FiltrosCatalogo from "./FiltrosCatalogo.jsx";
 import Icono from "./Icono.jsx";
 import "./CatalogoMundo.css";
@@ -14,6 +15,7 @@ import "./CatalogoMundo.css";
 // Cromos que se ven sin desplazar (2 filas en móvil, 1 en escritorio): su arte
 // se pide de inmediato para no retrasar el primer pintado (LCP).
 const CARTAS_VISIBLES_AL_INICIO = 6;
+const CROMOS_POR_MUNDO = 20;
 
 function Selector({ etiqueta, valor, onCambiar, opciones }) {
   return (
@@ -31,6 +33,42 @@ function Selector({ etiqueta, valor, onCambiar, opciones }) {
       </select>
       <Icono nombre="chevronAbajo" />
     </label>
+  );
+}
+
+function CasillasEsqueleto() {
+  return (
+    <ul className="catalogo-casillas" aria-hidden="true">
+      {Array.from({ length: CROMOS_POR_MUNDO }, (_, indice) => (
+        <li key={indice}>
+          <Esqueleto className="catalogo-esqueleto-carta" />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Esqueleto con la forma del catálogo mientras llegan los datos. */
+function EsqueletoCatalogo({ textos }) {
+  return (
+    <section className="catalogo" aria-busy="true">
+      <AvisoCarga textos={textos} />
+      <div className="catalogo-esqueleto-cabecera">
+        <div className="catalogo-esqueleto-cabecera-interior">
+          <Esqueleto className="catalogo-esqueleto-titulo" />
+          <Esqueleto className="catalogo-esqueleto-linea" />
+        </div>
+      </div>
+      <div className="catalogo-contenido">
+        <div className="catalogo-esqueleto-columna" aria-hidden="true">
+          <Esqueleto className="catalogo-esqueleto-panel" />
+          <Esqueleto className="catalogo-esqueleto-panel" />
+        </div>
+        <div className="catalogo-album">
+          <CasillasEsqueleto />
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -85,21 +123,18 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
 
   if (estado.error && !estado.datos) {
     return (
-      <Estado rol="alert">
-        <p>{estados?.error?.texto}</p>
-        <button
-          type="button"
-          className={clasesBoton("secundario", "m")}
-          onClick={estado.recargar}
-        >
-          {estados?.error?.botones?.reintentar}
-        </button>
-      </Estado>
+      <EstadoError
+        className="catalogo-error"
+        textos={textos}
+        error={estado.error}
+        onReintentar={estado.recargar}
+        etiquetaTitulo="h1"
+      />
     );
   }
 
   if (!estado.datos || !pagina) {
-    return <Estado>{estados?.cargando}</Estado>;
+    return <EsqueletoCatalogo textos={textos} />;
   }
 
   const { mundo, mundos, rarezas } = estado.datos;
@@ -241,6 +276,12 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
                 </li>
               ))}
             </ul>
+          ) : estado.error && !estado.cromos ? (
+            <EstadoError
+              textos={textos}
+              error={estado.error}
+              onReintentar={estado.recargar}
+            />
           ) : estado.cromos ? (
             <div className="catalogo-vacio">
               <h2>{pagina.vacio.titulo}</h2>
@@ -254,7 +295,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
               </Link>
             </div>
           ) : (
-            <Estado>{estados?.cargando}</Estado>
+            <CasillasEsqueleto />
           )}
         </div>
       </div>

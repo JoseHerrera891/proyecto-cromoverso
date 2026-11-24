@@ -128,6 +128,22 @@ describe("DetalleCromo", () => {
     expect(markup).toMatch(/class="detalle-fondo" inert=""/);
   });
 
+  it("mientras carga muestra un esqueleto y se puede cerrar", () => {
+    const markup = renderizar({ cargando: true });
+
+    expect(markup).toContain('class="esqueleto');
+    expect(markup).toContain('role="status">Cargando…');
+    expect(markup).toContain('aria-label="Cerrar"');
+  });
+
+  it("si la API falla muestra el error con reintento", () => {
+    const markup = renderizar({ error: { status: 503, codigo: "x" } });
+
+    expect(markup).toContain('role="alert"');
+    expect(markup).toContain("Error");
+    expect(markup).toContain('aria-label="Cerrar"');
+  });
+
   it("muestra la página de no encontrado cuando la API responde 404", () => {
     const markup = renderizar({ error: true, noEncontrado: true });
 

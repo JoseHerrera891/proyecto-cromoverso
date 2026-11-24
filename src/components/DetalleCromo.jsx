@@ -7,12 +7,13 @@ import { insertarVariables } from "../utils/textos.js";
 import Badge from "./Badge.jsx";
 import CartaCromo from "./CartaCromo.jsx";
 import CatalogoMundo from "./CatalogoMundo.jsx";
+import { AvisoCarga, Esqueleto, EstadoError } from "./Estados.jsx";
 import Icono from "./Icono.jsx";
 import "./DetalleCromo.css";
 
 const conCeros = (numero) => String(numero).padStart(3, "0");
 
-function useDialogo(onCerrar, activo) {
+function useDialogo(onCerrar, activo, contenido) {
   const dialogo = useRef(null);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ function useDialogo(onCerrar, activo) {
       document.removeEventListener("keydown", gestionarTeclado);
       document.body.style.overflow = overflowAnterior;
     };
-  }, [onCerrar, activo]);
+  }, [onCerrar, activo, contenido]);
 
   return dialogo;
 }
@@ -92,7 +93,6 @@ export default function DetalleCromo({ id, textos }) {
   const navigate = useNavigate();
   const { state } = useLocation();
   const pagina = textos?.paginas?.detalleCromo;
-  const estados = textos?.estados;
   const mundoFondo = cromo?.mundo ?? state?.mundo;
   const volverA = state?.volverA ?? (mundoFondo && `/mundos/${mundoFondo}`);
 
@@ -100,7 +100,23 @@ export default function DetalleCromo({ id, textos }) {
     () => navigate(volverA ?? "/mundos"),
     [navigate, volverA],
   );
-  const dialogo = useDialogo(cerrar, Boolean(cromo && pagina));
+  // El foco vuelve a «Cerrar» cada vez que cambia lo que muestra la ventana.
+  const contenido = cromo?.id ?? (error ? "error" : "carga");
+  const dialogo = useDialogo(
+    cerrar,
+    Boolean(pagina) && !noEncontrado,
+    contenido,
+  );
+  const botonCerrar = pagina && (
+    <button
+      type="button"
+      className="detalle-cerrar"
+      aria-label={pagina.botones.cerrar}
+      onClick={cerrar}
+    >
+      <Icono nombre="cerrar" />
+    </button>
+  );
 
   useTituloDocumento(
     cromo && pagina && insertarVariables(pagina.seo.titulo, cromo),
@@ -147,14 +163,7 @@ export default function DetalleCromo({ id, textos }) {
             style={{ "--color-mundo": cromo.ilustracion.colorBase }}
           >
             <span className="detalle-asa" aria-hidden="true" />
-            <button
-              type="button"
-              className="detalle-cerrar"
-              aria-label={pagina.botones.cerrar}
-              onClick={cerrar}
-            >
-              <Icono nombre="cerrar" />
-            </button>
+            {botonCerrar}
 
             <div className="detalle-carta">
               <CartaCromo
@@ -229,25 +238,30 @@ export default function DetalleCromo({ id, textos }) {
               )}
             </nav>
           </section>
+        ) : error ? (
+          <div className="detalle detalle--estado" ref={dialogo}>
+            {botonCerrar}
+            <EstadoError
+              textos={textos}
+              error={error}
+              onReintentar={recargar}
+            />
+          </div>
         ) : (
           <div
-            className="detalle detalle--estado"
-            role={error ? "alert" : "status"}
+            className="detalle detalle--esqueleto"
+            aria-busy="true"
+            ref={dialogo}
           >
-            {error ? (
-              <>
-                <p>{estados?.error?.texto}</p>
-                <button
-                  type="button"
-                  className={clasesBoton("secundario", "m")}
-                  onClick={recargar}
-                >
-                  {estados?.error?.botones?.reintentar}
-                </button>
-              </>
-            ) : (
-              <p>{estados?.cargando}</p>
-            )}
+            {botonCerrar}
+            <AvisoCarga textos={textos} />
+            <Esqueleto className="detalle-esqueleto-carta" />
+            <div className="detalle-esqueleto-info">
+              <Esqueleto className="detalle-esqueleto-etiquetas" />
+              <Esqueleto className="detalle-esqueleto-titulo" />
+              <Esqueleto className="detalle-esqueleto-poder" />
+              <Esqueleto className="detalle-esqueleto-atributos" />
+            </div>
           </div>
         )}
       </div>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { crearUrlApi } from "../utils/api.js";
-import { ErrorHttp } from "./useCatalogoMundo.js";
+import { pedirJson as pedirApi } from "../utils/api.js";
 
 export function validarDetalleCromo(cromo) {
   const camposTexto = [
@@ -30,11 +29,8 @@ export function validarDetalleCromo(cromo) {
   return cromo;
 }
 
-async function pedirJson(ruta, signal, fetcher) {
-  const respuesta = await fetcher(crearUrlApi(ruta), { signal });
-  if (!respuesta.ok) throw new ErrorHttp(respuesta.status);
-  return respuesta.json();
-}
+const pedirJson = (ruta, signal, fetcher) =>
+  pedirApi(ruta, { signal, fetcher });
 
 export async function solicitarDetalleCromo(id, signal, fetcher = fetch) {
   return validarDetalleCromo(
@@ -127,7 +123,7 @@ export function useDetalleCromo(id) {
   return {
     cromo: estado.cromo,
     cargando,
-    error: Boolean(estado.error),
+    error: estado.error,
     noEncontrado: estado.error?.status === 404,
     recargar: () => setIntento((valor) => valor + 1),
   };

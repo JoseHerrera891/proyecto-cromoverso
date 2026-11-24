@@ -1,0 +1,67 @@
+/* Estados de carga, vacío y error (US-CRO-S2-02). */
+.estado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+  padding: var(--espacio-6) var(--margen-pagina-movil);
+}
+
+.estado-icono {
+  display: grid;
+  place-items: center;
+  width: var(--control-alto-minimo);
+  height: var(--control-alto-minimo);
+  border-radius: var(--radio-pildora);
+  color: var(--estado-error);
+  background: var(--estado-error-suave);
+}
+
+.estado-icono .icono {
+  width: var(--icono-tamano-l);
+  height: var(--icono-tamano-l);
+}
+
+.estado-titulo {
+  margin: 0;
+  font-family: var(--fuente-unbounded);
+  font-size: var(--texto-xl);
+  line-height: var(--linea-xl);
+}
+
+.estado-texto {
+  max-width: var(--ancho-bienvenida);
+  margin: 0;
+  color: var(--texto-secundario);
+  font-size: var(--texto-base);
+  line-height: var(--linea-base);
+}
+
+.esqueleto {
+  display: block;
+  border-radius: var(--radio-m);
+  background:
+    linear-gradient(90deg, transparent, var(--brillo-holografico), transparent)
+      0 0 / 200% 100% no-repeat,
+    var(--fondo-sutil);
+  animation: esqueleto-brillo 1.4s ease-in-out infinite;
+}
+
+@keyframes esqueleto-brillo {
+  from {
+    background-position:
+      150% 0,
+      0 0;
+  }
+  to {
+    background-position:
+      -50% 0,
+      0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esqueleto {
+    animation: none;
+  }
+}
