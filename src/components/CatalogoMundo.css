@@ -224,8 +224,8 @@
 
 .catalogo-opcion--tipo input {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
@@ -253,7 +253,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-1);
-  padding: 2px var(--espacio-2);
+  padding: 0.125rem var(--espacio-2);
   border: var(--borde-grosor) solid var(--color-rareza);
   border-radius: var(--radio-pildora);
   color: var(--texto-principal);
@@ -367,7 +367,7 @@
   gap: var(--espacio-1);
   height: 100%;
   min-width: 0;
-  padding: 6px;
+  padding: 0.375rem;
   border: var(--borde-grosor) solid var(--borde-fuerte);
   border-radius: var(--radio-s);
   background: var(--fondo-superficie);
@@ -464,8 +464,8 @@
 .catalogo-solo-lector {
   position: absolute;
   overflow: hidden;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   clip-path: inset(50%);

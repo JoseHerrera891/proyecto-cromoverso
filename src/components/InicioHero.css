@@ -142,7 +142,7 @@
   left: 50%;
   z-index: 2;
   padding: clamp(0.35rem, 1cqw, 0.75rem) clamp(0.75rem, 2cqw, 1.375rem);
-  border: clamp(2px, 0.25vw, 4px) solid var(--borde-fuerte);
+  border: clamp(0.125rem, 0.25vw, 0.25rem) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
   color: var(--texto-principal);
   background: var(--marca-acento);
@@ -169,26 +169,26 @@
   position: absolute;
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto auto;
-  gap: clamp(2px, 0.5cqw, 4px);
+  gap: clamp(0.125rem, 0.5cqw, 0.25rem);
   overflow: hidden;
   width: 30%;
   height: 80%;
-  padding: clamp(4px, 1.2cqw, 10px);
-  border: clamp(3px, 1.4cqw, 10px) solid var(--fondo-inverso);
+  padding: clamp(0.25rem, 1.2cqw, 0.625rem);
+  border: clamp(0.1875rem, 1.4cqw, 0.625rem) solid var(--fondo-inverso);
   border-radius: var(--radio-m);
   color: var(--texto-principal);
   background: var(--fondo-superficie);
-  box-shadow: clamp(4px, 1.2cqw, 9px) clamp(4px, 1.2cqw, 9px) 0 0
-    var(--fondo-inverso);
+  box-shadow: clamp(0.25rem, 1.2cqw, 0.5625rem)
+    clamp(0.25rem, 1.2cqw, 0.5625rem) 0 0 var(--fondo-inverso);
 }
 
 .inicio-hero-carta-numero {
   position: absolute;
-  top: clamp(5px, 1.5cqw, 12px);
-  left: clamp(5px, 1.5cqw, 12px);
+  top: clamp(0.3125rem, 1.5cqw, 0.75rem);
+  left: clamp(0.3125rem, 1.5cqw, 0.75rem);
   z-index: 1;
   padding: 0 clamp(0.25rem, 1cqw, 0.625rem);
-  border: clamp(1px, 0.4cqw, 3px) solid var(--fondo-inverso);
+  border: clamp(0.0625rem, 0.4cqw, 0.1875rem) solid var(--fondo-inverso);
   border-radius: var(--radio-pildora);
   background: var(--fondo-superficie);
   font-size: clamp(0.875rem, 2.5cqw, 1rem);
@@ -197,14 +197,14 @@
 
 .inicio-hero-carta-insignia {
   position: absolute;
-  top: clamp(5px, 1.5cqw, 12px);
-  right: clamp(5px, 1.5cqw, 12px);
+  top: clamp(0.3125rem, 1.5cqw, 0.75rem);
+  right: clamp(0.3125rem, 1.5cqw, 0.75rem);
   z-index: 1;
   display: grid;
   width: clamp(1.5rem, 4.7cqw, 2.25rem);
   height: clamp(2rem, 6.3cqw, 2.75rem);
   place-items: center;
-  border: clamp(1px, 0.4cqw, 3px) solid var(--fondo-inverso);
+  border: clamp(0.0625rem, 0.4cqw, 0.1875rem) solid var(--fondo-inverso);
   border-radius: var(--radio-pildora);
   color: var(--rareza-legendaria);
   background: var(--fondo-superficie);
@@ -223,7 +223,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  border: clamp(2px, 0.7cqw, 5px) solid var(--marca-primario);
+  border: clamp(0.125rem, 0.7cqw, 0.3125rem) solid var(--marca-primario);
   border-radius: var(--radio-m);
   object-fit: cover;
 }
@@ -337,7 +337,7 @@
 @media (min-width: 768px) and (max-width: 1279px) {
   .inicio-hero {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    padding: var(--espacio-6) 28px;
+    padding: var(--espacio-6) 1.75rem;
   }
 
   .inicio-hero h1 {
