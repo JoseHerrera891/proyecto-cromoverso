@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useCatalogoMundo } from "../hooks/useCatalogoMundo.js";
+import { useTituloDocumento } from "../hooks/useTituloDocumento.js";
 import { ordenarRarezas } from "../utils/catalogo.js";
 import { clasesBoton } from "../utils/clasesBoton.js";
 import { insertarVariables } from "../utils/textos.js";
@@ -53,6 +54,15 @@ export default function CatalogoMundo({ id, textos }) {
       tipo: parametros.get("tipo") ?? "",
     },
     Object.keys(opcionesTipo),
+  );
+  const nombreMundo = estado.datos?.mundo.nombre;
+  useTituloDocumento(
+    nombreMundo &&
+      pagina?.seo?.titulo &&
+      insertarVariables(pagina.seo.titulo, { mundo: nombreMundo }),
+    nombreMundo &&
+      pagina?.seo?.descripcion &&
+      insertarVariables(pagina.seo.descripcion, { mundo: nombreMundo }),
   );
 
   if (estado.noEncontrado && estados?.noEncontrado) {

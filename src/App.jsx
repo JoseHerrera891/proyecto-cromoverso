@@ -14,6 +14,8 @@ import { obtenerTituloPagina } from "./utils/tituloPagina.js";
 const COOKIE_CONSENT_NAME = "consentimiento";
 const COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365;
 const LANGUAGE_COOKIE_NAME = "idioma";
+// Etiquetas lang que indica la API (textos.idioma.mensajes.recordatorioMovil).
+const ETIQUETAS_LANG = { es: "es-CO", en: "en" };
 const PREFERENCIAS_ACCESIBILIDAD_INICIALES = {
   tamanoTexto: "normal",
   altoContraste: false,
@@ -48,9 +50,11 @@ export default function App() {
   const datos = useTextos(idioma);
   const tituloPagina = obtenerTituloPagina(pathname, datos.textos);
 
+  // El atributo lang sigue al idioma de los textos que se ven en pantalla.
+  const idiomaVisible = datos.idiomaTextos ?? idioma;
   useEffect(() => {
-    document.documentElement.lang = idioma;
-  }, [idioma]);
+    document.documentElement.lang = ETIQUETAS_LANG[idiomaVisible];
+  }, [idiomaVisible]);
 
   useEffect(() => {
     const raiz = document.documentElement;
