@@ -1,3 +1,4 @@
+// US-CRO-S1-02 · Navegar por el sitio en web y móvil
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";

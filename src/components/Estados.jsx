@@ -1,3 +1,4 @@
+// US-CRO-S2-02 · Estados de carga, vacío y error
 import { clasesBoton } from "../utils/clasesBoton.js";
 import Icono from "./Icono.jsx";
 import "./Estados.css";
@@ -6,6 +7,7 @@ import "./Estados.css";
  * Estado de error con botón para reintentar. El título sale de
  * textos.estados.error y el mensaje de textos.errores[codigo] de la API.
  */
+// US-CRO-S2-02 · C3 y C4: error con «Reintentar»; texto de textos.estados y textos.errores[codigo].
 export function EstadoError({
   textos,
   error,
@@ -39,6 +41,7 @@ export function EstadoError({
 }
 
 /** Bloque gris animado que ocupa el lugar de un contenido que aún carga. */
+// US-CRO-S2-02 · C1: bloque de esqueleto de carga.
 export function Esqueleto({ className = "" }) {
   return <span className={`esqueleto ${className}`} aria-hidden="true" />;
 }

@@ -1,3 +1,4 @@
+// US-CRO-S1-05 · Cambiar el idioma entre español e inglés
 /** Reemplaza {variable} en un texto de la API por su valor. */
 export function insertarVariables(plantilla, variables) {
   return Object.entries(variables).reduce(

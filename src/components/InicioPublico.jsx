@@ -1,3 +1,4 @@
+// US-CRO-S1-03 · Inicio público
 import { useInicioPublico } from "../hooks/useInicioPublico.js";
 import { useTituloDocumento } from "../hooks/useTituloDocumento.js";
 import InicioHero from "./InicioHero.jsx";

@@ -1,3 +1,4 @@
+// US-CRO-S2-05 · Mantener la sesión y cerrarla
 import { useEffect, useRef, useState } from "react";
 import { useSesion } from "../hooks/useSesion.js";
 import { iniciales } from "../utils/iniciales.js";
@@ -17,6 +18,7 @@ export function Avatar({ usuario, variante = "acento" }) {
 }
 
 /** Menú de cuenta de la barra (Figma · «Menú de cuenta»). */
+// US-CRO-S2-05 · C2 y C3: menú con nombre y correo, y «Cerrar sesión».
 export default function MenuCuenta({ textos }) {
   const { usuario, salir } = useSesion();
   const [abierto, setAbierto] = useState(false);

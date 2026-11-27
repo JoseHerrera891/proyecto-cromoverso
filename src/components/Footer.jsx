@@ -1,3 +1,4 @@
+// US-CRO-S1-02 · Navegar por el sitio en web y móvil
 import { Link } from "react-router-dom";
 import "./Footer.css";
 

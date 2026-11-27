@@ -1,3 +1,4 @@
+// US-CRO-S1-03 · Inicio público
 import "./InicioRarezas.css";
 
 export default function InicioRarezas({ rarezas }) {

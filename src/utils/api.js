@@ -1,3 +1,6 @@
+// US-CRO-S2-02 · Estados de carga, vacío y error
+// US-CRO-S2-04 · Ver por qué no pude ingresar
+// US-CRO-S2-05 · Mantener la sesión y cerrarla
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(
   /\/+$/,
   "",
@@ -25,6 +28,7 @@ export class ErrorHttp extends Error {
   }
 }
 
+// US-CRO-S2-04 · C3: segundos de bloqueo que indica Retry-After.
 /** Segundos de la cabecera Retry-After (número o fecha HTTP). */
 export function segundosDeEspera(valor, ahora = Date.now()) {
   if (!valor) return null;
@@ -42,6 +46,7 @@ export function segundosDeEspera(valor, ahora = Date.now()) {
 export function cabecerasDeSimulacion(busqueda = globalThis.location?.search) {
   const parametros = new URLSearchParams(busqueda ?? "");
   const cabeceras = {};
+  // US-CRO-S2-02 · C5: ?simularLatencia y ?simularError → cabeceras X-Simular-*.
   const latencia = parametros.get("simularLatencia");
   const error = parametros.get("simularError");
   if (/^\d+$/.test(latencia ?? "")) cabeceras["X-Simular-Latencia"] = latencia;
@@ -61,6 +66,7 @@ export async function pedirJson(
   const respuesta = await fetcher(crearUrlApi(ruta), {
     method: metodo,
     signal,
+    // US-CRO-S2-05 · C1: la cookie httpOnly `sesion` viaja con credentials: "include".
     credentials: conSesion ? "include" : "same-origin",
     headers: {
       ...cabecerasDeSimulacion(),

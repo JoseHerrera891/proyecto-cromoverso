@@ -1,3 +1,4 @@
+// US-CRO-S2-01 · Detalle de un cromo
 export const FIGURAS = {
   circulo: <circle cx="50" cy="50" r="34" />,
   estrella: (

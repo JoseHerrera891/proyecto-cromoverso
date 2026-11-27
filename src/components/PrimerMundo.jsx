@@ -1,3 +1,4 @@
+// US-CRO-S1-02 · Navegar por el sitio en web y móvil
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { crearUrlApi } from "../utils/api.js";

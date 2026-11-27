@@ -1,3 +1,5 @@
+// US-CRO-S1-03 · Inicio público
+// US-CRO-S2-05 · Mantener la sesión y cerrarla
 import { Link } from "react-router-dom";
 import { useSesion } from "../hooks/useSesion.js";
 import { clasesBoton } from "../utils/clasesBoton.js";
@@ -43,6 +45,7 @@ export default function InicioHero({ textos, destacados = [], rarezas = [] }) {
           </h1>
           <p className="inicio-hero-descripcion">{hero.subtituloMovil}</p>
           <div className="inicio-hero-acciones">
+            {/* US-CRO-S2-05 · C2: con sesión la portada no invita a crear cuenta. */}
             {!usuario && (
               <Link className={clasesBoton("acento", "g")} to="/registro">
                 <Icono nombre="regalo" />

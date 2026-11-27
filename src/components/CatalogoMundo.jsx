@@ -1,3 +1,6 @@
+// US-CRO-S1-04 · Catálogo de un mundo
+// US-CRO-S2-01 · Detalle de un cromo
+// US-CRO-S2-02 · Estados de carga, vacío y error
 import { useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useCatalogoMundo } from "../hooks/useCatalogoMundo.js";
@@ -82,6 +85,7 @@ function Estado({ children, rol = "status" }) {
 
 /** Vista 2 · Catálogo de un mundo, en la ruta /mundos/:id. */
 export default function CatalogoMundo({ id, textos, fondo = false }) {
+  // US-CRO-S1-04 · C2: los filtros viven en la URL (?rareza=…&tipo=…).
   const [parametros, setParametros] = useSearchParams();
   const { pathname, search } = useLocation();
   const [buscadorAbierto, setBuscadorAbierto] = useState(false);
@@ -121,6 +125,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
     );
   }
 
+  // US-CRO-S2-02 · C3: error con botón «Reintentar» en el catálogo.
   if (estado.error && !estado.datos) {
     return (
       <EstadoError
@@ -133,6 +138,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
     );
   }
 
+  // US-CRO-S2-02 · C1: esqueleto con la forma del catálogo mientras carga.
   if (!estado.datos || !pagina) {
     return <EsqueletoCatalogo textos={textos} />;
   }
@@ -258,6 +264,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
             <ul className="catalogo-casillas">
               {cromos.map((cromo, indice) => (
                 <li key={cromo.id}>
+                  {/* US-CRO-S1-04 · C3: cada cromo enlaza a su detalle (S2-01: recordando mundo y filtros). */}
                   <Link
                     className="catalogo-cromo-enlace"
                     to={`/cromos/${encodeURIComponent(cromo.id)}`}
@@ -285,6 +292,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
             />
           ) : estado.cromos ? (
             <div className="catalogo-vacio">
+              {/* US-CRO-S2-02 · C2: estado vacío (ej. /mundos/neon?rareza=legendaria&tipo=aliado). */}
               <h2>{pagina.vacio.titulo}</h2>
               <p>{pagina.vacio.texto}</p>
               <Link

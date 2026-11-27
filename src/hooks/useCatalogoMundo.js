@@ -1,3 +1,5 @@
+// US-CRO-S1-04 · Catálogo de un mundo
+// US-CRO-S2-02 · Estados de carga, vacío y error
 import { useEffect, useState } from "react";
 import { ErrorHttp, pedirJson as pedirApi } from "../utils/api.js";
 

@@ -1,3 +1,4 @@
+// US-CRO-S2-01 · Detalle de un cromo
 import { useEffect } from "react";
 
 /** Título de la pestaña y meta descripción desde los textos SEO de la API. */

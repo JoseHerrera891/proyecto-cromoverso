@@ -1,3 +1,4 @@
+// US-CRO-S2-05 · Mantener la sesión y cerrarla
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContextoSesion } from "../hooks/useSesion.js";
@@ -24,6 +25,7 @@ export default function ProveedorSesion({
   usuarioActual.current = usuario;
 
   // Si la sesión vence (401 no_autenticado) se lleva a la persona a ingresar.
+  // US-CRO-S2-05 · C4: sesión vencida → se lleva a la persona a /ingresar.
   const sesionVencida = useCallback(() => {
     setUsuario(null);
     navigate("/ingresar");
@@ -42,12 +44,14 @@ export default function ProveedorSesion({
   }, [sesionVencida]);
 
   useEffect(() => {
+    // US-CRO-S2-05 · C2: GET /sesion al cargar la página.
     if (!verificarAlIniciar) return;
     // Quien nunca ingresó en este navegador no tiene sesión que consultar.
     if (!puedeHaberSesion()) {
       setVerificada(true);
       return;
     }
+    // US-CRO-S2-05 · C5: sin «Mantener la sesión», se cierra al abrir el navegador.
     if (debeCerrarSesionAlIniciar()) {
       cerrarSesion()
         .catch(() => {})
@@ -60,6 +64,7 @@ export default function ProveedorSesion({
   }, []);
 
   useEffect(() => {
+    // US-CRO-S2-05 · C4: al volver a la pestaña se revisa si la sesión venció.
     function alVolver() {
       if (document.visibilityState === "visible" && usuarioActual.current) {
         verificar();
@@ -73,6 +78,7 @@ export default function ProveedorSesion({
     };
   }, [verificar]);
 
+  // US-CRO-S2-05 · C3: cerrar sesión y volver al inicio como visitante.
   const salir = useCallback(async () => {
     try {
       await cerrarSesion();

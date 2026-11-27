@@ -1,3 +1,4 @@
+// US-CRO-S1-04 · Catálogo de un mundo
 /** Rarezas de la más escasa a la más común, como en Figma. */
 export function ordenarRarezas(rarezas) {
   return [...rarezas].sort(
