@@ -1,3 +1,4 @@
+// US-CRO-S1-02 · Navegar por el sitio en web y móvil
 export function obtenerTituloPagina(pathname, textos) {
   const nav = textos?.navbar;
   const seccion = pathname.split("/").filter(Boolean)[0] || "inicio";

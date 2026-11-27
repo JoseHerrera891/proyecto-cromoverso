@@ -1,3 +1,5 @@
+/* US-CRO-S1-01 · Configurar el proyecto y el sistema de diseño */
+/* US-CRO-S1-04 · Catálogo de un mundo */
 /* Etiqueta de rareza (Figma · «Etiqueta de rareza»): icono + palabra. */
 .etiqueta {
   --color-rareza: var(--rareza-comun);

@@ -1,3 +1,4 @@
+// US-CRO-S1-03 · Inicio público
 // Emblemas exportados de Figma («Imágenes para exportar» › mundos), uno por
 // id de mundo de la API.
 const archivos = import.meta.glob("../assets/mundos/*.svg", {

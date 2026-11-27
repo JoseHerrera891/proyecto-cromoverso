@@ -1,3 +1,4 @@
+// US-CRO-S1-04 · Catálogo de un mundo
 import { Link } from "react-router-dom";
 import { contarPor, ordenarRarezas } from "../utils/catalogo.js";
 import { clasesBoton } from "../utils/clasesBoton.js";

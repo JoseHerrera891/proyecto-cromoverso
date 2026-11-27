@@ -1,3 +1,5 @@
+// US-CRO-S1-01 · Configurar el proyecto y el sistema de diseño
+// US-CRO-S1-06 · Aceptar o rechazar las cookies
 import { useId } from "react";
 import Button from "./Button.jsx";
 import "./CookieBanner.css";

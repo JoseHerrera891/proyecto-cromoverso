@@ -1,3 +1,4 @@
+// US-CRO-S1-01 · Configurar el proyecto y el sistema de diseño
 import { forwardRef, useId } from "react";
 import Icono from "./Icono.jsx";
 import "./TextField.css";

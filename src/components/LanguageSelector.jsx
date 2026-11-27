@@ -1,3 +1,5 @@
+// US-CRO-S1-01 · Configurar el proyecto y el sistema de diseño
+// US-CRO-S1-05 · Cambiar el idioma entre español e inglés
 import "./LanguageSelector.css";
 
 const IDIOMAS = ["es", "en"];

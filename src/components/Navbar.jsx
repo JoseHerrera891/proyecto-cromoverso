@@ -1,3 +1,5 @@
+// US-CRO-S1-02 · Navegar por el sitio en web y móvil
+// US-CRO-S1-05 · Cambiar el idioma entre español e inglés
 import {
   lazy,
   Suspense,
@@ -48,6 +50,7 @@ function MenuMovil({
     menu.current?.querySelector("button")?.focus();
 
     function gestionarTeclado(evento) {
+      // US-CRO-S1-02 · C2: el menú móvil se cierra con teclado (Escape).
       if (evento.key === "Escape") {
         onCerrar();
         return;

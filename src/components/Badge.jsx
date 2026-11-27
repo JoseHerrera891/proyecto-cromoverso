@@ -1,3 +1,5 @@
+// US-CRO-S1-01 · Configurar el proyecto y el sistema de diseño
+// US-CRO-S1-04 · Catálogo de un mundo
 import "./Badge.css";
 
 const VARIANTES = ["comun", "rara", "epica", "legendaria"];

@@ -1,3 +1,5 @@
+// US-CRO-S1-05 · Cambiar el idioma entre español e inglés
+// US-CRO-S1-06 · Aceptar o rechazar las cookies
 export const COOKIE_CONSENTIMIENTO = "consentimiento";
 export const COOKIE_IDIOMA = "idioma";
 const UN_ANIO = 60 * 60 * 24 * 365;
@@ -37,6 +39,7 @@ export function guardarConsentimiento(valor, idioma) {
 }
 
 /** Recuerda el idioma solo con consentimiento. */
+// US-CRO-S1-05 · C4: el idioma se guarda en la cookie solo si aceptó las cookies.
 export function recordarIdioma(idioma) {
   if (aceptoCookies()) escribirCookie(COOKIE_IDIOMA, idioma);
 }

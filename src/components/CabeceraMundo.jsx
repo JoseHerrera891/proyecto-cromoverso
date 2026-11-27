@@ -1,3 +1,4 @@
+// US-CRO-S1-04 · Catálogo de un mundo
 import { Link } from "react-router-dom";
 import { insertarVariables } from "../utils/textos.js";
 import Icono from "./Icono.jsx";

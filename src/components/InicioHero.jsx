@@ -1,3 +1,4 @@
+// US-CRO-S1-03 · Inicio público
 import { Link } from "react-router-dom";
 import { useSesion } from "../hooks/useSesion.js";
 import { clasesBoton } from "../utils/clasesBoton.js";

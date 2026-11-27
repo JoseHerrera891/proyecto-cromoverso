@@ -1,3 +1,6 @@
+// US-CRO-S1-02 · Navegar por el sitio en web y móvil
+// US-CRO-S1-05 · Cambiar el idioma entre español e inglés
+// US-CRO-S1-06 · Aceptar o rechazar las cookies
 import "./styles/App.css";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -32,6 +35,7 @@ const PREFERENCIAS_ACCESIBILIDAD_INICIALES = {
   fuenteLecturaFacil: false,
 };
 
+// US-CRO-S1-02 · C1: encabezado y pie en todas las vistas (salvo /ingresar, pantalla completa).
 export default function App() {
   const [idioma, setIdioma] = useState(() => idiomaGuardado());
   const [preferenciasAccesibilidad, setPreferenciasAccesibilidad] = useState(
@@ -46,6 +50,7 @@ export default function App() {
   const datos = useTextos(idioma);
   const tituloPagina = obtenerTituloPagina(pathname, datos.textos);
 
+  // US-CRO-S1-05 · C3: <html lang> cambia con el idioma.
   // El atributo lang sigue al idioma de los textos que se ven en pantalla.
   const idiomaVisible = datos.idiomaTextos ?? idioma;
   useEffect(() => {
@@ -136,6 +141,7 @@ export default function App() {
         </main>
         {!pantallaCompleta && <Footer textos={datos.textos} idioma={idioma} />}
       </div>
+      {/* US-CRO-S1-06 · C1: aviso de cookies en la primera visita. */}
       {mostrarAvisoCookies && datos.textos?.cookies?.banner && (
         <CookieBanner
           texts={datos.textos.cookies.banner}

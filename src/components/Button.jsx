@@ -1,3 +1,4 @@
+// US-CRO-S1-01 · Configurar el proyecto y el sistema de diseño
 import { clasesBoton } from "../utils/clasesBoton.js";
 import "./Button.css";
 

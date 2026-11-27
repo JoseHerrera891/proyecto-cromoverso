@@ -1,3 +1,4 @@
+/* US-CRO-S1-03 · Inicio público */
 .inicio-rarezas {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

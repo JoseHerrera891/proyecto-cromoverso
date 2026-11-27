@@ -1,3 +1,4 @@
+// US-CRO-S1-04 · Catálogo de un mundo
 import { arteDeCromo } from "../utils/arteCromos.js";
 import { FIGURAS } from "../utils/figuras.jsx";
 import Icono from "./Icono.jsx";

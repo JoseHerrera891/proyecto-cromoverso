@@ -1,3 +1,4 @@
+// US-CRO-S1-03 · Inicio público
 import { useEffect, useState } from "react";
 import { crearUrlApi } from "../utils/api.js";
 import { arteDeCromo } from "../utils/arteCromos.js";

@@ -1,3 +1,4 @@
+// US-CRO-S1-03 · Inicio público
 import { Link } from "react-router-dom";
 import { emblemaDeMundo } from "../utils/emblemasMundos.js";
 import { FIGURAS } from "../utils/figuras.jsx";

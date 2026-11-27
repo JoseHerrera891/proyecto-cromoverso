@@ -1,3 +1,4 @@
+// US-CRO-S1-05 · Cambiar el idioma entre español e inglés
 import { useEffect, useState } from "react";
 import { API_BASE_URL, crearUrlApi } from "../utils/api.js";
 
