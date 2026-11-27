@@ -1,3 +1,5 @@
+// US-CRO-S2-01 · Detalle de un cromo
+// US-CRO-S2-02 · Estados de carga, vacío y error
 import { useEffect, useState } from "react";
 import { pedirJson as pedirApi } from "../utils/api.js";
 
@@ -124,6 +126,7 @@ export function useDetalleCromo(id) {
     cromo: estado.cromo,
     cargando,
     error: estado.error,
+    // US-CRO-S2-01 · C3: distingue el 404 del resto de errores.
     noEncontrado: estado.error?.status === 404,
     recargar: () => setIntento((valor) => valor + 1),
   };

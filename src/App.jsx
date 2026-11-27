@@ -1,6 +1,8 @@
 // US-CRO-S1-02 · Navegar por el sitio en web y móvil
 // US-CRO-S1-05 · Cambiar el idioma entre español e inglés
 // US-CRO-S1-06 · Aceptar o rechazar las cookies
+// US-CRO-S2-01 · Detalle de un cromo
+// US-CRO-S2-03 · Iniciar sesión
 import "./styles/App.css";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -14,6 +16,7 @@ const PrimerMundo = lazy(() => import("./components/PrimerMundo.jsx"));
 const DetalleCromo = lazy(() => import("./components/DetalleCromo.jsx"));
 const Ingresar = lazy(() => import("./components/Ingresar.jsx"));
 // Vistas con su propio diseño a pantalla completa, sin barra ni pie del sitio.
+// US-CRO-S2-03 · Decisión: /ingresar a pantalla completa (Figma), sin barra ni pie.
 const RUTAS_PANTALLA_COMPLETA = ["/ingresar"];
 import CookieBanner from "./components/CookieBanner.jsx";
 import { useTextos } from "./hooks/useTextos.js";
@@ -36,6 +39,7 @@ const PREFERENCIAS_ACCESIBILIDAD_INICIALES = {
 };
 
 // US-CRO-S1-02 · C1: encabezado y pie en todas las vistas (salvo /ingresar, pantalla completa).
+// US-CRO-S2-01 · Rutas: /cromos/:id abre el detalle (S2-01); /ingresar abre el ingreso (S2-03).
 export default function App() {
   const [idioma, setIdioma] = useState(() => idiomaGuardado());
   const [preferenciasAccesibilidad, setPreferenciasAccesibilidad] = useState(

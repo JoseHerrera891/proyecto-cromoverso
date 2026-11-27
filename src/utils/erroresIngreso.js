@@ -1,3 +1,4 @@
+// US-CRO-S2-04 · Ver por qué no pude ingresar
 import { ErrorHttp } from "./api.js";
 
 const ESPERA_POR_DEFECTO = 30;
@@ -14,11 +15,14 @@ export function avisoDeError(error, pagina, textos) {
   const errores = pagina.errores;
 
   if (!(error instanceof ErrorHttp)) {
+    // US-CRO-S2-04 · C4: sin red → error de conexión con «Reintentar».
     return { tipo: "conexion", aviso: errores.conexion };
   }
+  // US-CRO-S2-04 · C2: 401 credenciales_invalidas → un solo mensaje.
   if (error.status === 401) {
     return { tipo: "credenciales", aviso: errores.credenciales };
   }
+  // US-CRO-S2-04 · C3: 429 demasiadas_peticiones → bloqueo con Retry-After.
   if (error.status === 429) {
     return {
       tipo: "bloqueo",
@@ -26,6 +30,7 @@ export function avisoDeError(error, pagina, textos) {
       segundos: error.reintentarEn ?? ESPERA_POR_DEFECTO,
     };
   }
+  // US-CRO-S2-03 · C3: 422 validacion → mensaje junto a cada campo.
   if (error.status === 422) {
     const campos = {};
     if (error.campos?.correo) campos.correo = error.campos.correo;

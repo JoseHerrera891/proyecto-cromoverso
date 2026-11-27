@@ -1,4 +1,6 @@
 // US-CRO-S1-04 · Catálogo de un mundo
+// US-CRO-S2-01 · Detalle de un cromo
+// US-CRO-S2-02 · Estados de carga, vacío y error
 import { useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useCatalogoMundo } from "../hooks/useCatalogoMundo.js";
@@ -123,6 +125,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
     );
   }
 
+  // US-CRO-S2-02 · C3: error con botón «Reintentar» en el catálogo.
   if (estado.error && !estado.datos) {
     return (
       <EstadoError
@@ -135,6 +138,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
     );
   }
 
+  // US-CRO-S2-02 · C1: esqueleto con la forma del catálogo mientras carga.
   if (!estado.datos || !pagina) {
     return <EsqueletoCatalogo textos={textos} />;
   }
@@ -288,6 +292,7 @@ export default function CatalogoMundo({ id, textos, fondo = false }) {
             />
           ) : estado.cromos ? (
             <div className="catalogo-vacio">
+              {/* US-CRO-S2-02 · C2: estado vacío (ej. /mundos/neon?rareza=legendaria&tipo=aliado). */}
               <h2>{pagina.vacio.titulo}</h2>
               <p>{pagina.vacio.texto}</p>
               <Link

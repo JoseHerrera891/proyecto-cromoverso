@@ -1,5 +1,6 @@
 // US-CRO-S1-02 · Navegar por el sitio en web y móvil
 // US-CRO-S1-05 · Cambiar el idioma entre español e inglés
+// US-CRO-S2-05 · Mantener la sesión y cerrarla
 import {
   lazy,
   Suspense,
@@ -155,6 +156,7 @@ function MenuMovil({
         </div>
       </div>
 
+      {/* US-CRO-S2-05 · C2: con sesión, avatar y cerrar sesión en el menú móvil; sin sesión, «Ingresar» y «Crear cuenta». */}
       {usuario ? (
         <div className="menu-movil-sesion menu-movil-sesion--usuario">
           <Avatar usuario={usuario} />
@@ -296,6 +298,7 @@ export default function Navbar({
               nombres={textos?.idioma?.opciones}
             />
           </div>
+          {/* US-CRO-S2-05 · C2: con sesión, menú de cuenta; sin sesión, «Ingresar» y «Crear cuenta». */}
           {usuario ? (
             <div className="navbar-solo-escritorio">
               <MenuCuenta textos={nav?.usuario} />

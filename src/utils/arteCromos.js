@@ -1,3 +1,4 @@
+// US-CRO-S2-01 · Detalle de un cromo
 // Arte exportado de Figma («Imágenes para exportar» › cromos). Cada archivo se
 // llama como el id del cromo en la API. Los cromos sin arte se dibujan en SVG
 // con ilustracion.colorBase e ilustracion.figura.

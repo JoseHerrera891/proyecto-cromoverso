@@ -1,3 +1,5 @@
+// US-CRO-S2-01 · Detalle de un cromo
+// US-CRO-S2-02 · Estados de carga, vacío y error
 import { useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDetalleCromo } from "../hooks/useDetalleCromo.js";
@@ -118,11 +120,13 @@ export default function DetalleCromo({ id, textos }) {
     </button>
   );
 
+  // US-CRO-S2-01 · C2: título y descripción de la pestaña con nombre y poder.
   useTituloDocumento(
     cromo && pagina && insertarVariables(pagina.seo.titulo, cromo),
     cromo && pagina && insertarVariables(pagina.seo.descripcion, cromo),
   );
 
+  // US-CRO-S2-01 · C3: 404 no_encontrado → página de no encontrado.
   if (noEncontrado && pagina) {
     return (
       <div className="detalle-no-encontrado" role="alert">
@@ -140,6 +144,7 @@ export default function DetalleCromo({ id, textos }) {
 
   return (
     <>
+      {/* US-CRO-S2-01 · Ventana sobre el catálogo del mundo (web) / hoja inferior (móvil). */}
       {mundoFondo && (
         <div className="detalle-fondo" inert aria-hidden="true">
           <CatalogoMundo id={mundoFondo} textos={textos} fondo />
@@ -165,6 +170,7 @@ export default function DetalleCromo({ id, textos }) {
             <span className="detalle-asa" aria-hidden="true" />
             {botonCerrar}
 
+            {/* US-CRO-S2-01 · C4: carta dibujada solo en SVG con ilustracion.colorBase y figura. */}
             <div className="detalle-carta">
               <CartaCromo
                 cromo={cromo}
@@ -175,6 +181,7 @@ export default function DetalleCromo({ id, textos }) {
               />
             </div>
 
+            {/* US-CRO-S2-01 · C1: rareza con icono y palabra, y tipo. */}
             <div className="detalle-identidad">
               <div className="detalle-etiquetas">
                 <Badge rareza={cromo.rareza}>
@@ -198,6 +205,7 @@ export default function DetalleCromo({ id, textos }) {
               <p className="detalle-subtitulo">{`${cromo.mundoNombre} · ${tipo}`}</p>
             </div>
 
+            {/* US-CRO-S2-01 · C1: poder y descripción. */}
             <div className="detalle-poder">
               <span className="detalle-poder-icono" aria-hidden="true">
                 <Icono nombre="rayo" />
@@ -210,6 +218,7 @@ export default function DetalleCromo({ id, textos }) {
 
             <p className="detalle-descripcion">{cromo.descripcion}</p>
 
+            {/* US-CRO-S2-01 · C1: atributos en barras. */}
             <Atributos atributos={cromo.atributos} textos={pagina.atributos} />
 
             <nav className="detalle-navegacion" aria-label={cromo.mundoNombre}>
@@ -241,6 +250,7 @@ export default function DetalleCromo({ id, textos }) {
         ) : error ? (
           <div className="detalle detalle--estado" ref={dialogo}>
             {botonCerrar}
+            {/* US-CRO-S2-02 · C3: error con botón «Reintentar» en el detalle. */}
             <EstadoError
               textos={textos}
               error={error}
@@ -254,6 +264,7 @@ export default function DetalleCromo({ id, textos }) {
             ref={dialogo}
           >
             {botonCerrar}
+            {/* US-CRO-S2-02 · C1: esqueleto con la forma del detalle mientras carga. */}
             <AvisoCarga textos={textos} />
             <Esqueleto className="detalle-esqueleto-carta" />
             <div className="detalle-esqueleto-info">

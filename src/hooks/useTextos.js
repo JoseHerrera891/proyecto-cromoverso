@@ -1,4 +1,5 @@
 // US-CRO-S1-05 · Cambiar el idioma entre español e inglés
+// US-CRO-S2-02 · Estados de carga, vacío y error
 import { useEffect, useState } from "react";
 import { API_BASE_URL, crearUrlApi } from "../utils/api.js";
 

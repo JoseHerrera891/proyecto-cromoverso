@@ -1,4 +1,5 @@
 // US-CRO-S1-01 · Configurar el proyecto y el sistema de diseño
+// US-CRO-S2-03 · Iniciar sesión
 import { forwardRef, useId } from "react";
 import Icono from "./Icono.jsx";
 import "./TextField.css";
@@ -8,6 +9,7 @@ import "./TextField.css";
  * descripción y error enlazados con aria-describedby y un accesorio opcional
  * dentro de la caja (por ejemplo, el botón para ver la contraseña).
  */
+// US-CRO-S2-03 · C1 y C3: etiqueta asociada al campo y error junto a él.
 const TextField = forwardRef(function TextField(
   {
     label,

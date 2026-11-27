@@ -1,3 +1,4 @@
+// US-CRO-S2-05 · Mantener la sesión y cerrarla
 /** Iniciales del nombre para el avatar: «Laura Cardona» → «LC». */
 export function iniciales(nombre = "") {
   return nombre

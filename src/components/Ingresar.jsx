@@ -1,3 +1,6 @@
+// US-CRO-S2-03 · Iniciar sesión
+// US-CRO-S2-04 · Ver por qué no pude ingresar
+// US-CRO-S2-05 · Mantener la sesión y cerrarla
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import abanico from "../assets/ilustraciones/abanico-de-cromos.webp";
@@ -17,6 +20,7 @@ const LOGO_NORMAL = "/marca/logo-normal.svg";
 const LOGO_INVERSO = "/marca/logo-inverso.svg";
 
 /** Errores de campos vacíos, en el orden en que aparecen en el formulario. */
+// US-CRO-S2-03 · C3: valida que no falte ningún dato.
 export function validarIngreso({ correo, clave }, errores) {
   const resultado = {};
   if (!correo.trim()) resultado.correo = errores.correoObligatorio;
@@ -52,6 +56,7 @@ export default function Ingresar({ textos }) {
 
   useTituloDocumento(pagina?.seo?.titulo, pagina?.seo?.descripcion);
 
+  // US-CRO-S2-04 · C3: 429 → el formulario se bloquea los segundos de Retry-After.
   // Cuenta regresiva del bloqueo por demasiados intentos (Retry-After).
   useEffect(() => {
     if (segundos <= 0) return undefined;
@@ -74,6 +79,7 @@ export default function Ingresar({ textos }) {
       setErrores((actuales) => ({ ...actuales, [name]: null }));
   }
 
+  // US-CRO-S2-03 · C3: mensaje junto al campo y foco en el primer campo con error.
   function marcarCampos(nuevosErrores) {
     setErrores(nuevosErrores);
     const primero = Object.keys(nuevosErrores)[0];
@@ -83,6 +89,7 @@ export default function Ingresar({ textos }) {
 
   async function enviar(evento) {
     evento.preventDefault();
+    // US-CRO-S2-04 · C1: no se puede enviar dos veces.
     if (enviando || bloqueado) return;
     if (marcarCampos(validarIngreso(valores, pagina.errores))) {
       setAviso(pagina.errores.camposObligatorios);
@@ -92,10 +99,13 @@ export default function Ingresar({ textos }) {
     setEnviando(true);
     try {
       const usuario = await iniciarSesion(valores);
+      // US-CRO-S2-05 · C5: guarda solo la preferencia «Mantener la sesión iniciada».
       recordarPreferenciaDeSesion(mantener);
       setUsuario(usuario);
+      // US-CRO-S2-03 · C4: al ingresar vuelve al inicio con la sesión iniciada.
       navigate("/");
     } catch (error) {
+      // US-CRO-S2-04 · C2–C4: traduce 401, 429 y sin red al aviso del formulario.
       const resultado = avisoDeError(error, pagina, textos);
       setAviso({ ...resultado.aviso, tipo: resultado.tipo });
       if (resultado.campos) marcarCampos(resultado.campos);
@@ -104,6 +114,7 @@ export default function Ingresar({ textos }) {
     }
   }
 
+  // US-CRO-S2-04 · C1: «Ingresando…» mientras envía; C4: «Reintentar» sin red.
   let etiquetaBoton = formulario.botones.ingresar;
   if (enviando) etiquetaBoton = formulario.mensajes.ingresando;
   else if (aviso?.tipo === "conexion")
@@ -147,8 +158,10 @@ export default function Ingresar({ textos }) {
           <h1>{formulario.titulo}</h1>
           <p className="ingreso-subtitulo">{formulario.subtitulo}</p>
 
+          {/* US-CRO-S2-04 · C2–C4: aviso de error del ingreso. */}
           {aviso && <Aviso titulo={aviso.titulo} texto={textoAviso} />}
 
+          {/* US-CRO-S2-03 · C1: correo y contraseña con etiquetas visibles. S2-04 C3: se bloquea con 429. */}
           <fieldset className="ingreso-campos" disabled={bloqueado}>
             <TextField
               ref={campos.correo}
@@ -162,6 +175,7 @@ export default function Ingresar({ textos }) {
               onChange={cambiar}
               error={errores.correo}
             />
+            {/* US-CRO-S2-03 · C2: el ojo muestra/oculta la contraseña (aria-pressed). */}
             <CampoClave
               ref={campos.clave}
               id="ingreso-clave"
@@ -175,6 +189,7 @@ export default function Ingresar({ textos }) {
             />
           </fieldset>
 
+          {/* US-CRO-S2-05 · C5: «Mantener la sesión iniciada». S2-03 C5: «¿Olvidaste tu contraseña?». */}
           <div className="ingreso-recordar">
             <label className="ingreso-casilla">
               <input
@@ -204,6 +219,7 @@ export default function Ingresar({ textos }) {
             {etiquetaBoton}
           </button>
 
+          {/* US-CRO-S2-03 · C5: enlace «Crea una cuenta». */}
           <p className="ingreso-pie">
             {formulario.mensajes.sinCuenta}{" "}
             <Link className="ingreso-enlace" to="/registro">

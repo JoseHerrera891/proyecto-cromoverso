@@ -1,4 +1,5 @@
 // US-CRO-S1-04 · Catálogo de un mundo
+// US-CRO-S2-01 · Detalle de un cromo
 import { arteDeCromo } from "../utils/arteCromos.js";
 import { FIGURAS } from "../utils/figuras.jsx";
 import Icono from "./Icono.jsx";
